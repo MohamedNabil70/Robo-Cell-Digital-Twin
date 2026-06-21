@@ -26,7 +26,7 @@ public class RobotArmController : MonoBehaviour
     public ArmRole role = ArmRole.Arm1_Car1ToConveyor1;
 
     [Header("══ Offline / Simulation ═════════════════════════════════════════")]
-    public bool offlineMode = false;
+    public bool offlineMode = true;
 
     [Header("── Joints — drag each bone Transform here ───────────────────")]
     public Transform joint1, joint2, joint3, joint4, joint5, joint6;
