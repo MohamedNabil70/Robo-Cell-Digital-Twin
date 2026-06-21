@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 7e1244b1add7b4a4b98ea5d43d9dbd20
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Modules/SceneButtons/SceneButtonMoveable.cs
+  uploadId: 921010

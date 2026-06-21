@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 51ad7855b19ddfb46adccb0b18416817
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/Prefabs/UIButton.prefab
+  uploadId: 921010

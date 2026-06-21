@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7191a5c9459e9144b8f418271478be5e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/3DPrefabs/Decals/Imgs/Materials/ISO_7010_P003.svg.mat
+  uploadId: 921010

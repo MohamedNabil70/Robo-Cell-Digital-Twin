@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 76f8b948e72fa984c82a70402f9f2c9e
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/SmoothMotion/SCurveTest.cs
+  uploadId: 921010

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cdf7bd60ef632dc4aacc2268d3ce6e22
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Resources/Gizmo/Gizmo.prefab
+  uploadId: 921010

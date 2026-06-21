@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ac387962e3815594382840f3717f7d60
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/HMI/HMI_PanelWorldSpace.prefab
+  uploadId: 921010

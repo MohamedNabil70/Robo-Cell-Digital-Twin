@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d03e2d83daf773d4bb076190f7c9e870
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/3DPrefabs/SchunkEGH80Gripper.prefab
+  uploadId: 921010

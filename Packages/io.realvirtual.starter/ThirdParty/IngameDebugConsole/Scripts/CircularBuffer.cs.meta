@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 6136cb3c00eac0149901b8e7f2fecef8
+timeCreated: 1550943949
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/ThirdParty/IngameDebugConsole/Scripts/CircularBuffer.cs
+  uploadId: 921010

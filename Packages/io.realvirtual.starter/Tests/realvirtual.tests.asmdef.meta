@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6e09bc3b1a845694d91e78f625022154
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Tests/realvirtual.tests.asmdef
+  uploadId: 921010

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 6eed5266fca904643b97d0a61b4c2c40
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/Shaders/UnityGLTF_PBRGraph_Fallback.shader
+  uploadId: 921010

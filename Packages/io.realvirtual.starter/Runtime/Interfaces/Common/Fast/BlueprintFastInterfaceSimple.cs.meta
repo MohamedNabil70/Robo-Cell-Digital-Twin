@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: c9496e7d6fd20da4d9cca6820f8c5c8c
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Interfaces/Common/Fast/BlueprintFastInterfaceSimple.cs
+  uploadId: 921010

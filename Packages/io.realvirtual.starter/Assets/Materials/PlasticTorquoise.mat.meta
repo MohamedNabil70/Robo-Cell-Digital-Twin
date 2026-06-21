@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: c69d6ff234d34824d89ceaa34bea5b00
+timeCreated: 1524253754
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/Materials/PlasticTorquoise.mat
+  uploadId: 921010

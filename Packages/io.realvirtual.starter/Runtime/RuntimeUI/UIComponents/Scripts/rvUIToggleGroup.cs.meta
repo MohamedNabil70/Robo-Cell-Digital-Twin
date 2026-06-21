@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 858f7834216cc964a95d8ed05a72ba42
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/UIComponents/Scripts/rvUIToggleGroup.cs
+  uploadId: 921010

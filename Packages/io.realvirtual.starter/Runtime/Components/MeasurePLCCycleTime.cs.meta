@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 992d3ec6a19e530438e4515c83b7ded5
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Components/MeasurePLCCycleTime.cs
+  uploadId: 921010

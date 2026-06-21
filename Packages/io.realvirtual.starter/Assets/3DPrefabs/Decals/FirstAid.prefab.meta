@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8f1e1990e6191e043a07747fb1791856
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/3DPrefabs/Decals/FirstAid.prefab
+  uploadId: 921010

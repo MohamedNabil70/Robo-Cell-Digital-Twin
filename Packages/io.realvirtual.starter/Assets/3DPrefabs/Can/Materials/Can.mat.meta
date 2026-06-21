@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1a90c5defc8e3f245b5934cdd8966d70
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/3DPrefabs/Can/Materials/Can.mat
+  uploadId: 921010

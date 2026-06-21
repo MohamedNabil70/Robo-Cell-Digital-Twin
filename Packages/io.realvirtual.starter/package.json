@@ -1,0 +1,51 @@
+{
+  "name": "io.realvirtual.starter",
+  "version": "6.3.3",
+  "displayName": "realvirtual Starter",
+  "description": "Industrial automation simulation and virtual commissioning framework for Unity.",
+  "type": "library",
+  "dependencies": {
+    "com.unity.burst": "1.8.26",
+    "com.unity.cinemachine": "2.10.5",
+    "com.unity.collections": "2.6.2",
+    "com.unity.inputsystem": "1.17.0",
+    "com.unity.mathematics": "1.3.3",
+    "com.unity.postprocessing": "3.5.1",
+    "com.unity.recorder": "5.1.3",
+    "com.unity.render-pipelines.universal": "17.3.0",
+    "com.unity.splines": "2.8.2",
+    "com.unity.textmeshpro": "5.0.0",
+    "com.unity.ui": "2.0.0"
+  },
+  "unity": "6000.3",
+  "documentationUrl": "https://doc.realvirtual.io",
+  "changelogUrl": "https://doc.realvirtual.io/release-notes",
+  "licensesUrl": "https://realvirtual.io/en/license-conditions/",
+  "author": {
+    "name": "realvirtual GmbH",
+    "email": "info@realvirtual.io",
+    "url": "https://realvirtual.io"
+  },
+  "samples": [
+    {
+      "displayName": "Getting Started",
+      "description": "Introduction demo showcasing core realvirtual features: conveyors, drives, sensors, and MU handling.",
+      "path": "Samples~/GettingStarted"
+    },
+    {
+      "displayName": "Drives",
+      "description": "Drive component demos: force drives, raycast limits, and conditional drive control.",
+      "path": "Samples~/Drives"
+    },
+    {
+      "displayName": "Transport Systems",
+      "description": "Conveyor, transport surface, chain system, and guided transport (AGV) demos.",
+      "path": "Samples~/Transport"
+    },
+    {
+      "displayName": "Object Handling",
+      "description": "Gripping, material unit manipulation, cutting, and physics-based object handling demos.",
+      "path": "Samples~/ObjectHandling"
+    }
+  ]
+}

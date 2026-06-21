@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: cf09cbab2c987494ab31bd93dc49cf66
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/TemplateScene.unity
+  uploadId: 921010

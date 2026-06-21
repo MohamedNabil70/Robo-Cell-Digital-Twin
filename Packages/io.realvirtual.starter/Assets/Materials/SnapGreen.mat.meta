@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1747f20b773066e4c8b13d0f9083ab7f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/Materials/SnapGreen.mat
+  uploadId: 921010

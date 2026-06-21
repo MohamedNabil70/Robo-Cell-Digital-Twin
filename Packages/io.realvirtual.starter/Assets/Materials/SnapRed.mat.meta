@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fe3fd8b08893d90438c8ca772d051c84
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/Materials/SnapRed.mat
+  uploadId: 921010

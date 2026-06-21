@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 78e1b54ad8395b2a8988b9d94ecc0a14
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/3DPrefabs/Fences/Fence-1m-Opening.prefab
+  uploadId: 921010

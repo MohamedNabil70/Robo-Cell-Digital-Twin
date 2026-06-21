@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: d655b915280ebd049b623b28961c2a83
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Editor/QuickEdit/QuickEditWindow.cs
+  uploadId: 921010

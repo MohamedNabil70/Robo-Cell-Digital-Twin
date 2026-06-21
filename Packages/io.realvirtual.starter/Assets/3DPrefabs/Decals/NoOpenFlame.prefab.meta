@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 70b2b2088b85a2e6fb3f20dd790d9c6f
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/3DPrefabs/Decals/NoOpenFlame.prefab
+  uploadId: 921010

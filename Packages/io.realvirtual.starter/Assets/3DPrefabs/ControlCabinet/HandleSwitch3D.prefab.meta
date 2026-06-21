@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 9c1869f5601e0584fa3a68d923de8455
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/3DPrefabs/ControlCabinet/HandleSwitch3D.prefab
+  uploadId: 921010

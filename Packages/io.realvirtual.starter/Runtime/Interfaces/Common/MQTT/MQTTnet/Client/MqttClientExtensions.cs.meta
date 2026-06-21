@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 92f76aad78157194eb5e8194b1b7090c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Interfaces/Common/MQTT/MQTTnet/Client/MqttClientExtensions.cs
+  uploadId: 921010

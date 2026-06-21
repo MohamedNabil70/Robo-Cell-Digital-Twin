@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: b3da8b6054f440f4aa65472b8bf971ff
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RenderFeatures/AbstractSelectionManager.cs
+  uploadId: 921010

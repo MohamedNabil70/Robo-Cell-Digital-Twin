@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d11202d3e8c26574a916b8767ae2474f
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/UIPrefabs/ButtonGroupConnection.prefab
+  uploadId: 921010

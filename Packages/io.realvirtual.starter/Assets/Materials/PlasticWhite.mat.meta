@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 4e70270447653a941a82e9998fe9b466
+timeCreated: 1524253753
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/Materials/PlasticWhite.mat
+  uploadId: 921010

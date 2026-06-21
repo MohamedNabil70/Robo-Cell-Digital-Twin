@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: eb2cdc3af0265d943a56675e5d87b437
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/Materials/ShippingSigns.mat
+  uploadId: 921010

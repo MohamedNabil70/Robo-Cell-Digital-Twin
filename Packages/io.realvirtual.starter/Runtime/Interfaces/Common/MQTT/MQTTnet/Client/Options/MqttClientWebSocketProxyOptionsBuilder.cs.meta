@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 2a7a21a4dafbc7a4f9460c883bb7fabd
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Interfaces/Common/MQTT/MQTTnet/Client/Options/MqttClientWebSocketProxyOptionsBuilder.cs
+  uploadId: 921010

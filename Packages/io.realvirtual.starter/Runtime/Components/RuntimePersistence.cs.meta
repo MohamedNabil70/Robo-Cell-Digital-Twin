@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: b3f09e850387c8c499741a2eca62a788
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Components/RuntimePersistence.cs
+  uploadId: 921010

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 826764f93a579de4ebdc061aa661b0df
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Modules/ConveyorBelt/Resources/ConveyorBelt.prefab
+  uploadId: 921010

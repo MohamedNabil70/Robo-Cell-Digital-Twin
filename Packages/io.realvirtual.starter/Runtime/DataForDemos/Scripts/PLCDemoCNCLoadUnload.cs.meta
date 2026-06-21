@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 77f0c81660170e14abfb5e0a56f20337
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/DataForDemos/Scripts/PLCDemoCNCLoadUnload.cs
+  uploadId: 921010

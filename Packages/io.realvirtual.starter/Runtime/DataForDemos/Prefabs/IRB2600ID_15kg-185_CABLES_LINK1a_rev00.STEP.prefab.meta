@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 77a2620dc58d03f488fd16a65a794c31
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/DataForDemos/Prefabs/IRB2600ID_15kg-185_CABLES_LINK1a_rev00.STEP.prefab
+  uploadId: 921010

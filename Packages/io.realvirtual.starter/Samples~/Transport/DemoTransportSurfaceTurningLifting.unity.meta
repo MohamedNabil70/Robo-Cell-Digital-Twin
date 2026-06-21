@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0ce376eff6d2f5a4096bb467224e5570
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Samples~/Transport/DemoTransportSurfaceTurningLifting.unity
+  uploadId: 921010

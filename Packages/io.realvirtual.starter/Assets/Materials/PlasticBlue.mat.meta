@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 041a3f32ec9043541b4eb8c6a190434b
+timeCreated: 1524204216
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/Materials/PlasticBlue.mat
+  uploadId: 921010

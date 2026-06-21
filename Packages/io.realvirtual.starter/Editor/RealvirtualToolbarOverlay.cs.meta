@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 0878a0cd00547cf4ab0679e08fecefe8
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Editor/RealvirtualToolbarOverlay.cs
+  uploadId: 921010

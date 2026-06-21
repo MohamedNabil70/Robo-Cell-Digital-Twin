@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 35d10065e35e6b0409fa13c915c3aa70
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/Prefabs/Left.prefab
+  uploadId: 921010

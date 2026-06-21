@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: f5e05ce6dc5a10d43a291058f7196156
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/UIComponents/Scripts/rvUIContent/rvUIModeButton.cs
+  uploadId: 921010

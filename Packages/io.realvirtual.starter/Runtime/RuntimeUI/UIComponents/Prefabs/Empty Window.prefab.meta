@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5dabe730be16a7a469fb3a92fbd0c0d7
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/UIComponents/Prefabs/Empty
+    Window.prefab
+  uploadId: 921010

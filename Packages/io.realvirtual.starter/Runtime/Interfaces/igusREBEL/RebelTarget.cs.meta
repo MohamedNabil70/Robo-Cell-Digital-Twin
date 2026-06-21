@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 8ef91aa73f2e9d84bb281098989db376
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Interfaces/igusREBEL/RebelTarget.cs
+  uploadId: 921010

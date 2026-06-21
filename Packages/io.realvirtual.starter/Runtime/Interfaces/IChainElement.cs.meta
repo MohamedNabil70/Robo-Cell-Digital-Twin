@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 068043101c8cbd04096547c9c749d5c1
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Interfaces/IChainElement.cs
+  uploadId: 921010

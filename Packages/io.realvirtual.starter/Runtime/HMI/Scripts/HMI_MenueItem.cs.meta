@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 69c1d3cb1fa9de4499d1a23b06875053
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/HMI/Scripts/HMI_MenueItem.cs
+  uploadId: 921010

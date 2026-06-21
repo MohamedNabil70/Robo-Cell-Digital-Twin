@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 20f8a70fda38cab45a5b3e692b0de530
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/3DPrefabs/ControlCabinet/ControlCabinet.prefab
+  uploadId: 921010

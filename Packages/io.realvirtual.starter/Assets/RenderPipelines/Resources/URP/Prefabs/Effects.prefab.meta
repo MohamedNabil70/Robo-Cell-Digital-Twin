@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 1de65fd1d368db64ab3b312d60ce73a0
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/RenderPipelines/Resources/URP/Prefabs/Effects.prefab
+  uploadId: 921010

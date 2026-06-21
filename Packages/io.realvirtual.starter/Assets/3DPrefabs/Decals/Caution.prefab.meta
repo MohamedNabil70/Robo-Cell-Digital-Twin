@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ec2b3faf807f3604fb2f6b63956eaaa0
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/3DPrefabs/Decals/Caution.prefab
+  uploadId: 921010

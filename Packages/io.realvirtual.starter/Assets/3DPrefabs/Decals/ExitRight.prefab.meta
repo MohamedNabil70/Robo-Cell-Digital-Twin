@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 551d16453d831de1ba51d585fff3ae7e
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/3DPrefabs/Decals/ExitRight.prefab
+  uploadId: 921010

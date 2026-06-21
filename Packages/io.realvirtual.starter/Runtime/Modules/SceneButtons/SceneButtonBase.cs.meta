@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 31456d7b44f23144ea3a8526d22ab3ff
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Modules/SceneButtons/SceneButtonBase.cs
+  uploadId: 921010

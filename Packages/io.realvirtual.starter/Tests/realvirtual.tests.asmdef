@@ -1,0 +1,36 @@
+{
+    "name": "realvirtual.tests",
+    "rootNamespace": "",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "realvirtual.base",
+        "realvirtual.featuretestframework",
+        "realvirtual.interfaces.opocua",
+        "realvirtual.cadlink",
+        "NaughtyAttributes.Core",
+        "IngameDebugConsole.Runtime",
+        "realvirtual.spacenavigator",
+        "io.realvirtual.mcp"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [
+        {
+            "name": "io.realvirtual.mcp",
+            "expression": "",
+            "define": "REALVIRTUAL_MCP"
+        }
+    ],
+    "noEngineReferences": false
+}

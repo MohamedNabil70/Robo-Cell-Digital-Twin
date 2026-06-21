@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: aad81336e68af2644ac60cd123df374f
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/HMI/HMI.prefab
+  uploadId: 921010

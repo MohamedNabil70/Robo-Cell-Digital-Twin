@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 3c8a5eb7a87bcf342ade452ce40e27f9
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Editor/OverlayExtensions/ExampleOverlayButtons.cs
+  uploadId: 921010

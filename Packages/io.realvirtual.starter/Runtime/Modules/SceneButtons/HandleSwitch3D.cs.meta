@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: f691e8ddd82e6584ab12fc5c4eb9b2b7
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Modules/SceneButtons/HandleSwitch3D.cs
+  uploadId: 921010

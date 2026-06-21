@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 3919a69a5132b5d4593a141c55756bf8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/ExcelDataReader/Core/BinaryFormat/XlsInternalString.cs
+  uploadId: 921010

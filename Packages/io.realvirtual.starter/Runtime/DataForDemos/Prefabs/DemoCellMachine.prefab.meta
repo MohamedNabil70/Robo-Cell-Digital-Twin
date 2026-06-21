@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 013b95b7231eeb04a84388edf4128de6
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/DataForDemos/Prefabs/DemoCellMachine.prefab
+  uploadId: 921010

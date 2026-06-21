@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: db13a7a29cfc6a48bb9e778cbaa4aba4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/3DPrefabs/Decals/Materials/Decal-3
+    19.mat
+  uploadId: 921010

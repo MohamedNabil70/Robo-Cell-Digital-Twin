@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: bd850a92214d2ef4a90f36a8ed092c20
+timeCreated: 1510076185
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/ThirdParty/IngameDebugConsole/Android/DebugLogLogcatListener.cs
+  uploadId: 921010

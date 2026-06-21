@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 9864e8501b03c9b4a91d2c8427db5be1
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/UIPrefabs/ButtonTriggerBoolSignal.prefab
+  uploadId: 921010

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0194e22df5c64be22ba4760bc35c392b
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/3DPrefabs/Decals/NoSmoking.prefab
+  uploadId: 921010

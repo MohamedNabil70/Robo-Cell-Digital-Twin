@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 377352736a14b0007bc96de5b43507cc
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/3DPrefabs/Stands/U-Base.prefab
+  uploadId: 921010

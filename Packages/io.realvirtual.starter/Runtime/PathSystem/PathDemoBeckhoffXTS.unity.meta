@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8e777b2c97d0b374b9775ae7cb9996b6
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/PathSystem/PathDemoBeckhoffXTS.unity
+  uploadId: 921010

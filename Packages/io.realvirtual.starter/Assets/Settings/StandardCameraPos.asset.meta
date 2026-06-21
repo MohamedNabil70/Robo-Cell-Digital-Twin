@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 943edd039da1f6e4fbd0fb327d552a9a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/Settings/StandardCameraPos.asset
+  uploadId: 921010

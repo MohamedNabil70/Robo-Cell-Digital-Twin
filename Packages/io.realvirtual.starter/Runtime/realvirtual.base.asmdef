@@ -1,0 +1,58 @@
+{
+    "name": "realvirtual.base",
+    "rootNamespace": "",
+    "references": [
+        "NaughtyAttributes.Core",
+        "Cinemachine",
+        "Unity.Recorder.Base",
+        "Unity.Recorder.Editor",
+        "Unity.Postprocessing.Runtime",
+        "AGXUnity",
+        "realvirtual.spacenavigator",
+        "BakingSheet",
+        "Unity.Behavior",
+        "Unity.TextMeshPro",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.RenderPipelines.Universal.Editor",
+        "Unity.RenderPipelines.Universal.Shaders",
+        "Unity.RenderPipeline.Universal.ShaderLibrary",
+        "Unity.RenderPipelines.Universal.2D.Runtime",
+        "Unity.RenderPipelines.Universal.Config.Runtime",
+        "IngameDebugConsole.Runtime",
+        "Unity.Splines",
+        "Unity.Mathematics",
+        "Unity.Burst",
+        "Unity.Collections",
+        "Unity.Jobs",
+        "Unity.AppUI",
+        "io.realvirtual.mcp"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [
+        "Switch"
+    ],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "Simulation.Simit.Runtime.dll",
+        "Simulation.Core.Runtime.dll",
+        "Siemens.Simit.API.Coupling.dll",
+        "Siemens.Simit.Logging.dll",
+        "Siemens.Simit.Tracing.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "io.realvirtual.professional",
+            "expression": "",
+            "define": "REALVIRTUAL_PROFESSIONAL"
+        },
+        {
+            "name": "io.realvirtual.mcp",
+            "expression": "",
+            "define": "REALVIRTUAL_MCP"
+        }
+    ],
+    "noEngineReferences": false
+}

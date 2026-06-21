@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e7f891a76d8f52046b76f5b9cd97d4bf
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/RuntimeInspector/Animation/SlideInUI.anim
+  uploadId: 921010

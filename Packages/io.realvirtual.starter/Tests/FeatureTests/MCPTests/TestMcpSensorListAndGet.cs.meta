@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 6c0610c94f45f1c439a29bb6742a16f6
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Tests/FeatureTests/MCPTests/TestMcpSensorListAndGet.cs
+  uploadId: 921010

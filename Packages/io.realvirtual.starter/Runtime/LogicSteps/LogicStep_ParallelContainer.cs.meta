@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: c0d262e07d0140d2a9ffc5fa9119aa1f
+timeCreated: 1750061959
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/LogicSteps/LogicStep_ParallelContainer.cs
+  uploadId: 921010

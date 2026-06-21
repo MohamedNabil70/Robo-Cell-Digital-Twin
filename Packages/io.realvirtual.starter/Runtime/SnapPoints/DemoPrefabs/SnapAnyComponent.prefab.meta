@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 16ccf66cb4e1d8e42abfb19dcea9498f
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/SnapPoints/DemoPrefabs/SnapAnyComponent.prefab
+  uploadId: 921010

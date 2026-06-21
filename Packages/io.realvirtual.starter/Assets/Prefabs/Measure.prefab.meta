@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 7b4d8e5ba32c23e4a929e49e984a5a71
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/Prefabs/Measure.prefab
+  uploadId: 921010

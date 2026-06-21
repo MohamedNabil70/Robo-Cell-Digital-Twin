@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: fdc188eccfae2ab4cb102e289b2507ec
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Tests/FeatureTests/S7Tests/TestS7ByteConversion.cs
+  uploadId: 921010

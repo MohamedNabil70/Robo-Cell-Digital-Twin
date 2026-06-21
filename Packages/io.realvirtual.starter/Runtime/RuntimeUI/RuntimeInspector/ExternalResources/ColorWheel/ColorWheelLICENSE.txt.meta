@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: bd20edc15d6b63c468da09ded7ed8ed5
+timeCreated: 1430238877
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/RuntimeInspector/ExternalResources/ColorWheel/ColorWheelLICENSE.txt
+  uploadId: 921010

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 9b9cfa88ebd657049b484170a2ed29b4
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/DataForDemos/robotdk_democonveyor.rdk
+  uploadId: 921010

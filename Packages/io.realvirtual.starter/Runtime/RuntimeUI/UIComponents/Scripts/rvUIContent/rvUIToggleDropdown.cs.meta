@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: a19ec063fee900742937f2d8f1bc6c50
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/UIComponents/Scripts/rvUIContent/rvUIToggleDropdown.cs
+  uploadId: 921010

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0f3a5625d66d11744b495d48adf5291e
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/UIComponents/Prefabs/Row.prefab
+  uploadId: 921010

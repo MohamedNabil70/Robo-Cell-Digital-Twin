@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: cd2b3ff0cbe6de948b6ad3f15098fe5d
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/3DPrefabs/ControlCabinet/PushButton3D.prefab
+  uploadId: 921010

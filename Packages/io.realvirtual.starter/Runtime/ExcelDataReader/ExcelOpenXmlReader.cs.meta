@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: f1ad1ae6c8e79db4992d4e0c883ba380
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/ExcelDataReader/ExcelOpenXmlReader.cs
+  uploadId: 921010

@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: c52dc3661fcc030459c45e9a30eb4088
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/UIComponents/Scripts/EnumField.cs
+  uploadId: 921010

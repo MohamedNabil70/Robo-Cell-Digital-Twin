@@ -1,0 +1,30 @@
+{
+  "name": "realvirtual.editor",
+  "rootNamespace": "",
+  "references": [
+    "NaughtyAttributes.Core",
+    "NaughtyAttributes.Editor",
+    "realvirtual.base",
+    "Unity.RenderPipelines.Universal.Runtime",
+    "Unity.RenderPipelines.Universal.Editor",
+    "IngameDebugConsole.Runtime",
+    "realvirtual.spacenavigator"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [
+    {
+      "name": "io.realvirtual.professional",
+      "expression": "",
+      "define": "REALVIRTUAL_PROFESSIONAL"
+    }
+  ],
+  "noEngineReferences": false
+}

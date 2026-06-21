@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: bb93f9eb2b8e0f14f991192dbb49bfdf
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/UIPrefabs/SceneSelectables.prefab
+  uploadId: 921010

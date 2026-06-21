@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 90d2c7ec2298c68428b83273c23eb3f9
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/UIComponents/Prefabs/FloatingMenu/RootPanel.prefab
+  uploadId: 921010

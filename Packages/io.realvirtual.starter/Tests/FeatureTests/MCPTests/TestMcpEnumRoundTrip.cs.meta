@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 236529b91b8a31d4ab319e2f53ff4e50
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Tests/FeatureTests/MCPTests/TestMcpEnumRoundTrip.cs
+  uploadId: 921010

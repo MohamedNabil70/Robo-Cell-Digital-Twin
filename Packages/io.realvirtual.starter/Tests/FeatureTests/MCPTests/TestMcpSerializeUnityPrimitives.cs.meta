@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: cf31c69ab871b60429c0aba100c0bd23
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Tests/FeatureTests/MCPTests/TestMcpSerializeUnityPrimitives.cs
+  uploadId: 921010

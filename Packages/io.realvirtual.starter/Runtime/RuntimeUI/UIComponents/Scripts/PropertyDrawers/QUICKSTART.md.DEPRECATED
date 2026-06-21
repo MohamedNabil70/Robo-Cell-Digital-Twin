@@ -1,0 +1,158 @@
+# Property Drawer System - Quick Start Guide
+
+## 5-Minute Quick Start
+
+### Step 1: Create Your Component
+
+```csharp
+using UnityEngine;
+using realvirtual;
+
+public class MyComponent : MonoBehaviour, IRuntimeUI
+{
+    public bool enableFeature = true;
+    public bool debugMode = false;
+
+    void Start()
+    {
+        RuntimeUIManager.Instance.Register(this);
+        RuntimeUIManager.Instance.RebuildUI(this);
+    }
+
+    void OnDestroy()
+    {
+        RuntimeUIManager.Instance.Unregister(this);
+    }
+
+    public void DrawCustomRuntimeUI(RuntimeUIBuilder builder)
+    {
+        var window = builder.AddContainer(RuntimeUIBuilder.ContentType.Window);
+        builder.StepIn();
+
+        builder.AddText("My Inspector");
+
+        // Draw properties automatically
+        RuntimePropertyDrawerRegistry.Instance.DrawProperty(builder, this, "enableFeature");
+        RuntimePropertyDrawerRegistry.Instance.DrawProperty(builder, this, "debugMode");
+
+        builder.StepOut();
+    }
+}
+```
+
+### Step 2: Add to Scene
+
+1. Create an empty GameObject
+2. Add your component to it
+3. Ensure a `RuntimeUIBuilder` exists in the scene
+4. Run the scene
+
+### Step 3: See Your Runtime Inspector
+
+The UI will automatically display:
+- "Enable Feature" toggle button
+- "Debug Mode" toggle button
+- Interactive controls that update the properties
+
+## Common Patterns
+
+### Pattern 1: Simple Inspector
+```csharp
+public void DrawCustomRuntimeUI(RuntimeUIBuilder builder)
+{
+    builder.AddContainer(RuntimeUIBuilder.ContentType.Window);
+    builder.StepIn();
+
+    RuntimePropertyDrawerRegistry.Instance.DrawProperty(builder, this, "myProperty");
+
+    builder.StepOut();
+}
+```
+
+### Pattern 2: Custom Labels
+```csharp
+RuntimePropertyDrawerRegistry.Instance.DrawProperty(builder, this, "myBool", "Enable This Feature");
+```
+
+### Pattern 3: Multiple Properties
+```csharp
+// Draw multiple properties in a loop
+string[] properties = { "prop1", "prop2", "prop3" };
+foreach (var prop in properties)
+{
+    RuntimePropertyDrawerRegistry.Instance.DrawProperty(builder, this, prop);
+}
+```
+
+### Pattern 4: Inspect Another Object
+```csharp
+public GameObject targetObject;
+
+public void DrawCustomRuntimeUI(RuntimeUIBuilder builder)
+{
+    if (targetObject != null)
+    {
+        // Inspect properties of another object
+        var component = targetObject.GetComponent<MyOtherComponent>();
+        if (component != null)
+        {
+            RuntimePropertyDrawerRegistry.Instance.DrawProperty(builder, component, "someProperty");
+        }
+    }
+}
+```
+
+## Next Steps
+
+1. **Read the full README.md** for detailed documentation
+2. **Check RuntimeInspectorExample.cs** for working examples
+3. **Create custom drawers** for your own types
+4. **Extend the system** with additional property types
+
+## Supported Property Types (v1.0)
+
+✅ `bool` - Toggle button with True/False display
+
+🔜 Coming soon:
+- `int` - Numeric input with increment/decrement
+- `float` - Slider or numeric input
+- `string` - Text input field
+- `Vector3` - XYZ component editor
+- `Color` - Color picker
+- `Enum` - Dropdown selector
+
+## Troubleshooting
+
+**Problem**: UI doesn't appear
+- ✅ Check RuntimeUIBuilder exists in scene
+- ✅ Check RuntimeUIManager.Instance is not null
+- ✅ Verify Register() is called before RebuildUI()
+
+**Problem**: Property not found error
+- ✅ Check property name spelling
+- ✅ Ensure property is public or has [SerializeField]
+
+**Problem**: Value doesn't update
+- ✅ Check if property has a setter (not read-only)
+- ✅ Verify SetValue is working in your custom drawer
+
+## Example Files
+
+- `IRuntimePropertyDrawer.cs` - Core interface
+- `RuntimePropertyDrawerBase.cs` - Base implementation
+- `BoolPropertyDrawer.cs` - Boolean drawer example
+- `RuntimePropertyDrawerRegistry.cs` - Drawer manager
+- `RuntimeInspectorExample.cs` - Complete working example
+- `README.md` - Full documentation
+
+## Tips
+
+💡 **Use the Registry** - Let it automatically find the right drawer for your property type
+
+💡 **Custom Labels** - Provide descriptive labels for better UX
+
+💡 **Reuse Instances** - If using drawers manually, cache and reuse them
+
+💡 **Extend It** - Create custom drawers for your own types
+
+💡 **Performance** - Only call RebuildUI() when needed, not every frame

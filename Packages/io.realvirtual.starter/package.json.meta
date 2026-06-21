@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a088479d56cb5fb4eaa40bf8a8f5847f
+PackageManifestImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/package.json
+  uploadId: 921010

@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 6d7a898edd7a8f74cacf2cc0956a4287
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/SnapPoints/private/SnapPointHelper.cs
+  uploadId: 921010

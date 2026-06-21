@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 19cb57948f8c4b9e99a84df4b0091b61
+timeCreated: 1719507479
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Editor/SelectMaterialsInScene.cs
+  uploadId: 921010

@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: ebdcdee04bf96eb42b6e730f3cd1b9a2
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/MCP/Tools/DriveTools.cs
+  uploadId: 921010

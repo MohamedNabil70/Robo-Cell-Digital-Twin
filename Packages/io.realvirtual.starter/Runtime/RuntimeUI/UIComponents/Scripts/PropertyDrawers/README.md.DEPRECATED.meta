@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: cee185a6eb9a40646a71a4bd62c45702
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/UIComponents/Scripts/PropertyDrawers/README.md.DEPRECATED
+  uploadId: 921010

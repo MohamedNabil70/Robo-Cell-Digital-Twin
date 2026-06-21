@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a6d3e92f44be0004abaa0686d94ea6f6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/HMI/Materials/Green.mat
+  uploadId: 921010

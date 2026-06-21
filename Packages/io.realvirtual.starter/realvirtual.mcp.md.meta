@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: cd926a6ff602cc64ba24f5ac23dcd1c6
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/realvirtual.mcp.md
+  uploadId: 921010

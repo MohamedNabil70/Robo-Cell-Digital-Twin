@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e34178fbbba11d64ba0943b44d98c4ff
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Resources/Postprocessing/realvirtualVRPostProcessing.asset
+  uploadId: 921010

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 7c3f499d15e877b44a2b99e803bad2e5
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/Prefabs/Cutter.prefab
+  uploadId: 921010

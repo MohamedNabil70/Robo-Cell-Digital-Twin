@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 0a7188fa7cc50fb47849f7d8aa9d66b9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/ExcelDataReader/Core/BinaryFormat/XlsBiffFormulaCell.cs
+  uploadId: 921010

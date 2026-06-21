@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f774e65bca1a59d4e9e87995e9235a47
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 112000000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Samples~/Drives/DemoForceDrive/LightingData.asset
+  uploadId: 921010

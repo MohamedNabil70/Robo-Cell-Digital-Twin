@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 1659ca6bb5fbdf54792533ad6241162b
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/UIComponents/Prefabs/FloatingMenu/ToggleGroup.prefab
+  uploadId: 921010

@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 8f3da1f2cf16c334ab7afee6b13d969d
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Interfaces/Common/Fast/TestFastInterface.cs
+  uploadId: 921010

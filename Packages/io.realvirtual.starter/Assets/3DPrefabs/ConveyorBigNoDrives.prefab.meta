@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 427f52591b9c8424f8c638632a78e501
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/3DPrefabs/ConveyorBigNoDrives.prefab
+  uploadId: 921010

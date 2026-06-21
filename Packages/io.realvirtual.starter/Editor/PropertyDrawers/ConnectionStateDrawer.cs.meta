@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 1534765666a4f27459d1538c5680a6b7
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Editor/PropertyDrawers/ConnectionStateDrawer.cs
+  uploadId: 921010

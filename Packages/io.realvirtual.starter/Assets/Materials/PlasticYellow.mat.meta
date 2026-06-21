@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: ba8a2667095277e43995eb1c72b2c2bd
+timeCreated: 1524253754
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/Materials/PlasticYellow.mat
+  uploadId: 921010

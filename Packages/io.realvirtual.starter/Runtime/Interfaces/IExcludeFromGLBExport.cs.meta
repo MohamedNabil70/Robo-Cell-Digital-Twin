@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: cbaa7a1edc7d1df4eb175e73dd2304ac
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Interfaces/IExcludeFromGLBExport.cs
+  uploadId: 921010

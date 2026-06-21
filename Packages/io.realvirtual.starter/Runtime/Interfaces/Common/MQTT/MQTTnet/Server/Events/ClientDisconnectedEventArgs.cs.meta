@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 54b49bc4257e70f4bba0d216d977ffe8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Interfaces/Common/MQTT/MQTTnet/Server/Events/ClientDisconnectedEventArgs.cs
+  uploadId: 921010

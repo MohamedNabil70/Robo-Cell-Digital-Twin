@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: ab3578c997c4151418f6911f21579036
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Tests/FeatureTests/MCPTests/TestMcpSerializeDrivePrimitives.cs
+  uploadId: 921010

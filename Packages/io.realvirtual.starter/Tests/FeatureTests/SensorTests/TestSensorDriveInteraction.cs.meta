@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 590767981a801e845a6f87451f28b6eb
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Tests/FeatureTests/SensorTests/TestSensorDriveInteraction.cs
+  uploadId: 921010

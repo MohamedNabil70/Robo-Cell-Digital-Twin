@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: e974a2bf4bb75ca468153a42cc0f43da
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/LogicSteps/LogicStep_SetSignalFloat.cs
+  uploadId: 921010

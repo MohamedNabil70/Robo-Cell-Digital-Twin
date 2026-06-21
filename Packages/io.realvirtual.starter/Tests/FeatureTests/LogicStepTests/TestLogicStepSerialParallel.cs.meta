@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: d075e79add2ae27488175f3d237aef65
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Tests/FeatureTests/LogicStepTests/TestLogicStepSerialParallel.cs
+  uploadId: 921010

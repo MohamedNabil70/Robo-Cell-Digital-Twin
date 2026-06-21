@@ -1,0 +1,21 @@
+{
+    "name": "realvirtual.interfaces.igusrebel",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e308546d627524f418b1aaa0b161dd30",
+        "GUID:776d03a35f1b52c4a9aed9f56d7b4229",
+        "GUID:3de88c88fbbb8f944b9210d496af9762",
+        "GUID:92586979b474e3a44a05d11d4502dee2"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [
+        "VisionOS"
+    ],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 570ae3abaf80c5444a34fe3cfe5a7971
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/DataForDemos/Prefabs/logo.mat
+  uploadId: 921010

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: accd55221bc189e4d93c051b5a6ce8d0
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4890085278179872738
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/Settings/Realvirtual Lighting
+    Settings.lighting
+  uploadId: 921010

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8d7fda473ad74dd4a8977d3664c03771
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/Prefabs/IconPanel.prefab
+  uploadId: 921010

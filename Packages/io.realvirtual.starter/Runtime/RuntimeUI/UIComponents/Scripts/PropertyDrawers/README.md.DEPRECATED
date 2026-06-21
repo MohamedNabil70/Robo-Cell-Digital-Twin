@@ -1,0 +1,349 @@
+# Runtime Property Drawer System
+
+## Overview
+
+The Runtime Property Drawer system provides a flexible framework for creating custom runtime inspectors in Unity using the RuntimeUI system. It allows you to automatically generate UI for inspecting and editing properties of any object at runtime.
+
+## Architecture
+
+The system consists of four main components:
+
+### 1. IRuntimePropertyDrawer Interface
+The core interface that all property drawers must implement. It defines methods for:
+- Drawing properties with RuntimeUIBuilder
+- Getting and setting property values
+- Checking if a drawer can handle a specific property type
+
+### 2. RuntimePropertyDrawerBase Abstract Class
+Base implementation providing common functionality:
+- Reflection-based property access (fields and properties)
+- Property name formatting for display
+- Helper methods for type checking
+
+### 3. Concrete Drawer Implementations
+Specific implementations for different property types:
+- **BoolPropertyDrawer**: Creates toggle buttons for boolean properties
+- *Future drawers*: Int, Float, String, Vector3, Color, etc.
+
+### 4. RuntimePropertyDrawerRegistry
+Centralized registry for managing property drawers:
+- Automatic drawer selection based on property type
+- Default drawer registration
+- Custom drawer registration
+- Simplified API for drawing properties
+
+## Usage
+
+### Approach 1: Using the Registry (Recommended)
+
+The easiest way to use property drawers is through the `RuntimePropertyDrawerRegistry`:
+
+```csharp
+using UnityEngine;
+using realvirtual;
+
+public class MyInspector : MonoBehaviour, IRuntimeUI
+{
+    public bool myBoolProperty = true;
+    public bool anotherBool = false;
+
+    void Start()
+    {
+        RuntimeUIManager.Instance.Register(this);
+        RuntimeUIManager.Instance.RebuildUI(this);
+    }
+
+    void OnDestroy()
+    {
+        RuntimeUIManager.Instance.Unregister(this);
+    }
+
+    public void DrawCustomRuntimeUI(RuntimeUIBuilder builder)
+    {
+        var window = builder.AddContainer(RuntimeUIBuilder.ContentType.Window);
+        builder.StepIn();
+
+        // Automatically finds and uses the correct drawer
+        RuntimePropertyDrawerRegistry.Instance.DrawProperty(builder, this, "myBoolProperty");
+        RuntimePropertyDrawerRegistry.Instance.DrawProperty(builder, this, "anotherBool", "Custom Label");
+
+        builder.StepOut();
+    }
+}
+```
+
+### Approach 2: Direct Drawer Usage
+
+For more control, you can use drawer instances directly:
+
+```csharp
+using UnityEngine;
+using realvirtual;
+
+public class MyInspector : MonoBehaviour, IRuntimeUI
+{
+    public bool myBoolProperty = true;
+
+    private BoolPropertyDrawer boolDrawer;
+
+    void Start()
+    {
+        boolDrawer = new BoolPropertyDrawer();
+        RuntimeUIManager.Instance.Register(this);
+        RuntimeUIManager.Instance.RebuildUI(this);
+    }
+
+    public void DrawCustomRuntimeUI(RuntimeUIBuilder builder)
+    {
+        var window = builder.AddContainer(RuntimeUIBuilder.ContentType.Window);
+        builder.StepIn();
+
+        // Direct drawer usage
+        boolDrawer.DrawProperty(builder, this, "myBoolProperty", "My Bool");
+
+        builder.StepOut();
+    }
+}
+```
+
+## Creating Custom Property Drawers
+
+To create a drawer for a custom type:
+
+```csharp
+using System;
+using UnityEngine;
+using realvirtual;
+
+public class IntPropertyDrawer : RuntimePropertyDrawerBase
+{
+    public override void DrawProperty(RuntimeUIBuilder builder, object target, string propertyName, string label = null)
+    {
+        // Get current value
+        object valueObj = GetValue(target, propertyName);
+        if (!(valueObj is int))
+            return;
+
+        int currentValue = (int)valueObj;
+        string displayLabel = GetDisplayLabel(propertyName, label);
+
+        // Create UI
+        var container = builder.AddContainer(RuntimeUIBuilder.ContentType.HorizontalMenu);
+        builder.StepIn();
+
+        builder.AddText(displayLabel);
+
+        // Create increment/decrement buttons
+        var decrementBtn = builder.AddButton("-");
+        decrementBtn.OnClick.AddListener((isOn) =>
+        {
+            int newValue = currentValue - 1;
+            SetValue(target, propertyName, newValue);
+        });
+
+        var valueText = builder.AddText(currentValue.ToString());
+
+        var incrementBtn = builder.AddButton("+");
+        incrementBtn.OnClick.AddListener((isOn) =>
+        {
+            int newValue = currentValue + 1;
+            SetValue(target, propertyName, newValue);
+        });
+
+        builder.StepOut();
+    }
+
+    public override bool CanDrawPropertyType(Type propertyType)
+    {
+        return propertyType == typeof(int);
+    }
+}
+
+// Register the custom drawer
+RuntimePropertyDrawerRegistry.Instance.RegisterDrawer(typeof(int), new IntPropertyDrawer());
+```
+
+## API Reference
+
+### IRuntimePropertyDrawer
+
+| Method | Description |
+|--------|-------------|
+| `DrawProperty(builder, target, propertyName, label)` | Draws the property UI |
+| `GetValue(target, propertyName)` | Gets the current property value |
+| `SetValue(target, propertyName, value)` | Sets the property value |
+| `CanDrawPropertyType(propertyType)` | Checks if drawer handles the type |
+
+### RuntimePropertyDrawerBase
+
+| Method | Description |
+|--------|-------------|
+| `GetDisplayLabel(propertyName, label)` | Gets formatted display label |
+| `FormatPropertyName(propertyName)` | Formats property name with spaces |
+| `GetPropertyType(target, propertyName)` | Gets the Type of a property |
+
+### RuntimePropertyDrawerRegistry
+
+| Method | Description |
+|--------|-------------|
+| `Instance` | Singleton instance (auto-created) |
+| `RegisterDrawer(type, drawer)` | Registers a drawer for a type |
+| `UnregisterDrawer(type)` | Unregisters a drawer |
+| `GetDrawer(type)` | Gets drawer for a type |
+| `GetDrawerForProperty(target, propertyName)` | Gets drawer for a specific property |
+| `DrawProperty(builder, target, propertyName, label)` | Draws property automatically |
+| `HasDrawer(type)` | Checks if drawer is registered |
+| `GetRegisteredTypes()` | Gets all registered types |
+| `Reset()` | Clears and re-registers defaults |
+
+## Built-in Drawers
+
+### BoolPropertyDrawer
+- **Type**: `bool`
+- **UI**: Label + Toggle button showing "True" or "False"
+- **Features**:
+  - Click to toggle value
+  - Visual feedback with button state
+  - Automatic property updates
+
+## Best Practices
+
+### 1. Use the Registry
+```csharp
+// Good: Use registry for automatic drawer selection
+RuntimePropertyDrawerRegistry.Instance.DrawProperty(builder, this, "myProperty");
+
+// Less flexible: Manual drawer instantiation for every property
+var drawer = new BoolPropertyDrawer();
+drawer.DrawProperty(builder, this, "myProperty");
+```
+
+### 2. Provide Custom Labels
+```csharp
+// Good: Descriptive label
+RuntimePropertyDrawerRegistry.Instance.DrawProperty(builder, this, "isEnabled", "Enable Feature");
+
+// Acceptable: Auto-formatted from property name
+RuntimePropertyDrawerRegistry.Instance.DrawProperty(builder, this, "isEnabled");
+// Shows as "Is Enabled"
+```
+
+### 3. Register Custom Drawers Early
+```csharp
+// Register in Awake or static constructor
+void Awake()
+{
+    RuntimePropertyDrawerRegistry.Instance.RegisterDrawer(typeof(MyCustomType), new MyCustomTypeDrawer());
+}
+```
+
+### 4. Handle Private Fields
+```csharp
+// Works with both public and private fields
+[SerializeField]
+private bool privateField = true;
+
+// Draw in inspector
+RuntimePropertyDrawerRegistry.Instance.DrawProperty(builder, this, "privateField");
+```
+
+## Extending the System
+
+### Future Property Types to Implement
+
+1. **Numeric Types**
+   - IntPropertyDrawer
+   - FloatPropertyDrawer
+   - DoublePropertyDrawer
+
+2. **String Types**
+   - StringPropertyDrawer (text input)
+   - TextAreaPropertyDrawer (multi-line)
+
+3. **Unity Types**
+   - Vector2PropertyDrawer
+   - Vector3PropertyDrawer
+   - ColorPropertyDrawer
+   - LayerMaskPropertyDrawer
+
+4. **Collection Types**
+   - ArrayPropertyDrawer
+   - ListPropertyDrawer
+
+5. **Enum Types**
+   - EnumPropertyDrawer (dropdown)
+
+6. **Object References**
+   - ObjectReferencePropertyDrawer
+
+### Example: Vector3 Drawer
+
+```csharp
+public class Vector3PropertyDrawer : RuntimePropertyDrawerBase
+{
+    private FloatPropertyDrawer floatDrawer = new FloatPropertyDrawer();
+
+    public override void DrawProperty(RuntimeUIBuilder builder, object target, string propertyName, string label = null)
+    {
+        Vector3 value = (Vector3)GetValue(target, propertyName);
+        string displayLabel = GetDisplayLabel(propertyName, label);
+
+        var container = builder.AddContainer(RuntimeUIBuilder.ContentType.VerticalMenu);
+        builder.StepIn();
+
+        builder.AddText(displayLabel);
+
+        // Create a temporary object to hold x, y, z values
+        // Draw each component...
+
+        builder.StepOut();
+    }
+
+    public override bool CanDrawPropertyType(Type propertyType)
+    {
+        return propertyType == typeof(Vector3);
+    }
+}
+```
+
+## Troubleshooting
+
+### Property Not Found
+**Error**: "Property 'myProperty' not found on type 'MyClass'"
+**Solution**:
+- Check property name spelling
+- Ensure property is public or has [SerializeField]
+- Verify property exists on the target object
+
+### No Drawer Found
+**Error**: "No drawer found for property 'myProperty'"
+**Solution**:
+- Check if a drawer is registered for the property type
+- Use `RuntimePropertyDrawerRegistry.Instance.HasDrawer(typeof(MyType))`
+- Register a custom drawer if needed
+
+### Value Not Updating
+**Issue**: UI shows old value after changes
+**Solution**:
+- Call `RuntimeUIManager.Instance.RebuildUI(this)` to refresh
+- Ensure SetValue is being called correctly
+- Check if property has a setter (not read-only)
+
+## Performance Considerations
+
+1. **Reflection Overhead**: Property drawers use reflection for flexibility. For performance-critical scenarios, consider caching FieldInfo/PropertyInfo.
+
+2. **UI Rebuilding**: Avoid calling `RebuildUI()` every frame. Only rebuild when property values change externally.
+
+3. **Drawer Instances**: The registry creates singleton drawers. For manual usage, reuse drawer instances instead of creating new ones.
+
+## Version History
+
+### v1.0 (Current)
+- Initial implementation
+- IRuntimePropertyDrawer interface
+- RuntimePropertyDrawerBase abstract class
+- BoolPropertyDrawer implementation
+- RuntimePropertyDrawerRegistry
+- Automatic drawer selection
+- Reflection-based property access

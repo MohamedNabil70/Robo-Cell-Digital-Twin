@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: be1a9d6d25cecf04bba6fd14b320d6c5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Interfaces/Common/MQTT/MQTTnet/Formatter/MqttPacketFormatterAdapter.cs
+  uploadId: 921010

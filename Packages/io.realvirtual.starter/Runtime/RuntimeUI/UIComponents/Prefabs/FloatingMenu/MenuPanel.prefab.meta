@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b0c11041bf218f04c98d196e9a023a2f
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/UIComponents/Prefabs/FloatingMenu/MenuPanel.prefab
+  uploadId: 921010

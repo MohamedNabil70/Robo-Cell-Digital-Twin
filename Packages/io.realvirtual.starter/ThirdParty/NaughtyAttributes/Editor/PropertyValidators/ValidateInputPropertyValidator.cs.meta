@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 5f6adf84ed53a7840a456e8b4dce38d9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/ThirdParty/NaughtyAttributes/Editor/PropertyValidators/ValidateInputPropertyValidator.cs
+  uploadId: 921010

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5dd34abcc1808844d8424a79a2b6b5fa
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/DataForDemos/cam.csv
+  uploadId: 921010

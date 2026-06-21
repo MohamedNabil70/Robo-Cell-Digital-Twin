@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d829dcfc225f56440a2b10d9ac318aea
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4343727234628468602
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/ThirdParty/IngameDebugConsole/Sprites/IngameDebugConsoleSpriteAtlas.spriteatlas
+  uploadId: 921010

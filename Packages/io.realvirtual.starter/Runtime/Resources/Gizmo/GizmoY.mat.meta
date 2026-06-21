@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 094b37d59bdddac479d1ec7b9ad43464
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Resources/Gizmo/GizmoY.mat
+  uploadId: 921010

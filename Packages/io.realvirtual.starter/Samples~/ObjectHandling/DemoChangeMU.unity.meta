@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 4b87c196ec741964ea35bf43913eeae0
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Samples~/ObjectHandling/DemoChangeMU.unity
+  uploadId: 921010

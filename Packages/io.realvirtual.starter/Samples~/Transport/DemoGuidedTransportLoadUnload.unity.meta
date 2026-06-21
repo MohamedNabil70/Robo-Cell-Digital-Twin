@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 81fc991c5bc17ef4cbde9ef3a6355a54
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Samples~/Transport/DemoGuidedTransportLoadUnload.unity
+  uploadId: 921010

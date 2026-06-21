@@ -1,0 +1,21 @@
+{
+  "name": "realvirtual.interfaces.s7tcpip",
+  "rootNamespace": "",
+  "references": [
+    "NaughtyAttributes.Core",
+    "realvirtual.base",
+    "IngameDebugConsole.Runtime",
+    "realvirtual.spacenavigator"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [
+    "WebGL"
+  ],
+  "allowUnsafeCode": true,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: e3205493774374a4885d792ad7a96852
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/SmoothMotion/SCurveGenerator7Segment.cs
+  uploadId: 921010

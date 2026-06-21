@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 92586979b474e3a44a05d11d4502dee2
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/SpaceNavigator/Plugins/realvirtual.spacenavigator.asmdef
+  uploadId: 921010

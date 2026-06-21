@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 05ab40b59a8bcc346b8219affd7f6acb
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/3DPrefabs/ControlCabinet/CabinetHanging.prefab
+  uploadId: 921010

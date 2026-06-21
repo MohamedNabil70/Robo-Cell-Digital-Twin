@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 1b6adf138be0a07418b452febcb8a17f
+timeCreated: 1508175622
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/RuntimeInspector/Scripts/RuntimeInspector/Skin/SkinnedWindow.cs
+  uploadId: 921010

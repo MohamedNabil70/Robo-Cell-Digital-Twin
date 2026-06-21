@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 2dbe95876cf05734d90df44255be5ada
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Editor/realvirtual.editor.asmdef
+  uploadId: 921010

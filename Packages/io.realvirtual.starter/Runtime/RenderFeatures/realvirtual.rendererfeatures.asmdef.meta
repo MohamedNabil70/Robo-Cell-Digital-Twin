@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ec4fb857960394f4a83fabf87d29cce7
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RenderFeatures/realvirtual.rendererfeatures.asmdef
+  uploadId: 921010

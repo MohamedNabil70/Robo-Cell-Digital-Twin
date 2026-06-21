@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 39e6f6501be74ac4b91c19f12f96bf5a
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Tests/FeatureTests/GripTests/TestGripOverlapBoxPick.cs
+  uploadId: 921010

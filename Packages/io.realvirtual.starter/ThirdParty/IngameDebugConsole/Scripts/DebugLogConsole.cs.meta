@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: d15693a03d0d33b4892c6365a2a97e19
+timeCreated: 1472036503
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/ThirdParty/IngameDebugConsole/Scripts/DebugLogConsole.cs
+  uploadId: 921010

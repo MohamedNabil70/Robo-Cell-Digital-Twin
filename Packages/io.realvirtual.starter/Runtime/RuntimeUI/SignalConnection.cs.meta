@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: da9f1d3410a48fc45bac512285d73e1b
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/SignalConnection.cs
+  uploadId: 921010

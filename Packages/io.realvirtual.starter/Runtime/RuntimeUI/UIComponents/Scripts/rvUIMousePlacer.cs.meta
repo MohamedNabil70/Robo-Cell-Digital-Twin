@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 550395d6de96b084292b50efceee3e07
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/UIComponents/Scripts/rvUIMousePlacer.cs
+  uploadId: 921010

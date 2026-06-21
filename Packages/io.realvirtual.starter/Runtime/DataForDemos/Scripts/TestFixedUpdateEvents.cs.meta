@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 7a8483f6857432b48906c43da111e839
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/DataForDemos/Scripts/TestFixedUpdateEvents.cs
+  uploadId: 921010

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 237e915391227a64b8a30b7ddba831e5
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/HMI/HMI_TabButton.prefab
+  uploadId: 921010

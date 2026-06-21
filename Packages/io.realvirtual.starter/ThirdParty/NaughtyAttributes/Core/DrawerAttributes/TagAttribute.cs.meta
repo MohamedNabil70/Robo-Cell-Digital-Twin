@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 8903399bbd7c9d745a7b9188ab6c8320
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/ThirdParty/NaughtyAttributes/Core/DrawerAttributes/TagAttribute.cs
+  uploadId: 921010

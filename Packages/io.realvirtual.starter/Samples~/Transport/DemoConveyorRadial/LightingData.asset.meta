@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fcd7714de3d4fe94bbeb8d728dc10aa4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 112000000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Samples~/Transport/DemoConveyorRadial/LightingData.asset
+  uploadId: 921010

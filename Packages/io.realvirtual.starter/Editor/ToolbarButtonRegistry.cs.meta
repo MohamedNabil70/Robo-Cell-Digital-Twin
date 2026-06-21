@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 092fe18de9a66594cb4bebbb09346caf
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Editor/ToolbarButtonRegistry.cs
+  uploadId: 921010

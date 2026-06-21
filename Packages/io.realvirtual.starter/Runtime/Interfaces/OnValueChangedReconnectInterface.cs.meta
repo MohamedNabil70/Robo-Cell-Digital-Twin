@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 52e91d6db83d31b428d0b145ed5c4952
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Interfaces/OnValueChangedReconnectInterface.cs
+  uploadId: 921010

@@ -1,0 +1,21 @@
+{
+    "name": "realvirtual.featuretests",
+    "rootNamespace": "",
+    "references": [
+        "realvirtual.base",
+        "realvirtual.featuretestframework",
+        "realvirtual.interfaces.s7tcpip",
+        "NaughtyAttributes.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "REALVIRTUAL_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

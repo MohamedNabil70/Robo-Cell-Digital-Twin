@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 917f1e7d28ca9d2449c67a5ebc0a9e37
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Interfaces/Common/MQTT/MQTTnet/Client/Unsubscribing/MqttClientUnsubscribeOptionsBuilder.cs
+  uploadId: 921010

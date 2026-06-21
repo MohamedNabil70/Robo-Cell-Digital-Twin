@@ -1,0 +1,19 @@
+{
+  "name": "realvirtual.runtimeui.scripts.editor",
+  "rootNamespace": "",
+  "references": [
+    "realvirtual.base",
+    "realvirtual.materialicons.editor"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

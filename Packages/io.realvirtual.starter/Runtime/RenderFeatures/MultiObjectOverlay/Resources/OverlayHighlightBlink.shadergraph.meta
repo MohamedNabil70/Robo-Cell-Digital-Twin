@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: f07248830ef6b2e4c9c43c2a59f251d4
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 625f186215c104763be7675aa2d941aa, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RenderFeatures/MultiObjectOverlay/Resources/OverlayHighlightBlink.shadergraph
+  uploadId: 921010

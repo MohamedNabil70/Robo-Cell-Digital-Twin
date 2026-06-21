@@ -1,0 +1,335 @@
+/* ============================================================
+   realvirtual Editor — Shared Stylesheet
+   Prefix: rv-editor-   (avoids collision with rv- in Planner)
+   ============================================================ */
+
+/* ----- Semantic Color Variables ----- */
+:root {
+    --rv-color-success:       rgb(77, 153, 77);    /* 0.3, 0.6, 0.3  — apply / move / confirm */
+    --rv-color-danger:        rgb(179, 77, 77);     /* 0.7, 0.3, 0.3  — undo / delete / error  */
+    --rv-color-warning:       rgb(179, 153, 51);    /* 0.7, 0.6, 0.2  — reset / caution         */
+    --rv-color-primary:       rgb(51, 102, 204);    /* 0.2, 0.4, 0.8  — select / add / primary   */
+    --rv-color-primary-light: rgb(77, 128, 230);    /* 0.3, 0.5, 0.9  — secondary blue           */
+    --rv-color-primary-pale:  rgb(102, 153, 255);   /* 0.4, 0.6, 1.0  — tertiary blue            */
+
+    --rv-color-text-header:   rgb(217, 217, 217);   /* 0.85 — section header labels    */
+    --rv-color-text-muted:    rgb(179, 179, 179);   /* 0.70 — secondary text / status  */
+    --rv-color-text-subtle:   rgb(153, 153, 153);   /* 0.60 — hint text / timestamps   */
+
+    --rv-color-separator:     rgb(77, 77, 77);      /* 0.30 — horizontal dividers      */
+    --rv-color-bg-section:    rgb(46, 46, 46);      /* 0.18 — section background        */
+    --rv-color-bg-root:       rgb(56, 56, 56);      /* 0.22 — overlay root background   */
+}
+
+
+/* ==========  Layout Primitives  ========== */
+
+.rv-editor-root {
+    padding: 3px 6px;
+}
+
+.rv-editor-root-overlay {
+    padding: 8px;
+    min-width: 280px;
+    background-color: var(--rv-color-bg-root);
+}
+
+.rv-editor-row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.rv-editor-row-between {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rv-editor-row-center {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.rv-editor-no-shrink {
+    flex-shrink: 0;
+}
+
+.rv-editor-grow {
+    flex-grow: 1;
+}
+
+
+/* ==========  Section  ========== */
+
+.rv-editor-section {
+    padding: 2px 0;
+    margin-bottom: 2px;
+}
+
+.rv-editor-section-bg {
+    padding: 6px 8px;
+    margin-bottom: 6px;
+    background-color: var(--rv-color-bg-section);
+    border-radius: 4px;
+}
+
+.rv-editor-section-header {
+    -unity-font-style: bold;
+    margin-bottom: 2px;
+    font-size: 12px;
+    color: var(--rv-color-text-header);
+}
+
+
+/* ==========  Buttons  ========== */
+
+.rv-editor-btn-action {
+    height: 28px;
+    min-height: 28px;
+    flex-shrink: 0;
+}
+
+.rv-editor-btn-action-primary {
+    flex-grow: 2;
+}
+
+.rv-editor-btn-action-secondary {
+    flex-grow: 1;
+}
+
+.rv-editor-btn-toggle {
+    font-size: 9px;
+    height: 18px;
+    padding: 1px 6px;
+}
+
+.rv-editor-btn-select {
+    min-width: 60px;
+    width: 60px;
+    margin-left: 5px;
+}
+
+.rv-editor-btn-icon-only {
+    width: 20px;
+}
+
+.rv-editor-btn-small {
+    height: 22px;
+    font-size: 9px;
+}
+
+.rv-editor-btn-medium {
+    height: 24px;
+}
+
+
+/* ==========  Button Icon Layout  ========== */
+
+.rv-editor-btn-icon-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* ==========  Action Row  ========== */
+
+.rv-editor-action-row {
+    flex-direction: row;
+    margin-top: 5px;
+    flex-shrink: 0;
+}
+
+.rv-editor-action-row > Button {
+    margin-right: 4px;
+}
+
+
+/* ==========  Field + Button Row  ========== */
+
+.rv-editor-field-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 5px;
+    flex-shrink: 0;
+}
+
+
+/* ==========  Header Row (with optional toggle)  ========== */
+
+.rv-editor-header-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+
+/* ==========  Separator  ========== */
+
+.rv-editor-separator {
+    height: 1px;
+    background-color: var(--rv-color-separator);
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+
+/* ==========  Typography  ========== */
+
+.rv-editor-text-header {
+    -unity-font-style: bold;
+    font-size: 12px;
+    color: var(--rv-color-text-header);
+}
+
+.rv-editor-text-small {
+    font-size: 9px;
+}
+
+.rv-editor-text-label {
+    font-size: 11px;
+    color: var(--rv-color-text-muted);
+}
+
+.rv-editor-text-value {
+    font-size: 16px;
+    -unity-font-style: bold;
+}
+
+.rv-editor-text-muted {
+    color: var(--rv-color-text-muted);
+}
+
+.rv-editor-text-subtle {
+    color: var(--rv-color-text-subtle);
+}
+
+
+/* ==========  Semantic State Colors  ========== */
+
+.rv-editor-color-success {
+    background-color: var(--rv-color-success);
+    color: white;
+}
+
+.rv-editor-color-danger {
+    background-color: var(--rv-color-danger);
+    color: white;
+}
+
+.rv-editor-color-warning {
+    background-color: var(--rv-color-warning);
+    color: white;
+}
+
+.rv-editor-color-primary {
+    background-color: var(--rv-color-primary);
+    color: white;
+}
+
+
+/* ==========  Hub Tab Bar  ========== */
+
+.rv-editor-tab-bar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0 2px;
+    margin-bottom: 0;
+    background-color: var(--rv-color-bg-section);
+    border-bottom-width: 1px;
+    border-bottom-color: var(--rv-color-separator);
+}
+
+.rv-editor-tab {
+    padding: 7px 16px;
+    margin: 4px 1px 0 1px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+    color: var(--rv-color-text-muted);
+    font-size: 11px;
+    -unity-font-style: normal;
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: auto;
+    min-height: 0;
+}
+
+.rv-editor-tab:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: var(--rv-color-text-header);
+}
+
+.rv-editor-tab--active {
+    background-color: rgb(56, 56, 56);
+    color: white;
+    -unity-font-style: bold;
+    border-top-width: 2px;
+    border-top-color: var(--rv-color-primary);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-left-color: var(--rv-color-separator);
+    border-right-color: var(--rv-color-separator);
+    margin-bottom: -1px;
+    padding-bottom: 8px;
+}
+
+
+/* ==========  ScrollView  ========== */
+
+.rv-editor-scrollview {
+    flex-grow: 1;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+
+/* ==========  Status / HelpBox spacing  ========== */
+
+.rv-editor-status {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+
+/* ==========  Item Row (list items with icon + text)  ========== */
+
+.rv-editor-item-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 2px;
+    padding: 2px 5px;
+}
+
+.rv-editor-item-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    flex-shrink: 0;
+}
+
+.rv-editor-item-label {
+    flex-grow: 1;
+    -unity-text-align: middle-left;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+
+/* ==========  Transport Controls  ========== */
+
+.rv-editor-transport-row {
+    flex-direction: row;
+    margin-bottom: 4px;
+}
+
+.rv-editor-transport-row > Button {
+    margin-right: 2px;
+    flex-grow: 1;
+    -unity-text-align: middle-center;
+}

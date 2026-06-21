@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 0532b1c4d8a9ccf4b9f98f0bbe4a6747
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/ThirdParty/NaughtyAttributes/Core/MetaAttributes/ShowIfAttributeBase.cs
+  uploadId: 921010

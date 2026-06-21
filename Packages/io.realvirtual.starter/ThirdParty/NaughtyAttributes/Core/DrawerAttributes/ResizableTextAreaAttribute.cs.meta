@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 56d9a4b795ef4a94d86b94e55fb81240
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/ThirdParty/NaughtyAttributes/Core/DrawerAttributes/ResizableTextAreaAttribute.cs
+  uploadId: 921010

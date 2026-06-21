@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: e1a4ef3d1723234408a97a84690ab8bb
+timeCreated: 1510168133
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/RuntimeInspector/Scripts/RuntimeHierarchy/Helpers/PseudoSceneSourceTransform.cs
+  uploadId: 921010

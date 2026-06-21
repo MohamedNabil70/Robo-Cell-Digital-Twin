@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9f71c7fa5fc4fb54798337c97f92b257
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/RenderPipelines/Resources/URP/URP-DefaultUnity2022.asset
+  uploadId: 921010

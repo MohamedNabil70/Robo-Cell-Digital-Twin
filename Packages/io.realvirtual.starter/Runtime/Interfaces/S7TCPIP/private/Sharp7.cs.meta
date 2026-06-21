@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 84d6f0d1d9d1bff40ba6f49d39e53627
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Interfaces/S7TCPIP/private/Sharp7.cs
+  uploadId: 921010

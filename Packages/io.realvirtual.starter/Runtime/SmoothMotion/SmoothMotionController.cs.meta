@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: c6ec36fa2bf474942b762b9dbcd4a280
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/SmoothMotion/SmoothMotionController.cs
+  uploadId: 921010

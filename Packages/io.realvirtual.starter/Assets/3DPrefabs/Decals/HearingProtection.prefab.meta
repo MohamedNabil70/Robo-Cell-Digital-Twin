@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6d512e5660185f8aca2ef312a749a3f3
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Assets/3DPrefabs/Decals/HearingProtection.prefab
+  uploadId: 921010

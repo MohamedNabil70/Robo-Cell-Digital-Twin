@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 92968b1c46ed74c42a595e3af803e218
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/UIComponents/Editor/realvirtual.runtimeui.editor.asmdef
+  uploadId: 921010

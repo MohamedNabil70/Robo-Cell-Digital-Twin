@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 710a2c60dcb649a438355eda982c4246
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/DataForDemos/Prefabs/CanConveyorSensor.prefab
+  uploadId: 921010

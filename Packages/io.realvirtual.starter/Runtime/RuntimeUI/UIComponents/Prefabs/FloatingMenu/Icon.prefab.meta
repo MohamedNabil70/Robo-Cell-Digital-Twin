@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 1c658ce2bc8d6fc45acaf7ded6d3fd78
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/RuntimeUI/UIComponents/Prefabs/FloatingMenu/Icon.prefab
+  uploadId: 921010

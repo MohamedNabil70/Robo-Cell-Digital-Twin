@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 06e0b801826070245b2f0bc997cfaa92
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Runtime/Interfaces/Common/Fast/ThreadSafeLogger.cs
+  uploadId: 921010

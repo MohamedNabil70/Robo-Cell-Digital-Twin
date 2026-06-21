@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: dd17af1031502704eb5ef6266b5b1b79
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Tests/FeatureTests/MCPTests/TestMcpReflectionCrossAssembly.cs
+  uploadId: 921010

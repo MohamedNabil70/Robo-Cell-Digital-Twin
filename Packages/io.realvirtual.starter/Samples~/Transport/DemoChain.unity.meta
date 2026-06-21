@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 174c16ec108464a4a83a283ac7c9c34b
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 366612
+  packageName: realvirtual Digital Twin Starter 6.3
+  packageVersion: 6.3.3-9052
+  assetPath: Packages/io.realvirtual.starter/Samples~/Transport/DemoChain.unity
+  uploadId: 921010
