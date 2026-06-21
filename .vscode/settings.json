@@ -67,6 +67,6 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "RoboCell Digital Twin.slnx",
+    "dotnet.defaultSolution": "Robo-Cell-Digital-Twin.slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false
 }
