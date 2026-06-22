@@ -571,7 +571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d757afcd8ba03204990ccb8a317af3d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConveyorMotor
-  offlineMode: 0
+  offlineMode: 1
   speed: 10
   axis: 1
   objectsOnBelt:
@@ -3612,7 +3612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27f84a97dac7e084582fd920fb96c234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SensorTrigger
-  offlineMode: 0
+  offlineMode: 1
   cubeTag: ProductObject
   cubeObject: {fileID: 0}
   expectedObjects:
@@ -4735,7 +4735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d49d638ed4ab8245bc3d0fc56eb9d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RobotCar1
-  offlineMode: 0
+  offlineMode: 1
   wpWarehouseA: {fileID: 1949118737}
   wpMid1: {fileID: 570219427}
   wpArm1Staging: {fileID: 227923465}
@@ -5108,7 +5108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27f84a97dac7e084582fd920fb96c234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SensorTrigger
-  offlineMode: 0
+  offlineMode: 1
   cubeTag: ProductObject
   cubeObject: {fileID: 0}
   expectedObjects:
@@ -5202,7 +5202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d359c12f3bd5eca4c8517ca311f62341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RobotCar2
-  offlineMode: 0
+  offlineMode: 1
   wpConv2Exit: {fileID: 1267974904}
   wpMid1: {fileID: 1456427330}
   wpWarehouseB: {fileID: 576859777}
@@ -6207,7 +6207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RobotArmController
   role: 0
-  offlineMode: 0
+  offlineMode: 1
   joint1: {fileID: 768662765}
   joint2: {fileID: 768662764}
   joint3: {fileID: 768662763}
@@ -6353,7 +6353,7 @@ MonoBehaviour:
   dbHeld: 0
   dbCubeName: "\u2014"
   dbEStop: 0
-  dbMode: PLC
+  dbMode: Offline
   dbFeedbackPhase: Idle
   dbLastQCVerdict: "\u2014"
   dbLastQCShape: "\u2014"
@@ -7833,7 +7833,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RobotArmController
   role: 2
-  offlineMode: 0
+  offlineMode: 1
   joint1: {fileID: 974010803}
   joint2: {fileID: 974010802}
   joint3: {fileID: 974010801}
@@ -7979,7 +7979,7 @@ MonoBehaviour:
   dbHeld: 0
   dbCubeName: "\u2014"
   dbEStop: 0
-  dbMode: PLC
+  dbMode: Offline
   dbFeedbackPhase: Idle
   dbLastQCVerdict: "\u2014"
   dbLastQCShape: "\u2014"
@@ -10269,7 +10269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RobotArmController
   role: 1
-  offlineMode: 0
+  offlineMode: 1
   joint1: {fileID: 1451542308}
   joint2: {fileID: 1451542307}
   joint3: {fileID: 1451542306}
@@ -10415,7 +10415,7 @@ MonoBehaviour:
   dbHeld: 0
   dbCubeName: "\u2014"
   dbEStop: 0
-  dbMode: PLC
+  dbMode: Offline
   dbFeedbackPhase: Idle
   dbLastQCVerdict: "\u2014"
   dbLastQCShape: "\u2014"
@@ -14948,7 +14948,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5f5a341c0b3d154c951e7c3b9469ebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnityBridgeClient
-  offlineMode: 0
+  offlineMode: 1
   ip: 127.0.0.1
   port: 5055
   reconnectDelay: 0
@@ -14978,7 +14978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IO_Router
   bridge: {fileID: 1860765507}
-  offlineMode: 0
+  offlineMode: 1
   dontDestroyOnLoad: 1
   periodicTagDump: 0
   tagDumpInterval: 0
@@ -15156,7 +15156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23460910472578b488d8c7ba4494e05c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GenericCommandButton
-  offlineMode: 0
+  offlineMode: 1
   tag: Inputs.OPC_In_Button_Start_Bit
   buttonMode: 2
   state: 1
@@ -15503,8 +15503,8 @@ MonoBehaviour:
   arm1: {fileID: 768662758}
   conveyor1: {fileID: 57066793}
   conveyor2: {fileID: 2088967910}
-  offlineMode: 0
-  offlineAutoStart: 0
+  offlineMode: 1
+  offlineAutoStart: 1
   postDispatchDelay: 0
   offlineAutoRestartDelay: 0
   in_StartBatch: Outputs.OPC_In_Start_Batch_Bit
@@ -16308,7 +16308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d757afcd8ba03204990ccb8a317af3d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConveyorMotor
-  offlineMode: 0
+  offlineMode: 1
   speed: 10
   axis: 1
   objectsOnBelt:
@@ -16786,7 +16786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70dccd004ce0950448ad239089b00143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QualityControlStation
-  offlineMode: 0
+  offlineMode: 1
   filterObjectName: 
   conveyorPulseDuration: 0.5
   logAllReports: 1
