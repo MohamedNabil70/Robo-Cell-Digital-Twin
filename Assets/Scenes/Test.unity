@@ -5728,10 +5728,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1570525795}
     m_Modifications:
-    - target: {fileID: 798578696004471235, guid: 57d6d9ac7da42454ea88f91737c63a1b, type: 3}
-      propertyPath: PlayOnStart
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 166776889290388931, guid: 57d6d9ac7da42454ea88f91737c63a1b, type: 3}
       propertyPath: m_Name
       value: A1F
@@ -5754,6 +5750,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 798578696004471235, guid: 57d6d9ac7da42454ea88f91737c63a1b, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 798578696004471235, guid: 57d6d9ac7da42454ea88f91737c63a1b, type: 3}
+      propertyPath: PlayOnStart
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 938061493027499789, guid: 57d6d9ac7da42454ea88f91737c63a1b, type: 3}
@@ -7354,10 +7354,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1570525795}
     m_Modifications:
-    - target: {fileID: 798578696004471235, guid: 57d6d9ac7da42454ea88f91737c63a1b, type: 3}
-      propertyPath: PlayOnStart
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 166776889290388931, guid: 57d6d9ac7da42454ea88f91737c63a1b, type: 3}
       propertyPath: m_Name
       value: A1L
@@ -7380,6 +7376,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 798578696004471235, guid: 57d6d9ac7da42454ea88f91737c63a1b, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 798578696004471235, guid: 57d6d9ac7da42454ea88f91737c63a1b, type: 3}
+      propertyPath: PlayOnStart
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 938061493027499789, guid: 57d6d9ac7da42454ea88f91737c63a1b, type: 3}
@@ -9414,6 +9414,7 @@ MonoBehaviour:
   HideNonG44Components: 0
   SceneIsAdditive: 0
   ForceStop: 0
+  IsNetworkOwner: 1
   Connected: 0
   UseDESMode: 0
   _desPackageWarning: 0
@@ -9876,10 +9877,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1570525795}
     m_Modifications:
-    - target: {fileID: 798578696004471235, guid: 57d6d9ac7da42454ea88f91737c63a1b, type: 3}
-      propertyPath: PlayOnStart
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 166776889290388931, guid: 57d6d9ac7da42454ea88f91737c63a1b, type: 3}
       propertyPath: m_Name
       value: A1M
@@ -9902,6 +9899,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 798578696004471235, guid: 57d6d9ac7da42454ea88f91737c63a1b, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 798578696004471235, guid: 57d6d9ac7da42454ea88f91737c63a1b, type: 3}
+      propertyPath: PlayOnStart
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 938061493027499789, guid: 57d6d9ac7da42454ea88f91737c63a1b, type: 3}
@@ -17139,4 +17140,4 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1570525795}
-  - {fileID: 1351379930}
+  - {fileID: 1351379931}

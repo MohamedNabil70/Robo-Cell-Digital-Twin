@@ -122,7 +122,16 @@ public class CubeProcessor : MonoBehaviour
     MeshRenderer mr;
 
     Collider    originalCollider;
-    bool        addedMeshCollider = false;
+    BoxCollider boundsCollider;
+    bool        addedMeshCollider   = false;
+    bool        addedBoundsCollider = false;
+    Vector3     originalBoxCenter;
+    Vector3     originalBoxSize;
+
+    // Cooking a runtime MeshCollider from a multi-million-triangle production
+    // mesh blocks Unity's main thread. Above this limit, a bounds proxy is both
+    // faster and sufficient for conveyor sensors and robot pickup/release logic.
+    const ulong MaxRuntimeMeshColliderTriangles = 50000;
 
     // ══════════════════════════════════════════════════════════════════════════
     // ══ SHAPE OVERRIDE SYSTEM ════════════════════════════════════════════════
@@ -197,6 +206,11 @@ public class CubeProcessor : MonoBehaviour
         processedMaterial.name  = $"{name}_ProcessedMaterial";
 
         originalCollider = GetComponent<Collider>();
+        if (originalCollider is BoxCollider originalBox)
+        {
+            originalBoxCenter = originalBox.center;
+            originalBoxSize   = originalBox.size;
+        }
 
         Debug.Log($"[PROCESSOR:{name}] Awake complete. Original mesh: '{SafeName(originalMesh)}'");
     }
@@ -405,8 +419,10 @@ public class CubeProcessor : MonoBehaviour
         else
         {
             DestroyProcessedMesh();
-            processedMesh = CloneMesh(baseMesh, $"{baseMesh.name}_Processed");
-            meshToApply   = processedMesh;
+            // Perfect parts do not modify vertex data, so use the imported mesh
+            // directly. Cloning the 2M+ triangle Turbine only wastes memory and
+            // stalls the main thread without changing the visual result.
+            meshToApply = baseMesh;
         }
 
         // Apply mesh
@@ -611,6 +627,13 @@ public class CubeProcessor : MonoBehaviour
     {
         if (m == null) return;
 
+        ulong triangleCount = GetTriangleCount(m);
+        if (triangleCount > MaxRuntimeMeshColliderTriangles)
+        {
+            UseBoundsCollider(m, triangleCount);
+            return;
+        }
+
         var mc = GetComponent<MeshCollider>();
         if (mc != null)
         {
@@ -632,6 +655,55 @@ public class CubeProcessor : MonoBehaviour
         addedMeshCollider = true;
     }
 
+    static ulong GetTriangleCount(Mesh mesh)
+    {
+        ulong count = 0;
+        for (int subMesh = 0; subMesh < mesh.subMeshCount; subMesh++)
+        {
+            if (mesh.GetTopology(subMesh) == MeshTopology.Triangles)
+                count += mesh.GetIndexCount(subMesh) / 3;
+        }
+        return count;
+    }
+
+    void UseBoundsCollider(Mesh mesh, ulong triangleCount)
+    {
+        if (addedMeshCollider)
+        {
+            MeshCollider generated = GetComponent<MeshCollider>();
+            if (generated != null)
+            {
+                generated.enabled = false;
+                generated.sharedMesh = null;
+                Destroy(generated);
+            }
+            addedMeshCollider = false;
+        }
+
+        if (originalCollider is BoxCollider originalBox)
+        {
+            boundsCollider = originalBox;
+        }
+        else if (boundsCollider == null)
+        {
+            boundsCollider = gameObject.AddComponent<BoxCollider>();
+            boundsCollider.isTrigger = originalCollider != null && originalCollider.isTrigger;
+            addedBoundsCollider = true;
+        }
+
+        if (originalCollider != null && originalCollider != boundsCollider)
+            originalCollider.enabled = false;
+
+        Bounds bounds = mesh.bounds;
+        boundsCollider.center = bounds.center;
+        boundsCollider.size = Vector3.Max(bounds.size, Vector3.one * 0.01f);
+        boundsCollider.enabled = true;
+
+        Debug.Log($"[PROCESSOR:{name}] Using lightweight bounds collider for " +
+                  $"'{mesh.name}' ({triangleCount:N0} triangles); skipped blocking " +
+                  "runtime MeshCollider cooking.");
+    }
+
     void RestoreCollider()
     {
         if (addedMeshCollider)
@@ -639,6 +711,18 @@ public class CubeProcessor : MonoBehaviour
             var mc = GetComponent<MeshCollider>();
             if (mc != null) Destroy(mc);
             addedMeshCollider = false;
+        }
+        if (addedBoundsCollider)
+        {
+            if (boundsCollider != null) Destroy(boundsCollider);
+            boundsCollider = null;
+            addedBoundsCollider = false;
+        }
+        if (originalCollider is BoxCollider originalBox)
+        {
+            originalBox.center = originalBoxCenter;
+            originalBox.size   = originalBoxSize;
+            boundsCollider     = null;
         }
         if (originalCollider != null)
             originalCollider.enabled = true;
