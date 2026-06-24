@@ -170,6 +170,14 @@ public class CubeProcessor : MonoBehaviour
     static readonly Dictionary<FallbackShape, Mesh> fallbackMeshCache = new Dictionary<FallbackShape, Mesh>();
     Mesh processedMesh;
 
+    // UnityEngine.Object uses a custom null operator for missing/destroyed serialized
+    // references. C#'s ?. operator bypasses that check and can therefore throw an
+    // UnassignedReferenceException while merely trying to print an optional object.
+    static string SafeName(UnityEngine.Object value, string fallback = "NULL")
+    {
+        return value != null ? value.name : fallback;
+    }
+
     // ─────────────────────────────────────────────────────────────────────────
     void Awake()
     {
@@ -190,7 +198,7 @@ public class CubeProcessor : MonoBehaviour
 
         originalCollider = GetComponent<Collider>();
 
-        Debug.Log($"[PROCESSOR:{name}] Awake complete. Original mesh: '{(originalMesh?.name ?? "NULL")}'");
+        Debug.Log($"[PROCESSOR:{name}] Awake complete. Original mesh: '{SafeName(originalMesh)}'");
     }
 
     void Start()
@@ -224,9 +232,9 @@ public class CubeProcessor : MonoBehaviour
     void LogShapeConfiguration()
     {
         Debug.Log($"╔═════════════ SHAPE CONFIG: {name} ═════════════╗");
-        Debug.Log($"  Original mesh      : '{(originalMesh?.name ?? "NULL")}'");
-        Debug.Log($"  Inspector prefab   : '{(processedShapePrefab?.name ?? "NULL (will use fallback)")}']");
-        Debug.Log($"  Injected override  : '{(injectedShapePrefab?.name ?? "NULL (not set)")}']");
+        Debug.Log($"  Original mesh      : '{SafeName(originalMesh)}'");
+        Debug.Log($"  Inspector prefab   : '{SafeName(processedShapePrefab, "NULL (will use fallback)")}'");
+        Debug.Log($"  Injected override  : '{SafeName(injectedShapePrefab, "NULL (not set)")}'");
         Debug.Log($"  Fallback shape     : {fallbackShape}");
         Debug.Log($"  ════════════════════════════════════════════");
         
@@ -268,7 +276,7 @@ public class CubeProcessor : MonoBehaviour
 
         Mesh fallback = GetFallbackMesh(out string fallbackName);
         source = $"FALLBACK ({fallbackShape})";
-        meshName = fallback?.name ?? "NULL";
+        meshName = SafeName(fallback);
         return fallback;
     }
 
@@ -341,10 +349,10 @@ public class CubeProcessor : MonoBehaviour
 
         // ═══ LOG FULL SHAPE RESOLUTION ═══
         Debug.Log($"╔═════════════ PROCESS START: {name} ═════════════╗");
-        Debug.Log($"  Injected override  : '{(injectedShapePrefab?.name ?? "NONE")}'");
-        Debug.Log($"  Inspector prefab   : '{(processedShapePrefab?.name ?? "NONE")}'");
+        Debug.Log($"  Injected override  : '{SafeName(injectedShapePrefab, "NONE")}'");
+        Debug.Log($"  Inspector prefab   : '{SafeName(processedShapePrefab, "NONE")}'");
         Debug.Log($"  Fallback shape     : {fallbackShape}");
-        Debug.Log($"  Original mesh      : '{(originalMesh?.name ?? "NULL")}'");
+        Debug.Log($"  Original mesh      : '{SafeName(originalMesh)}'");
         Debug.Log($"  Quality mode       : {qualityMode}");
 
         tel_CycleActive  = true;
@@ -353,7 +361,7 @@ public class CubeProcessor : MonoBehaviour
         axisPhase        = 0f;
 
         Mesh baseMesh = ResolveMesh(out string shapeName, out string shapeSource);
-        dbResolvedMeshName = baseMesh?.name ?? "NULL";
+        dbResolvedMeshName = SafeName(baseMesh);
         dbShapeSource = shapeSource;
         
         Debug.Log($"  ──────────────────────────────────────────────");
@@ -375,7 +383,7 @@ public class CubeProcessor : MonoBehaviour
         }
         else
         {
-            Debug.Log($"[PROCESSOR:{name}] ✔ Mesh WILL change: '{originalMesh?.name}' → '{baseMesh.name}'");
+            Debug.Log($"[PROCESSOR:{name}] ✔ Mesh WILL change: '{SafeName(originalMesh)}' → '{baseMesh.name}'");
         }
 
         processedMaterial.color = processedColor;
@@ -410,11 +418,11 @@ public class CubeProcessor : MonoBehaviour
         if (mf.sharedMesh != meshToApply)
         {
             Debug.LogError($"[PROCESSOR:{name}] ✖ MESH ASSIGNMENT FAILED! " +
-                          $"Tried to set '{meshToApply.name}' but got '{mf.sharedMesh?.name}'");
+                          $"Tried to set '{meshToApply.name}' but got '{SafeName(mf.sharedMesh)}'");
         }
         else
         {
-            Debug.Log($"[PROCESSOR:{name}] ✔ Mesh APPLIED: '{previousMesh?.name}' → '{meshToApply.name}'");
+            Debug.Log($"[PROCESSOR:{name}] ✔ Mesh APPLIED: '{SafeName(previousMesh)}' → '{meshToApply.name}'");
         }
 
         UpdateCollider(meshToApply);
@@ -573,7 +581,7 @@ public class CubeProcessor : MonoBehaviour
         Mesh fallback = GetFallbackMesh(out string fallbackName);
         shapeName = fallbackName;
         shapeSource = $"FALLBACK({fallbackShape})";
-        Debug.Log($"[PROCESSOR:{name}] Using FALLBACK shape: {fallbackShape} → mesh '{fallback?.name}'");
+        Debug.Log($"[PROCESSOR:{name}] Using FALLBACK shape: {fallbackShape} → mesh '{SafeName(fallback)}'");
         return fallback;
     }
 

@@ -477,10 +477,15 @@ public class RobotArmController : MonoBehaviour
         else Ok("gripPoint assigned.");
 
         bool IsZero(RobotPose p) => p.j1==0&&p.j2==0&&p.j3==0&&p.j4==0&&p.j5==0&&p.j6==0;
-        if (IsZero(poseHome))      Fail("poseHome is all zeros — not captured.");
+        bool homeUsesRestPose = IsZero(poseHome);
+        if (homeUsesRestPose)
+            Warn("poseHome is all zeros — using the robot's imported rest pose as Home.");
         if (IsZero(poseWaypointA)) Fail("poseWaypointA is all zeros — not captured.");
         if (IsZero(poseGrab))      Fail("poseGrab is all zeros — not captured.");
-        if (issues == 0)           Ok("Core poses (Home, WaypointA, Grab) are non-zero.");
+        if (issues == 0)
+            Ok(homeUsesRestPose
+                ? "Required motion poses are captured; Home uses the zero rest pose."
+                : "Core poses (Home, WaypointA, Grab) are non-zero.");
 
         if (!offlineMode)
         {
