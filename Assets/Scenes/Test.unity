@@ -274,7 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -783,7 +783,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -1092,9 +1092,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94d3b64ff0452354aacf76ce591a86f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
-  processedShapePrefab: {fileID: 974772661}
+  processedShapePrefab: {fileID: 4971544608727737617}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -1153,7 +1153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 974772661}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -1353,7 +1353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -1694,7 +1694,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -1894,7 +1894,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -2094,7 +2094,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -2294,7 +2294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -3297,7 +3297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -3968,7 +3968,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -5498,7 +5498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -6804,7 +6804,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -6979,6 +6979,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1457433727}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &853009938 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 87608f530d929fc469ce8335db117d4f, type: 3}
+  m_PrefabInstance: {fileID: 1544752978}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &873111720
 GameObject:
   m_ObjectHideFlags: 0
@@ -8186,13 +8191,8 @@ Light:
   m_EnableSpotReflector: 1
 --- !u!1 &974772661 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-  m_PrefabInstance: {fileID: 1732963624}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &974772662 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-  m_PrefabInstance: {fileID: 1732963624}
+  m_CorrespondingSourceObject: {fileID: 6453317474776386354, guid: 9de8727c6f216f947bd73e75ba8c0b65, type: 3}
+  m_PrefabInstance: {fileID: 4971544608727737615}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1006951455
 PrefabInstance:
@@ -9052,7 +9052,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -9283,7 +9283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -9676,7 +9676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -9876,7 +9876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -12218,7 +12218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -13402,7 +13402,7 @@ Transform:
   - {fileID: 638218243}
   - {fileID: 1745096343}
   - {fileID: 1544752979}
-  - {fileID: 974772662}
+  - {fileID: 4971544608727737616}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1573702964
@@ -13622,7 +13622,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -13878,7 +13878,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -14078,7 +14078,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -14301,83 +14301,6 @@ MonoBehaviour:
   bottomSurface: {fileID: 1464166783}
   leftCap: {fileID: 448847927}
   rightCap: {fileID: 302828223}
---- !u!1001 &1732963624
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1570525795}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.051053386
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.051053386
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.051053386
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -4.778696
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.1782027
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.08062446
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7052944
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7052944
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.050595053
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.050595067
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -98.206
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ac950f1442efb12479e3f8c660ecd902, type: 2}
-    - target: {fileID: 919132149155446097, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
-      propertyPath: m_Name
-      value: Turbine
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f1af2ecc359d2ca4099b01ee01ce463b, type: 3}
 --- !u!1 &1740282879
 GameObject:
   m_ObjectHideFlags: 0
@@ -14533,7 +14456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -15028,7 +14951,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -15495,7 +15418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 974772661}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -15569,18 +15492,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f40cc9a10cdec14cb0ac9545b2d872d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MqttTwinClient
-  brokerHost: mqtt-dashboard.com
-  brokerPort: 1883
-  useTls: 0
-  username: 
-  password: 
+  brokerHost: 1eb46b4460e549e79395d325b1a03a3b.s1.eu.hivemq.cloud
+  brokerPort: 8883
+  useTls: 1
+  username: admin
+  password: Admin1234
   clientId: unity_twin
   subscribeTopic: factory/cell1/twin/+/+
+  subscribeTopics:
+  - factory/cell1/twin/+/control
+  - factory/cell1/twin/+/status
   connectOnStart: 1
   reconnectOnDisconnect: 1
   reconnectDelaySeconds: 5
   dontDestroyOnLoad: 1
   telemetryManager: {fileID: 0}
+  messageRouter: {fileID: 0}
+  logReceivedTelemetry: 0
+  receivedMessageCount: 0
+  lastReceivedTopic: 
+  lastReceivedPayload: 
+  lastReceivedObjectId: 
+  lastReceivedMetric: 
+  lastReceivedUtc: 
 --- !u!4 &1972213317
 Transform:
   m_ObjectHideFlags: 0
@@ -15720,6 +15654,10 @@ MonoBehaviour:
   - {fileID: 386122245}
   - {fileID: 1008678561}
   - {fileID: 2006420107}
+  deliveredOutputPrefab: {fileID: 0}
+  deliveredOutputExampleObject: {fileID: 0}
+  deliveredOutputExampleName: TurbineExample
+  deliveredOutputSceneObjects: []
   deliveryOffset: {x: 0, y: 0.05, z: 0}
   warehouseRejectSlots: []
   rejectOffset: {x: 0, y: 0.05, z: 0}
@@ -15779,6 +15717,18 @@ MonoBehaviour:
   tel_GateDelivery: 1
   tel_GateCar1: 1
   tel_GateDispatch: 1
+  logExternalWarehouseSync: 1
+  useSeparateMqttShelfVisuals: 1
+  parentMqttShelfVisualsToSlots: 1
+  mqttRawBoxVisualScale: {x: 0.45, y: 0.45, z: 0.45}
+  mqttRawBoxVisualOffset: {x: 0, y: 0.05, z: 0}
+  mqttRawBoxVisualEuler: {x: 0, y: 0, z: 0}
+  mqttDeliveredOutputVisualScale: {x: 0.051053386, y: 0.051053386, z: 0.051053386}
+  mqttDeliveredOutputVisualOffset: {x: 0, y: 0.05, z: 0}
+  mqttDeliveredOutputVisualEuler: {x: -98.206, y: 90, z: -90}
+  matchDeliveredOutputExampleScale: 1
+  matchDeliveredOutputExampleRotation: 1
+  centerDeliveredOutputPivot: 1
   stuckWatchdogSeconds: 45
 --- !u!1 &2006420106
 GameObject:
@@ -16144,7 +16094,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -16704,6 +16654,204 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104671469}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2114634603
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2114634605}
+  - component: {fileID: 2114634604}
+  m_Layer: 0
+  m_Name: Twin Object Registry
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2114634604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114634603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c8037ed0fbe4ec4e8dde974396af791, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TwinObjectRegistry
+  dontDestroyOnLoad: 1
+  entries:
+  - objectId: arm1
+    objectType: 0
+    targetObject: {fileID: 768662757}
+    robotArm: {fileID: 768662758}
+    conveyor: {fileID: 0}
+    carTransform: {fileID: 0}
+    runningTag: 
+    eStopTag: 
+    objectDetectedTag: 
+    triggerTag: 
+    lastStatus: 
+    lastAtPickTarget: 0
+    lastAtDropTarget: 0
+    lastCarrying: 0
+    lastFinger1State: 0
+    lastFinger2State: 0
+    lastObjectDetected: 0
+    lastSourceTimestamp: 0
+    lastAppliedUtc: 
+  - objectId: arm2
+    objectType: 0
+    targetObject: {fileID: 1451542301}
+    robotArm: {fileID: 1451542310}
+    conveyor: {fileID: 0}
+    carTransform: {fileID: 0}
+    runningTag: 
+    eStopTag: 
+    objectDetectedTag: 
+    triggerTag: 
+    lastStatus: 
+    lastAtPickTarget: 0
+    lastAtDropTarget: 0
+    lastCarrying: 0
+    lastFinger1State: 0
+    lastFinger2State: 0
+    lastObjectDetected: 0
+    lastSourceTimestamp: 0
+    lastAppliedUtc: 
+  - objectId: arm3
+    objectType: 0
+    targetObject: {fileID: 974010795}
+    robotArm: {fileID: 974010796}
+    conveyor: {fileID: 0}
+    carTransform: {fileID: 0}
+    runningTag: 
+    eStopTag: 
+    objectDetectedTag: 
+    triggerTag: 
+    lastStatus: 
+    lastAtPickTarget: 0
+    lastAtDropTarget: 0
+    lastCarrying: 0
+    lastFinger1State: 0
+    lastFinger2State: 0
+    lastObjectDetected: 0
+    lastSourceTimestamp: 0
+    lastAppliedUtc: 
+  - objectId: car1
+    objectType: 1
+    targetObject: {fileID: 1006951457}
+    robotArm: {fileID: 0}
+    conveyor: {fileID: 0}
+    carTransform: {fileID: 1006951456}
+    runningTag: 
+    eStopTag: 
+    objectDetectedTag: 
+    triggerTag: 
+    lastStatus: 
+    lastAtPickTarget: 0
+    lastAtDropTarget: 0
+    lastCarrying: 0
+    lastFinger1State: 0
+    lastFinger2State: 0
+    lastObjectDetected: 0
+    lastSourceTimestamp: 0
+    lastAppliedUtc: 
+  - objectId: car2
+    objectType: 1
+    targetObject: {fileID: 416822130}
+    robotArm: {fileID: 0}
+    conveyor: {fileID: 0}
+    carTransform: {fileID: 416822129}
+    runningTag: 
+    eStopTag: 
+    objectDetectedTag: 
+    triggerTag: 
+    lastStatus: 
+    lastAtPickTarget: 0
+    lastAtDropTarget: 0
+    lastCarrying: 0
+    lastFinger1State: 0
+    lastFinger2State: 0
+    lastObjectDetected: 0
+    lastSourceTimestamp: 0
+    lastAppliedUtc: 
+  - objectId: conveyor1
+    objectType: 2
+    targetObject: {fileID: 57066788}
+    robotArm: {fileID: 0}
+    conveyor: {fileID: 57066793}
+    carTransform: {fileID: 0}
+    runningTag: DB_Unity_Feedback.Conv1Running
+    eStopTag: 
+    objectDetectedTag: DB_Unity_Feedback.Conv1ObjectDetected
+    triggerTag: 
+    lastStatus: 
+    lastAtPickTarget: 0
+    lastAtDropTarget: 0
+    lastCarrying: 0
+    lastFinger1State: 0
+    lastFinger2State: 0
+    lastObjectDetected: 0
+    lastSourceTimestamp: 0
+    lastAppliedUtc: 
+  - objectId: conveyor2
+    objectType: 2
+    targetObject: {fileID: 2088967905}
+    robotArm: {fileID: 0}
+    conveyor: {fileID: 2088967910}
+    carTransform: {fileID: 0}
+    runningTag: DB_Unity_Feedback.Conv1Running
+    eStopTag: 
+    objectDetectedTag: DB_Unity_Feedback.Conv2ObjectDetected
+    triggerTag: 
+    lastStatus: 
+    lastAtPickTarget: 0
+    lastAtDropTarget: 0
+    lastCarrying: 0
+    lastFinger1State: 0
+    lastFinger2State: 0
+    lastObjectDetected: 0
+    lastSourceTimestamp: 0
+    lastAppliedUtc: 
+  - objectId: warehouse
+    objectType: 3
+    targetObject: {fileID: 853009938}
+    robotArm: {fileID: 0}
+    conveyor: {fileID: 0}
+    carTransform: {fileID: 0}
+    runningTag: 
+    eStopTag: 
+    objectDetectedTag: 
+    triggerTag: 
+    lastStatus: 
+    lastAtPickTarget: 0
+    lastAtDropTarget: 0
+    lastCarrying: 0
+    lastFinger1State: 0
+    lastFinger2State: 0
+    lastObjectDetected: 0
+    lastSourceTimestamp: 0
+    lastAppliedUtc: 
+--- !u!4 &2114634605
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114634603}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 78.11485, y: -3.99999, z: -35.00318}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2114853760
 GameObject:
   m_ObjectHideFlags: 0
@@ -17198,7 +17346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CubeProcessor
   processedShapePrefab: {fileID: 0}
   fallbackShape: 0
-  processedColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
+  processedColor: {r: 0.94509804, g: 0.94509804, b: 0.94509804, a: 1}
   qualityMode: 0
   defect_VertexRemoval: 1
   defect_SurfaceNoise: 0
@@ -17243,6 +17391,73 @@ MonoBehaviour:
   tel_LastVerdict: "\u2014"
   tel_LastDefectFlags: 0
   tel_AvgCycleTime: 0
+--- !u!1001 &4971544608727737615
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1570525795}
+    m_Modifications:
+    - target: {fileID: 5592081391315834116, guid: 9de8727c6f216f947bd73e75ba8c0b65, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.6591477
+      objectReference: {fileID: 0}
+    - target: {fileID: 5592081391315834116, guid: 9de8727c6f216f947bd73e75ba8c0b65, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.006849525
+      objectReference: {fileID: 0}
+    - target: {fileID: 5592081391315834116, guid: 9de8727c6f216f947bd73e75ba8c0b65, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.10544871
+      objectReference: {fileID: 0}
+    - target: {fileID: 5592081391315834116, guid: 9de8727c6f216f947bd73e75ba8c0b65, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7052944
+      objectReference: {fileID: 0}
+    - target: {fileID: 5592081391315834116, guid: 9de8727c6f216f947bd73e75ba8c0b65, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7052944
+      objectReference: {fileID: 0}
+    - target: {fileID: 5592081391315834116, guid: 9de8727c6f216f947bd73e75ba8c0b65, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.050595053
+      objectReference: {fileID: 0}
+    - target: {fileID: 5592081391315834116, guid: 9de8727c6f216f947bd73e75ba8c0b65, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.050595067
+      objectReference: {fileID: 0}
+    - target: {fileID: 5592081391315834116, guid: 9de8727c6f216f947bd73e75ba8c0b65, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5592081391315834116, guid: 9de8727c6f216f947bd73e75ba8c0b65, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5592081391315834116, guid: 9de8727c6f216f947bd73e75ba8c0b65, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7873702435416022012, guid: 9de8727c6f216f947bd73e75ba8c0b65, type: 3}
+      propertyPath: m_Name
+      value: TurbineExample
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9de8727c6f216f947bd73e75ba8c0b65, type: 3}
+--- !u!4 &4971544608727737616 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5592081391315834116, guid: 9de8727c6f216f947bd73e75ba8c0b65, type: 3}
+  m_PrefabInstance: {fileID: 4971544608727737615}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4971544608727737617 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7873702435416022012, guid: 9de8727c6f216f947bd73e75ba8c0b65, type: 3}
+  m_PrefabInstance: {fileID: 4971544608727737615}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -17251,3 +17466,4 @@ SceneRoots:
   - {fileID: 1351379931}
   - {fileID: 1972213317}
   - {fileID: 1155699905}
+  - {fileID: 2114634605}

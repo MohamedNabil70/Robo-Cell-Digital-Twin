@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +20,11 @@ public class MqttTwinClient : MonoBehaviour
     public string password = "";
     public string clientId = "unity_twin";
     public string subscribeTopic = "factory/cell1/twin/+/+";
+    public string[] subscribeTopics =
+    {
+        "factory/cell1/twin/+/control",
+        "factory/cell1/twin/+/status"
+    };
 
     [Header("Runtime")]
     public bool connectOnStart = true;
@@ -26,6 +32,16 @@ public class MqttTwinClient : MonoBehaviour
     public float reconnectDelaySeconds = 5f;
     public bool dontDestroyOnLoad = true;
     public TelemetryManager telemetryManager;
+    public MqttTwinMessageRouter messageRouter;
+
+    [Header("Diagnostics")]
+    public bool logReceivedTelemetry = false;
+    [SerializeField] int receivedMessageCount;
+    [SerializeField] string lastReceivedTopic = "";
+    [SerializeField] string lastReceivedPayload = "";
+    [SerializeField] string lastReceivedObjectId = "";
+    [SerializeField] string lastReceivedMetric = "";
+    [SerializeField] string lastReceivedUtc = "";
 
     readonly ConcurrentQueue<IncomingMqttMessage> incomingMessages = new ConcurrentQueue<IncomingMqttMessage>();
     readonly ConcurrentQueue<QueuedLog> mainThreadLogs = new ConcurrentQueue<QueuedLog>();
@@ -62,6 +78,7 @@ public class MqttTwinClient : MonoBehaviour
     void Start()
     {
         EnsureTelemetryManager();
+        EnsureMessageRouter();
 
         if (connectOnStart)
         {
@@ -247,23 +264,18 @@ public class MqttTwinClient : MonoBehaviour
     async Task OnConnected(MqttClientConnectedEventArgs args)
     {
         reconnectScheduled = false;
-        QueueLog(LogLevel.Info, $"[MQTT Twin] Connected. Subscribing to '{subscribeTopic}'.");
-
-        if (string.IsNullOrWhiteSpace(subscribeTopic))
-        {
-            QueueLog(LogLevel.Warning, "[MQTT Twin] Subscribe topic is empty. No telemetry subscription created.");
-            return;
-        }
+        List<string> topics = GetSubscribeTopics();
 
         try
         {
-            var subscribeOptions = new MqttFactory()
-                .CreateSubscribeOptionsBuilder()
-                .WithTopicFilter(subscribeTopic)
-                .Build();
+            var subscribeBuilder = new MqttFactory().CreateSubscribeOptionsBuilder();
+            foreach (string topic in topics)
+            {
+                subscribeBuilder.WithTopicFilter(topic);
+            }
 
-            await mqttClient.SubscribeAsync(subscribeOptions, lifetimeCancellation.Token);
-            QueueLog(LogLevel.Info, $"[MQTT Twin] Subscribed to '{subscribeTopic}'.");
+            await mqttClient.SubscribeAsync(subscribeBuilder.Build(), lifetimeCancellation.Token);
+            QueueLog(LogLevel.Info, $"[MQTT Twin] Subscribed to {string.Join(", ", topics)}.");
         }
         catch (Exception ex)
         {
@@ -295,6 +307,7 @@ public class MqttTwinClient : MonoBehaviour
     void ProcessIncomingMessages()
     {
         EnsureTelemetryManager();
+        EnsureMessageRouter();
 
         while (incomingMessages.TryDequeue(out IncomingMqttMessage message))
         {
@@ -313,7 +326,31 @@ public class MqttTwinClient : MonoBehaviour
                 LogWarning($"[MQTT Twin] Received empty payload for '{message.Topic}'.");
             }
 
-            telemetryManager.UpdateTelemetry(cellId, objectId, metric, message.Payload);
+            if (metric == "status" || metric == "control")
+            {
+                messageRouter.RouteMessage(message.Topic, cellId, objectId, metric, message.Payload);
+            }
+            else
+            {
+                telemetryManager.UpdateTelemetry(cellId, objectId, metric, message.Payload);
+            }
+
+            RecordReceivedTelemetry(message.Topic, message.Payload, objectId, metric);
+        }
+    }
+
+    void RecordReceivedTelemetry(string topic, string payload, string objectId, string metric)
+    {
+        receivedMessageCount++;
+        lastReceivedTopic = topic;
+        lastReceivedPayload = payload;
+        lastReceivedObjectId = objectId;
+        lastReceivedMetric = metric;
+        lastReceivedUtc = DateTime.UtcNow.ToString("O");
+
+        if (logReceivedTelemetry)
+        {
+            LogInfo($"[MQTT Twin] Received telemetry #{receivedMessageCount}: {topic} = {payload}");
         }
     }
 
@@ -336,6 +373,73 @@ public class MqttTwinClient : MonoBehaviour
             var telemetryObject = new GameObject("TelemetryManager");
             telemetryManager = telemetryObject.AddComponent<TelemetryManager>();
             LogInfo("[MQTT Twin] Created runtime TelemetryManager because none was present in the scene.");
+        }
+    }
+
+    void EnsureMessageRouter()
+    {
+        if (messageRouter != null)
+        {
+            return;
+        }
+
+        messageRouter = MqttTwinMessageRouter.Instance;
+
+        if (messageRouter == null)
+        {
+            messageRouter = FindFirstObjectByType<MqttTwinMessageRouter>();
+        }
+
+        if (messageRouter == null)
+        {
+            var routerObject = new GameObject("MqttTwinMessageRouter");
+            messageRouter = routerObject.AddComponent<MqttTwinMessageRouter>();
+            LogInfo("[MQTT Twin] Created runtime MqttTwinMessageRouter because none was present in the scene.");
+        }
+
+        if (messageRouter.telemetryManager == null)
+        {
+            messageRouter.telemetryManager = telemetryManager;
+        }
+    }
+
+    List<string> GetSubscribeTopics()
+    {
+        var topics = new List<string>();
+        var seen = new HashSet<string>();
+
+        if (subscribeTopics != null)
+        {
+            foreach (string topic in subscribeTopics)
+            {
+                AddSubscribeTopic(topic, topics, seen);
+            }
+        }
+
+        if (topics.Count == 0)
+        {
+            AddSubscribeTopic(subscribeTopic, topics, seen);
+        }
+
+        if (topics.Count == 0)
+        {
+            topics.Add("factory/cell1/twin/+/+");
+        }
+
+        return topics;
+    }
+
+    static void AddSubscribeTopic(string topic, List<string> topics, HashSet<string> seen)
+    {
+        if (string.IsNullOrWhiteSpace(topic))
+        {
+            return;
+        }
+
+        topic = topic.Trim();
+        if (seen.Add(topic))
+        {
+            topics.Add(topic);
         }
     }
 

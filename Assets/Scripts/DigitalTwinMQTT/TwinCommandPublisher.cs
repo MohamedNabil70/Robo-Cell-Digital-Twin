@@ -117,14 +117,14 @@ public class TwinCommandPublisher : MonoBehaviour
             return;
         }
 
-        string topic = BuildCommandTopic(objectId, command);
+        string topic = BuildCommandTopic(objectId);
         string payload = BuildCommandPayload(objectId, command, value, unit, includeValue);
         await mqttClient.PublishAsync(topic, payload);
     }
 
-    string BuildCommandTopic(string objectId, string command)
+    string BuildCommandTopic(string objectId)
     {
-        return $"{factoryRoot}/{cellId}/twin/commands/{objectId}/{command}";
+        return $"{factoryRoot}/{cellId}/twin/commands/{objectId}";
     }
 
     string BuildCommandPayload(string objectId, string command, object value, string unit, bool includeValue)
