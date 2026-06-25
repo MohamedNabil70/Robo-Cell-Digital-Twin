@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 /// <summary>
 /// WarehouseManager — master batch controller with integrated QC routing.
@@ -18,6 +21,14 @@ public class WarehouseManager : MonoBehaviour
 
     [Header("══ Warehouse B — Delivery Slots ══════════════════════════════")]
     public List<Transform> warehouseBSlots = new List<Transform>();
+    [Tooltip("Finished output shown on Warehouse B for MQTT deliveredToB snapshots. Assign Assets/Turbine-Model/Turbine.fbx here.")]
+    public GameObject deliveredOutputPrefab;
+    [Tooltip("Reference scene object to copy turbine display scale/rotation from, e.g. TurbineExample.")]
+    public GameObject deliveredOutputExampleObject;
+    [Tooltip("Used to auto-find the scene reference when deliveredOutputExampleObject is not assigned.")]
+    public string deliveredOutputExampleName = "TurbineExample";
+    [Tooltip("Optional pre-placed finished output objects to reuse before instantiating deliveredOutputPrefab.")]
+    public List<GameObject> deliveredOutputSceneObjects = new List<GameObject>();
     public Vector3 deliveryOffset = new Vector3(0f, 0.05f, 0f);
 
     [Header("══ Warehouse B — Reject Slots (defective parts) ════════════════")]
@@ -122,6 +133,28 @@ public class WarehouseManager : MonoBehaviour
     [Tooltip("Dispatch gate: TRUE = not paused or E-Stopped.")]
     [SerializeField] bool  tel_GateDispatch   = true;
 
+    [Header("MQTT / External Warehouse Sync")]
+    [Tooltip("Log whenever an inbound warehouse/control snapshot corrects shelf occupancy.")]
+    [SerializeField] bool logExternalWarehouseSync = true;
+    [Tooltip("Use separate shelf display objects for MQTT warehouse snapshots so live/offline simulation is not interrupted.")]
+    [SerializeField] bool useSeparateMqttShelfVisuals = true;
+    [Tooltip("Parent MQTT shelf visuals to their slot transforms. This makes offsets local to each shelf slot.")]
+    [SerializeField] bool parentMqttShelfVisualsToSlots = true;
+    [Tooltip("Fallback size for passive raw-box shelf visuals when no clean object prefab is assigned.")]
+    [SerializeField] Vector3 mqttRawBoxVisualScale = new Vector3(0.45f, 0.45f, 0.45f);
+    [SerializeField] Vector3 mqttRawBoxVisualOffset = new Vector3(0f, 0.05f, 0f);
+    [SerializeField] Vector3 mqttRawBoxVisualEuler = Vector3.zero;
+    [Tooltip("Scale for turbine visuals spawned on Warehouse B by MQTT deliveredToB.")]
+    [SerializeField] Vector3 mqttDeliveredOutputVisualScale = new Vector3(0.051053386f, 0.051053386f, 0.051053386f);
+    [SerializeField] Vector3 mqttDeliveredOutputVisualOffset = new Vector3(0f, 0.05f, 0f);
+    [SerializeField] Vector3 mqttDeliveredOutputVisualEuler = new Vector3(-98.206f, 90f, -90f);
+    [Tooltip("Copy scale from deliveredOutputExampleObject / TurbineExample when available.")]
+    [SerializeField] bool matchDeliveredOutputExampleScale = true;
+    [Tooltip("Copy rotation from deliveredOutputExampleObject / TurbineExample when available.")]
+    [SerializeField] bool matchDeliveredOutputExampleRotation = true;
+    [Tooltip("Wrap spawned turbines in a parent object and shift the mesh so the parent axis is at the turbine bounds center.")]
+    [SerializeField] bool centerDeliveredOutputPivot = true;
+
     // ── Telemetry private ──────────────────────────────────────────────────────
     float batchStartTime   = 0f;
     float cycleStartTime   = 0f;
@@ -133,6 +166,8 @@ public class WarehouseManager : MonoBehaviour
 
     // ─────────────────────────────────────────────────────────────────────────
     List<GameObject> spawnedObjects = new List<GameObject>();
+    List<GameObject> mqttWarehouseAObjects = new List<GameObject>();
+    List<GameObject> deliveredOutputObjects = new List<GameObject>();
     Queue<int>       pendingQueue   = new Queue<int>();
     int              nextBSlot      = 0;
     bool             batchStarted   = false;
@@ -558,6 +593,426 @@ public class WarehouseManager : MonoBehaviour
         return $"[WH QC BATCH SUMMARY]\n  Perfect  : {dbBatchPerfectCount}\n  Defective: {dbBatchDefectCount}\n  Total    : {total}\n  Defect % : {rate:F1}%\n  Last part: {dbLastDeliveredVerdict} ({dbLastDeliveredShape})";
     }
 
+    public void ApplyExternalWarehouseSnapshot(int remainingInA, int deliveredToB, string batchStatus)
+    {
+        int requestedA = Mathf.Max(0, remainingInA);
+        int requestedB = Mathf.Max(0, deliveredToB);
+        int availableASlots = CountValidSlots(warehouseASlots);
+        int availableBSlots = CountValidSlots(warehouseBSlots);
+        int placedA = Mathf.Min(requestedA, availableASlots);
+        int placedB = Mathf.Min(requestedB, availableBSlots);
+        int requiredObjects = placedA;
+
+        if (requestedA > availableASlots)
+            Debug.LogWarning($"[WH] MQTT snapshot requested {requestedA} WH-A objects, but only {availableASlots} valid WH-A slot(s) exist.");
+        if (requestedB > availableBSlots)
+            Debug.LogWarning($"[WH] MQTT snapshot requested {requestedB} WH-B objects, but only {availableBSlots} valid WH-B slot(s) exist.");
+
+        if (useSeparateMqttShelfVisuals)
+            EnsureMqttWarehouseAObjectPool(requiredObjects);
+        else
+            EnsureWarehouseObjectPool(requiredObjects);
+        EnsureDeliveredOutputPool(placedB);
+
+        int availableObjects = useSeparateMqttShelfVisuals
+            ? mqttWarehouseAObjects.FindAll(o => o != null).Count
+            : spawnedObjects.FindAll(o => o != null).Count;
+        if (availableObjects < requiredObjects)
+            Debug.LogWarning($"[WH] MQTT snapshot needs {requiredObjects} visible object(s), but only {availableObjects} object(s) are available.");
+        int availableOutputs = deliveredOutputObjects.FindAll(o => o != null).Count;
+        if (availableOutputs < placedB)
+            Debug.LogWarning($"[WH] MQTT snapshot needs {placedB} delivered output object(s), but only {availableOutputs} turbine object(s) are available.");
+
+        if (!useSeparateMqttShelfVisuals && dispatchCoroutine != null)
+        {
+            StopCoroutine(dispatchCoroutine);
+            dispatchCoroutine = null;
+        }
+
+        if (!useSeparateMqttShelfVisuals)
+            pendingQueue.Clear();
+        int objectIndex = 0;
+        int actualPlacedA = 0;
+        int actualPlacedB = 0;
+
+        for (int slotIndex = 0; slotIndex < warehouseASlots.Count && actualPlacedA < placedA; slotIndex++)
+        {
+            Transform slot = warehouseASlots[slotIndex];
+            if (slot == null) continue;
+
+            GameObject obj = useSeparateMqttShelfVisuals
+                ? GetMqttWarehouseAObject(objectIndex)
+                : GetWarehouseObject(objectIndex);
+            if (obj == null) break;
+
+            if (useSeparateMqttShelfVisuals)
+            {
+                PlaceMqttShelfVisualOnSlot(obj, slot, mqttRawBoxVisualOffset, mqttRawBoxVisualEuler, mqttRawBoxVisualScale);
+            }
+            else
+            {
+                PlaceObjectOnSlot(obj, slot, spawnOffset);
+            }
+
+            if (!useSeparateMqttShelfVisuals)
+                pendingQueue.Enqueue(objectIndex);
+            objectIndex++;
+            actualPlacedA++;
+        }
+
+        int outputIndex = 0;
+        for (int slotIndex = 0; slotIndex < warehouseBSlots.Count && actualPlacedB < placedB; slotIndex++)
+        {
+            Transform slot = warehouseBSlots[slotIndex];
+            if (slot == null) continue;
+
+            GameObject obj = GetDeliveredOutputObject(outputIndex);
+            if (obj == null) break;
+
+            PlaceMqttShelfVisualOnSlot(obj, slot, mqttDeliveredOutputVisualOffset, GetDeliveredOutputVisualEuler(), GetDeliveredOutputVisualScale());
+            outputIndex++;
+            actualPlacedB++;
+        }
+
+        List<GameObject> rawShelfPool = useSeparateMqttShelfVisuals ? mqttWarehouseAObjects : spawnedObjects;
+        for (int i = objectIndex; i < rawShelfPool.Count; i++)
+        {
+            if (rawShelfPool[i] != null)
+                HideWarehouseObject(rawShelfPool[i]);
+        }
+
+        for (int i = outputIndex; i < deliveredOutputObjects.Count; i++)
+        {
+            if (deliveredOutputObjects[i] != null)
+                HideWarehouseObject(deliveredOutputObjects[i]);
+        }
+
+        dbTotalObjects = Mathf.Max(dbTotalObjects, requestedA + requestedB);
+        dbRemainingInA = actualPlacedA;
+        dbDeliveredToB = actualPlacedB;
+        dbStatus = string.IsNullOrEmpty(batchStatus) ? "External warehouse sync" : batchStatus;
+        dbPipelineStage = $"External sync: WH-A={actualPlacedA}, WH-B={actualPlacedB}";
+        dbCurrentObject = "—";
+        dbFeedbackPhase = "ExternalSync";
+        if (!useSeparateMqttShelfVisuals)
+        {
+            dbWaitingForDelivery = false;
+            dbWaitingForCar1 = false;
+            carBusy = false;
+            previousDelivered = true;
+            nextBSlot = actualPlacedB;
+            nextRejectSlot = 0;
+            batchComplete = actualPlacedA == 0 && actualPlacedB > 0;
+            batchStarted = false;
+        }
+
+        tel_WHAOccupied = actualPlacedA;
+        tel_WHBOccupied = actualPlacedB;
+        tel_RejectOccupied = 0;
+        tel_BatchProgressPct = requestedA + requestedB > 0
+            ? Mathf.Clamp01((float)actualPlacedB / (requestedA + requestedB)) * 100f
+            : 0f;
+        tel_EstTimeRemaining = 0f;
+        tel_GateDelivery = true;
+        tel_GateCar1 = true;
+        tel_GateDispatch = !dispatchPaused && !eStopActive;
+
+        if (logExternalWarehouseSync)
+            Debug.Log($"[WH] MQTT warehouse sync applied. WH-A={actualPlacedA}/{requestedA}, WH-B={actualPlacedB}/{requestedB}, status='{dbStatus}'.");
+    }
+
+    int CountValidSlots(List<Transform> slots)
+    {
+        int count = 0;
+        for (int i = 0; i < slots.Count; i++)
+            if (slots[i] != null) count++;
+        return count;
+    }
+
+    void EnsureWarehouseObjectPool(int requiredObjects)
+    {
+        for (int i = 0; i < requiredObjects; i++)
+        {
+            if (i < spawnedObjects.Count && spawnedObjects[i] != null)
+                continue;
+
+            GameObject obj = null;
+            if (i < sceneObjects.Count && sceneObjects[i] != null)
+            {
+                obj = sceneObjects[i];
+            }
+            else if (objectPrefab != null)
+            {
+                obj = Instantiate(objectPrefab);
+                obj.name = $"ProductObject_{i:D2}";
+            }
+
+            if (obj == null)
+                continue;
+
+            try { if (obj.CompareTag("Untagged")) obj.tag = "ProductObject"; } catch {}
+            conveyor1?.RegisterObject(obj.transform);
+            conveyor2?.RegisterObject(obj.transform);
+
+            while (spawnedObjects.Count <= i)
+                spawnedObjects.Add(null);
+
+            spawnedObjects[i] = obj;
+        }
+    }
+
+    void EnsureMqttWarehouseAObjectPool(int requiredObjects)
+    {
+        for (int i = 0; i < requiredObjects; i++)
+        {
+            if (i < mqttWarehouseAObjects.Count && mqttWarehouseAObjects[i] != null)
+                continue;
+
+            GameObject obj = CreatePassiveRawBoxVisual(i);
+            if (obj == null)
+                continue;
+
+            while (mqttWarehouseAObjects.Count <= i)
+                mqttWarehouseAObjects.Add(null);
+
+            mqttWarehouseAObjects[i] = obj;
+        }
+
+        if (requiredObjects > 0 && mqttWarehouseAObjects.FindAll(o => o != null).Count < requiredObjects)
+            Debug.LogWarning("[WH] MQTT warehouse A snapshot needs raw object visuals, but passive visual creation failed.");
+    }
+
+    GameObject CreatePassiveRawBoxVisual(int index)
+    {
+        GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        obj.name = $"MqttWarehouseABox_{index:D2}";
+        obj.transform.localScale = mqttRawBoxVisualScale;
+        StripShelfVisualRuntimeComponents(obj);
+        return obj;
+    }
+
+    void EnsureDeliveredOutputPool(int requiredOutputs)
+    {
+        for (int i = 0; i < requiredOutputs; i++)
+        {
+            if (i < deliveredOutputObjects.Count && deliveredOutputObjects[i] != null)
+                continue;
+
+            GameObject obj = null;
+            if (i < deliveredOutputSceneObjects.Count && deliveredOutputSceneObjects[i] != null)
+            {
+                obj = deliveredOutputSceneObjects[i];
+            }
+            GameObject outputPrefab = GetDeliveredOutputPrefab();
+            if (obj == null && outputPrefab != null)
+            {
+                obj = CreateDeliveredOutputVisual(outputPrefab, i);
+            }
+
+            if (obj == null)
+                continue;
+
+            while (deliveredOutputObjects.Count <= i)
+                deliveredOutputObjects.Add(null);
+
+            deliveredOutputObjects[i] = obj;
+        }
+
+        if (requiredOutputs > 0 &&
+            deliveredOutputObjects.FindAll(o => o != null).Count < requiredOutputs &&
+            deliveredOutputPrefab == null)
+        {
+            Debug.LogWarning("[WH] deliveredOutputPrefab is not assigned. Assign Assets/Turbine-Model/Turbine.fbx to show delivered turbines on Warehouse B.");
+        }
+    }
+
+    GameObject GetDeliveredOutputPrefab()
+    {
+        if (deliveredOutputPrefab != null)
+            return deliveredOutputPrefab;
+
+#if UNITY_EDITOR
+        deliveredOutputPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Turbine-Model/Turbine.fbx");
+        return deliveredOutputPrefab;
+#else
+        return null;
+#endif
+    }
+
+    GameObject CreateDeliveredOutputVisual(GameObject sourcePrefab, int index)
+    {
+        GameObject root = new GameObject($"DeliveredOutput_Turbine_{index:D2}");
+        GameObject model = Instantiate(sourcePrefab, root.transform);
+        model.name = "TurbineVisual";
+        model.transform.localPosition = Vector3.zero;
+        model.transform.localRotation = Quaternion.identity;
+        model.transform.localScale = Vector3.one;
+
+        StripShelfVisualRuntimeComponents(model);
+
+        if (centerDeliveredOutputPivot)
+            CenterChildRenderersOnParent(root.transform, model.transform);
+
+        return root;
+    }
+
+    Vector3 GetDeliveredOutputVisualScale()
+    {
+        GameObject example = GetDeliveredOutputExampleObject();
+        if (matchDeliveredOutputExampleScale && example != null)
+            return example.transform.localScale;
+
+        return mqttDeliveredOutputVisualScale;
+    }
+
+    Vector3 GetDeliveredOutputVisualEuler()
+    {
+        GameObject example = GetDeliveredOutputExampleObject();
+        if (matchDeliveredOutputExampleRotation && example != null)
+            return example.transform.localEulerAngles;
+
+        return mqttDeliveredOutputVisualEuler;
+    }
+
+    GameObject GetDeliveredOutputExampleObject()
+    {
+        if (deliveredOutputExampleObject != null)
+            return deliveredOutputExampleObject;
+
+        if (string.IsNullOrEmpty(deliveredOutputExampleName))
+            return null;
+
+        Transform[] transforms = FindObjectsByType<Transform>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        for (int i = 0; i < transforms.Length; i++)
+        {
+            if (transforms[i] != null && transforms[i].name == deliveredOutputExampleName)
+            {
+                deliveredOutputExampleObject = transforms[i].gameObject;
+                return deliveredOutputExampleObject;
+            }
+        }
+
+        return null;
+    }
+
+    void CenterChildRenderersOnParent(Transform parent, Transform child)
+    {
+        if (parent == null || child == null)
+            return;
+
+        Renderer[] renderers = child.GetComponentsInChildren<Renderer>(true);
+        if (renderers.Length == 0)
+            return;
+
+        Bounds bounds = renderers[0].bounds;
+        for (int i = 1; i < renderers.Length; i++)
+            bounds.Encapsulate(renderers[i].bounds);
+
+        Vector3 localCenter = parent.InverseTransformPoint(bounds.center);
+        child.localPosition -= localCenter;
+    }
+
+    GameObject GetWarehouseObject(int index)
+    {
+        if (index < 0 || index >= spawnedObjects.Count)
+            return null;
+
+        return spawnedObjects[index];
+    }
+
+    GameObject GetMqttWarehouseAObject(int index)
+    {
+        if (index < 0 || index >= mqttWarehouseAObjects.Count)
+            return null;
+
+        return mqttWarehouseAObjects[index];
+    }
+
+    GameObject GetDeliveredOutputObject(int index)
+    {
+        if (index < 0 || index >= deliveredOutputObjects.Count)
+            return null;
+
+        return deliveredOutputObjects[index];
+    }
+
+    void PlaceObjectOnSlot(GameObject obj, Transform slot, Vector3 offset)
+    {
+        if (obj == null || slot == null)
+            return;
+
+        var rb = obj.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.isKinematic = true;
+        }
+
+        obj.transform.SetParent(null);
+        obj.transform.position = slot.position + offset;
+        obj.transform.rotation = slot.rotation;
+        obj.SetActive(true);
+        conveyor1?.UnregisterObject(obj.transform);
+        conveyor2?.UnregisterObject(obj.transform);
+    }
+
+    void PlaceMqttShelfVisualOnSlot(GameObject obj, Transform slot, Vector3 localOffset, Vector3 localEuler, Vector3 localScale)
+    {
+        if (obj == null || slot == null)
+            return;
+
+        StripShelfVisualRuntimeComponents(obj);
+
+        if (parentMqttShelfVisualsToSlots)
+        {
+            obj.transform.SetParent(slot, false);
+            obj.transform.localPosition = localOffset;
+            obj.transform.localRotation = Quaternion.Euler(localEuler);
+            obj.transform.localScale = localScale;
+        }
+        else
+        {
+            obj.transform.SetParent(null);
+            obj.transform.position = slot.position + slot.TransformVector(localOffset);
+            obj.transform.rotation = slot.rotation * Quaternion.Euler(localEuler);
+            obj.transform.localScale = localScale;
+        }
+
+        obj.SetActive(true);
+        conveyor1?.UnregisterObject(obj.transform);
+        conveyor2?.UnregisterObject(obj.transform);
+    }
+
+    void StripShelfVisualRuntimeComponents(GameObject visual)
+    {
+        if (visual == null)
+            return;
+
+        Rigidbody[] rigidbodies = visual.GetComponentsInChildren<Rigidbody>(true);
+        for (int i = 0; i < rigidbodies.Length; i++)
+            Destroy(rigidbodies[i]);
+
+        Collider[] colliders = visual.GetComponentsInChildren<Collider>(true);
+        for (int i = 0; i < colliders.Length; i++)
+            Destroy(colliders[i]);
+
+        MonoBehaviour[] behaviours = visual.GetComponentsInChildren<MonoBehaviour>(true);
+        for (int i = 0; i < behaviours.Length; i++)
+            Destroy(behaviours[i]);
+    }
+
+    void HideWarehouseObject(GameObject obj)
+    {
+        if (obj == null)
+            return;
+
+        conveyor1?.UnregisterObject(obj.transform);
+        conveyor2?.UnregisterObject(obj.transform);
+        obj.transform.SetParent(null);
+        obj.SetActive(false);
+    }
+
     public void SetPipelineStage(string stage) => dbPipelineStage=stage;
 
     [ContextMenu("Run System Diagnostics")]
@@ -582,6 +1037,8 @@ public class WarehouseManager : MonoBehaviour
         if (objectPrefab==null){int vs=sceneObjects.FindAll(o=>o!=null).Count;if(vs==0)Fail("No objectPrefab AND no sceneObjects.");else Ok($"Using {vs} sceneObject(s).");}else Ok("objectPrefab assigned.");
         int validB=warehouseBSlots.FindAll(s=>s!=null).Count;
         if (validB<validA)Warn($"Only {validB} WH-B slot(s) for {validA} object(s)."); else Ok($"{validB} WH-B slots.");
+        if (deliveredOutputPrefab==null&&deliveredOutputSceneObjects.FindAll(o=>o!=null).Count==0) Warn("No deliveredOutputPrefab or deliveredOutputSceneObjects assigned. MQTT deliveredToB cannot show turbines.");
+        else Ok("Delivered output turbine source assigned.");
         int validR=warehouseRejectSlots.FindAll(s=>s!=null).Count;
         if (validR==0)Warn("No reject slots — defective parts go to normal WH-B slots."); else Ok($"{validR} reject slot(s).");
         Debug.Log($"╚═══ {warn} warning(s), {fail} failure(s). {(fail==0?(warn==0?"All clear.":"Check warnings."):"FIX FAILURES.")} ═══╝");

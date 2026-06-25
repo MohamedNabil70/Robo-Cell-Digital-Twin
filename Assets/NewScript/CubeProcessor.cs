@@ -40,7 +40,7 @@ public class CubeProcessor : MonoBehaviour
     public FallbackShape fallbackShape = FallbackShape.Sphere;
 
     [Tooltip("Colour applied to the processed shape.")]
-    public Color processedColor = new Color(0.2f, 0.85f, 0.3f);
+    public Color processedColor = new Color(0.94509804f, 0.94509804f, 0.94509804f);
 
     [Header("══ Quality Mode ════════════════════════════════════════════════")]
     public QualityMode qualityMode = QualityMode.Perfect;
@@ -272,8 +272,7 @@ public class CubeProcessor : MonoBehaviour
 
         if (injectedShapePrefab != null)
         {
-            var prefabMF = injectedShapePrefab.GetComponent<MeshFilter>();
-            Mesh m = prefabMF?.sharedMesh ?? prefabMF?.mesh;
+            Mesh m = ResolvePrefabMesh(injectedShapePrefab, out _);
             source = $"INJECTED ('{injectedShapePrefab.name}')";
             meshName = m?.name ?? "NULL";
             return m;
@@ -281,8 +280,7 @@ public class CubeProcessor : MonoBehaviour
 
         if (processedShapePrefab != null)
         {
-            var prefabMF = processedShapePrefab.GetComponent<MeshFilter>();
-            Mesh m = prefabMF?.sharedMesh ?? prefabMF?.mesh;
+            Mesh m = ResolvePrefabMesh(processedShapePrefab, out _);
             source = $"INSPECTOR ('{processedShapePrefab.name}')";
             meshName = m?.name ?? "NULL";
             return m;
@@ -292,6 +290,31 @@ public class CubeProcessor : MonoBehaviour
         source = $"FALLBACK ({fallbackShape})";
         meshName = SafeName(fallback);
         return fallback;
+    }
+
+    Mesh ResolvePrefabMesh(GameObject prefabOrSceneObject, out string meshOwnerName)
+    {
+        meshOwnerName = "NULL";
+        if (prefabOrSceneObject == null)
+            return null;
+
+        MeshFilter prefabMF = GetFirstMeshFilter(prefabOrSceneObject);
+        if (prefabMF == null)
+            return null;
+
+        meshOwnerName = prefabMF.gameObject.name;
+        return prefabMF.sharedMesh != null ? prefabMF.sharedMesh : prefabMF.mesh;
+    }
+
+    MeshFilter GetFirstMeshFilter(GameObject prefabOrSceneObject)
+    {
+        if (prefabOrSceneObject == null)
+            return null;
+
+        MeshFilter meshFilter = prefabOrSceneObject.GetComponent<MeshFilter>();
+        return meshFilter != null
+            ? meshFilter
+            : prefabOrSceneObject.GetComponentInChildren<MeshFilter>(true);
     }
 
     void OnDestroy()
@@ -553,7 +576,7 @@ public class CubeProcessor : MonoBehaviour
             shapeName = injectedShapePrefab.name;
             shapeSource = $"INJECTED";
             
-            var prefabMF = injectedShapePrefab.GetComponent<MeshFilter>();
+            var prefabMF = GetFirstMeshFilter(injectedShapePrefab);
             if (prefabMF == null)
             {
                 Debug.LogError($"[PROCESSOR:{name}] Injected shape '{injectedShapePrefab.name}' has no MeshFilter! Falling back.");
@@ -576,7 +599,7 @@ public class CubeProcessor : MonoBehaviour
             shapeName = processedShapePrefab.name;
             shapeSource = $"INSPECTOR";
             
-            var prefabMF = processedShapePrefab.GetComponent<MeshFilter>();
+            var prefabMF = GetFirstMeshFilter(processedShapePrefab);
             if (prefabMF == null)
             {
                 Debug.LogError($"[PROCESSOR:{name}] Inspector shape '{processedShapePrefab.name}' has no MeshFilter! Falling back to fallbackShape.");
