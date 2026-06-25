@@ -8677,6 +8677,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1114768693}
   m_CullTransparentMesh: 1
+--- !u!1 &1155699903
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1155699905}
+  - component: {fileID: 1155699904}
+  m_Layer: 0
+  m_Name: Twin Command Publisher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1155699904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155699903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf5686967b0e054ba38ae185764da7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TwinCommandPublisher
+  factoryRoot: factory
+  cellId: cell1
+  source: unity_twin
+  mqttClient: {fileID: 0}
+  defaultObjectId: conveyor1
+  defaultSpeed: 1.5
+  enableKeyboardTestInput: 0
+  testPublishKey: 289
+--- !u!4 &1155699905
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155699903}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 98.88472, y: -4, z: -60.8689}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1156474333
 GameObject:
   m_ObjectHideFlags: 0
@@ -15488,6 +15540,62 @@ MonoBehaviour:
   tel_LastVerdict: "\u2014"
   tel_LastDefectFlags: 0
   tel_AvgCycleTime: 0
+--- !u!1 &1972213315
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1972213317}
+  - component: {fileID: 1972213316}
+  m_Layer: 0
+  m_Name: MQTT Twin Client
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1972213316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972213315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f40cc9a10cdec14cb0ac9545b2d872d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MqttTwinClient
+  brokerHost: mqtt-dashboard.com
+  brokerPort: 1883
+  useTls: 0
+  username: 
+  password: 
+  clientId: unity_twin
+  subscribeTopic: factory/cell1/twin/+/+
+  connectOnStart: 1
+  reconnectOnDisconnect: 1
+  reconnectDelaySeconds: 5
+  dontDestroyOnLoad: 1
+  telemetryManager: {fileID: 0}
+--- !u!4 &1972213317
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972213315}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 98.88472, y: -4, z: -60.8689}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1989904280
 GameObject:
   m_ObjectHideFlags: 0
@@ -17141,3 +17249,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 1570525795}
   - {fileID: 1351379931}
+  - {fileID: 1972213317}
+  - {fileID: 1155699905}
