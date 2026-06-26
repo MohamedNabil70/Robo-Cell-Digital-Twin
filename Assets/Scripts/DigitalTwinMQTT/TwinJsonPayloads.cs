@@ -4,18 +4,24 @@ using System;
 public class TwinStatusPayload
 {
     public string objectId;
+    public string displayName;
     public string state;
     public string status;
     public string health;
     public bool running;
     public float speed;
+    public string speedUnit;
     public float temperature;
+    public string temperatureUnit;
     public float vibration;
+    public string vibrationUnit;
     public string aiStatus;
+    public string ai_status;
     public float aiConfidence;
     public string message;
     public string recommendedAction;
     public long timestamp;
+    public string timestampUtc;
 }
 
 [Serializable]
