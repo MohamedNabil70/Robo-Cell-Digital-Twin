@@ -175,12 +175,12 @@ public class SensorTrigger : MonoBehaviour
         // If sensor is in PLC mode but IO_Router or bridge are still offline,
         // feedback will be silently dropped. Warn loudly so the developer
         // can fix it immediately in the Inspector.
-        if (!offlineMode)
+        if (!offlineMode && IO_Router.Instance != null && IO_Router.Instance.sendOutputsToBridge)
         {
-            if (IO_Router.Instance != null && IO_Router.Instance.offlineMode)
+            if (IO_Router.Instance.offlineMode)
                 Debug.LogError($"[SENSOR:{name}] offlineMode=false but IO_Router.offlineMode=true! " +
                                "Sensor feedback will NOT reach TIA Portal. Set IO_Router.offlineMode=false.");
-            if (bridge != null && bridge.offlineMode)
+            if (bridge != null && bridge.enableTcpBridge && bridge.offlineMode)
                 Debug.LogError($"[SENSOR:{name}] offlineMode=false but UnityBridgeClient.offlineMode=true! " +
                                "No TCP connection — sensor feedback will be dropped by bridge.Send().");
         }

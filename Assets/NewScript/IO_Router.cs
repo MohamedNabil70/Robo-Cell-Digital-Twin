@@ -1,120 +1,123 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// IO_Router — central message bus between the OPC UA Bridge and all Unity components.
-/// (FIXED — see change log below)
+/// IO_Router â€” central message bus between the OPC UA Bridge and all Unity components.
+/// (FIXED â€” see change log below)
 ///
-/// ══ FIXES IN THIS VERSION ════════════════════════════════════════════════════
+/// â•گâ•گ FIXES IN THIS VERSION â•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گ
 ///
-///   FIX A — QUALIFIED TAG NAMES ("DBName.VarName") ACROSS ALL SET/GET:
-///   ─────────────────────────────────────────────────────────────────────
+///   FIX A â€” QUALIFIED TAG NAMES ("DBName.VarName") ACROSS ALL SET/GET:
+///   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 ///   The bridge now keys every tag as "DataBlockName.VariableName" to prevent
 ///   silent shadowing when multiple DataBlocks share a variable name.
-///   IO_Router passes these keys through unchanged — it never inspects the
+///   IO_Router passes these keys through unchanged â€” it never inspects the
 ///   content of a tag name, so no changes are needed inside IO_Router itself.
 ///   What IS needed: a new helper GetValueQualified() so components can query
 ///   a tag without knowing which DB it belongs to (if DB is unambiguous).
 ///
-///   FIX B — OFFLINE-MODE INBOUND MESSAGE HANDLING (preserved from prior fix):
-///   ─────────────────────────────────────────────────────────────────────
+///   FIX B â€” OFFLINE-MODE INBOUND MESSAGE HANDLING (preserved from prior fix):
+///   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 ///   HandleMessage() no longer drops inbound PLC messages when offlineMode=true.
-///   The flag only controls Unity→PLC sends (bridge.Send). Inbound PLC→Unity
+///   The flag only controls Unityâ†’PLC sends (bridge.Send). Inbound PLCâ†’Unity
 ///   messages are ALWAYS dispatched to local callbacks regardless of the flag.
 ///   A one-time warning fires if the flag mismatch is detected.
 ///
-///   FIX C — SETVALUE ALWAYS CALLS BRIDGE.SEND (preserved from prior fix):
-///   ─────────────────────────────────────────────────────────────────────
+///   FIX C â€” SETVALUE ALWAYS CALLS BRIDGE.SEND (preserved from prior fix):
+///   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 ///   SetValue() unconditionally calls bridge.Send(). bridge.Send() itself guards
 ///   on `if (!running) return` so nothing is sent when the TCP link is down.
-///   This makes offlineMode on IO_Router purely cosmetic — it doesn't gate sends.
+///   This makes offlineMode on IO_Router purely cosmetic â€” it doesn't gate sends.
 ///
-///   FIX D — TAG TRIMMING IN SETVALUE / GETVALUE:
-///   ─────────────────────────────────────────────
+///   FIX D â€” TAG TRIMMING IN SETVALUE / GETVALUE:
+///   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 ///   Any whitespace that slipped past TagSubscriptionHelper.RegisterWithRetry()
 ///   (e.g. in out_* fields that go directly to SetValue without going through
 ///   Register) is now trimmed at the SetValue/GetValue boundary too. This makes
 ///   every output tag immune to Inspector whitespace regardless of path taken.
 ///
-///   FIX E — SETVALUEWITHHANDOFF NOW ALSO TRIMS BOTH TAGS:
-///   ─────────────────────────────────────────────────────
+///   FIX E â€” SETVALUEWITHHANDOFF NOW ALSO TRIMS BOTH TAGS:
+///   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 ///   Same whitespace guard applied to the handoff call so feedback state
 ///   machine transitions can't fail due to a trailing space in an out_* field.
 ///
-///   FIX F — DIAGNOSTICS: QUALIFIED NAME AWARENESS IN LOGALLTAGS():
-///   ─────────────────────────────────────────────────────────────────
+///   FIX F â€” DIAGNOSTICS: QUALIFIED NAME AWARENESS IN LOGALLTAGS():
+///   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 ///   LogAllTags() now groups output by DB prefix (the part before the first '.')
 ///   so you can see at a glance which DataBlock each tag belongs to.
 ///   Tags without a '.' are shown in an "Unqualified / Legacy" group.
 ///
-/// ══ FEEDBACK STATE MACHINE (unchanged) ══════════════════════════════════════
+/// â•گâ•گ FEEDBACK STATE MACHINE (unchanged) â•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گ
 ///   SetValueWithHandoff() atomically transitions between phase tags.
 ///   The PLC never sees both tags FALSE simultaneously.
-/// ════════════════════════════════════════════════════════════════════════════
+/// â•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گ
 /// </summary>
 public class IO_Router : MonoBehaviour
 {
     public static IO_Router Instance { get; private set; }
 
-    [Header("── Bridge (drag UnityBridgeClient GameObject here) ──────────")]
+    [Header("â”€â”€ Bridge (drag UnityBridgeClient GameObject here) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€")]
     public UnityBridgeClient bridge;
+    [Tooltip("Enable only for the old UnityBridgeClient TCP/OPC UA bridge. Leave false for MQTT-driven twin control.")]
+    public bool sendOutputsToBridge = false;
+    [Tooltip("Search the scene for UnityBridgeClient when no bridge is assigned. Leave false for MQTT-driven twin control.")]
+    public bool autoFindBridgeClient = false;
 
-    [Header("══ Offline / Simulation ═════════════════════════════════════════")]
-    [Tooltip("TRUE = tags work locally only — nothing sent to PLC bridge. " +
+    [Header("â•گâ•گ Offline / Simulation â•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گ")]
+    [Tooltip("TRUE = tags work locally only â€” nothing sent to PLC bridge. " +
              "Switch to FALSE when connecting to TIA Portal.\n" +
-             "NOTE: inbound PLC→Unity messages are ALWAYS dispatched even when TRUE.")]
+             "NOTE: inbound PLCâ†’Unity messages are ALWAYS dispatched even when TRUE.")]
     public bool offlineMode = true;
 
-    [Header("── Settings ────────────────────────────────────────────────")]
+    [Header("â”€â”€ Settings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€")]
     public bool  dontDestroyOnLoad = true;
     public bool  periodicTagDump   = false;
     public float tagDumpInterval   = 30f;
 
-    [Header("── Debug (Read Only) ─────────────────────────────────────────")]
+    [Header("â”€â”€ Debug (Read Only) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€")]
     [SerializeField] int    dbRegisteredTags    = 0;
     [SerializeField] int    dbCachedTags        = 0;
-    [SerializeField] string dbLastTagIn         = "—";
-    [SerializeField] string dbLastTagOut        = "—";
+    [SerializeField] string dbLastTagIn         = "â€”";
+    [SerializeField] string dbLastTagOut        = "â€”";
     [SerializeField] bool   dbBridgeOnline      = false;
     [SerializeField] string dbMode              = "Offline";
     [SerializeField] int    dbDeferredBroadcast = 0;
     [SerializeField] int    dbQualifiedTagCount = 0;   // FIX F: count tags with '.' (DB-qualified)
     [SerializeField] int    dbLegacyTagCount    = 0;   // FIX F: count unqualified tags (legacy)
 
-    // ── Internal ──────────────────────────────────────────────────────────────
+    // â”€â”€ Internal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     readonly Dictionary<string, List<Action<bool>>> map   = new();
     readonly Dictionary<string, bool>               cache = new();
     float dumpTimer                  = 0f;
     bool  deferredBroadcastPending   = false;
     bool  offlineModeWarnFired       = false;
 
-    // ── Feedback state tracking ───────────────────────────────────────────────
+    // â”€â”€ Feedback state tracking â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     readonly HashSet<string> latchedFeedbackTags = new HashSet<string>();
 
-    // ─────────────────────────────────────────────────────────────────────────
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
         if (dontDestroyOnLoad) DontDestroyOnLoad(gameObject);
 
-        if (bridge == null)
+        if (bridge == null && autoFindBridgeClient)
         {
             bridge = GetComponentInChildren<UnityBridgeClient>();
-            if (bridge == null) bridge = FindObjectOfType<UnityBridgeClient>();
+            if (bridge == null) bridge = FindAnyObjectByType<UnityBridgeClient>();
             if (bridge != null) Debug.Log($"[IO ROUTER] Auto-found bridge on '{bridge.gameObject.name}'");
-            else                Debug.LogWarning("[IO ROUTER] No UnityBridgeClient found — offline mode forced.");
         }
 
-        if (!offlineMode && bridge == null)
+        if (sendOutputsToBridge && !offlineMode && bridge == null)
             Debug.LogError("[IO ROUTER] offlineMode=false but no UnityBridgeClient found!");
-        if (!offlineMode && bridge != null && bridge.offlineMode)
+        if (sendOutputsToBridge && !offlineMode && bridge != null && bridge.offlineMode)
             Debug.LogError("[IO ROUTER] offlineMode=false but UnityBridgeClient.offlineMode=true!");
 
-        dbMode = offlineMode ? "Offline" : "PLC";
+        dbMode = sendOutputsToBridge ? (offlineMode ? "Offline" : "PLC") : "MQTT";
     }
 
     void OnEnable()  { UnityBridgeClient.OnMessage += HandleMessage; }
@@ -125,7 +128,7 @@ public class IO_Router : MonoBehaviour
         dbBridgeOnline   = bridge != null && bridge.IsConnected;
         dbRegisteredTags = map.Count;
         dbCachedTags     = cache.Count;
-        dbMode           = offlineMode ? "Offline" : "PLC";
+        dbMode           = sendOutputsToBridge ? (offlineMode ? "Offline" : "PLC") : "MQTT";
 
         // FIX F: track qualified vs legacy tag counts
         dbQualifiedTagCount = cache.Keys.Count(k => k.Contains('.'));
@@ -138,7 +141,7 @@ public class IO_Router : MonoBehaviour
         }
     }
 
-    // ── Register / Unregister ─────────────────────────────────────────────────
+    // â”€â”€ Register / Unregister â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     public void Register(string tag, Action<bool> callback)
     {
         if (string.IsNullOrEmpty(tag) || callback == null) return;
@@ -170,7 +173,7 @@ public class IO_Router : MonoBehaviour
         if (!string.IsNullOrEmpty(tag)) map.Remove(tag.Trim());
     }
 
-    // ── Read ──────────────────────────────────────────────────────────────────
+    // â”€â”€ Read â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     public bool GetValue(string tag)
     {
         if (string.IsNullOrEmpty(tag)) return false;
@@ -182,7 +185,7 @@ public class IO_Router : MonoBehaviour
     /// Returns the value if exactly one qualified tag ends with ".VarName".
     /// Logs a warning if ambiguous (same var name in multiple DBs).
     /// Returns false and logs an error if not found.
-    /// Use this only for legacy/migration scenarios — prefer the full qualified name.
+    /// Use this only for legacy/migration scenarios â€” prefer the full qualified name.
     /// </summary>
     public bool GetValueQualified(string rawVarName, out string resolvedTag)
     {
@@ -205,7 +208,7 @@ public class IO_Router : MonoBehaviour
         if (matches.Count > 1)
         {
             Debug.LogWarning(
-                $"[IO ROUTER] GetValueQualified('{rawVarName}') is AMBIGUOUS — " +
+                $"[IO ROUTER] GetValueQualified('{rawVarName}') is AMBIGUOUS â€” " +
                 $"found in {matches.Count} DBs: {string.Join(", ", matches)}. " +
                 "Use the full qualified name in your Inspector field.");
             resolvedTag = matches[0];
@@ -219,7 +222,7 @@ public class IO_Router : MonoBehaviour
     public IEnumerable<string> KnownTags        => cache.Keys;
     public List<string>        GetAllKnownTags() => cache.Keys.OrderBy(k => k).ToList();
 
-    // ── Write — Unity → PLC ──────────────────────────────────────────────────
+    // â”€â”€ Write â€” Unity â†’ PLC â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     /// <summary>
     /// Write an output tag. In PLC mode, sends to bridge AND fires local callbacks.
     /// In offline mode, fires local callbacks ONLY (bridge.Send guards on running=false).
@@ -227,7 +230,7 @@ public class IO_Router : MonoBehaviour
     public void SetValue(string tag, bool value)
     {
         if (string.IsNullOrEmpty(tag)) return;
-        tag = tag.Trim();   // FIX D: trim at write boundary — catches out_* whitespace
+        tag = tag.Trim();   // FIX D: trim at write boundary â€” catches out_* whitespace
 
         cache[tag]   = value;
         dbLastTagOut = $"{tag}={value}";
@@ -235,20 +238,20 @@ public class IO_Router : MonoBehaviour
         if (value) latchedFeedbackTags.Add(tag);
         else       latchedFeedbackTags.Remove(tag);
 
-        // FIX C: always call bridge.Send() — bridge.Send() guards on running=false.
+        // FIX C: always call bridge.Send() â€” bridge.Send() guards on running=false.
         // offlineMode on IO_Router does NOT gate sends any more.
-        if (bridge != null)
+        if (sendOutputsToBridge && bridge != null)
             bridge.Send(tag, value);
-        else if (!offlineMode)
-            Debug.LogError($"[IO ROUTER] PLC mode but bridge is NULL — '{tag}={value}' dropped!");
+        else if (sendOutputsToBridge && !offlineMode)
+            Debug.LogError($"[IO ROUTER] PLC mode but bridge is NULL â€” '{tag}={value}' dropped!");
 
         FireCallbacks(tag, value);
     }
 
     /// <summary>
-    /// SEQUENTIAL FEEDBACK HANDOFF — atomically clears the PREVIOUS phase tag
+    /// SEQUENTIAL FEEDBACK HANDOFF â€” atomically clears the PREVIOUS phase tag
     /// and sets the NEXT phase tag in a single operation.
-    /// previousTag stays TRUE until this call — the PLC never sees both FALSE.
+    /// previousTag stays TRUE until this call â€” the PLC never sees both FALSE.
     /// </summary>
     public void SetValueWithHandoff(string previousTag, string nextTag)
     {
@@ -261,7 +264,7 @@ public class IO_Router : MonoBehaviour
         {
             cache[previousTag] = false;
             latchedFeedbackTags.Remove(previousTag);
-            if (bridge != null) bridge.Send(previousTag, false);
+            if (sendOutputsToBridge && bridge != null) bridge.Send(previousTag, false);
             dbLastTagOut = $"{previousTag}=false";
         }
 
@@ -269,7 +272,7 @@ public class IO_Router : MonoBehaviour
         {
             cache[nextTag] = true;
             latchedFeedbackTags.Add(nextTag);
-            if (bridge != null) bridge.Send(nextTag, true);
+            if (sendOutputsToBridge && bridge != null) bridge.Send(nextTag, true);
             dbLastTagOut = $"{nextTag}=true";
         }
 
@@ -296,7 +299,7 @@ public class IO_Router : MonoBehaviour
         !string.IsNullOrEmpty(tag) && latchedFeedbackTags.Contains(tag.Trim());
 
     /// <summary>
-    /// Simulate a PLC INPUT tag — fires local callbacks only, does NOT send to bridge.
+    /// Simulate a PLC INPUT tag â€” fires local callbacks only, does NOT send to bridge.
     /// </summary>
     public void SimulateInput(string tag, bool value)
     {
@@ -308,7 +311,51 @@ public class IO_Router : MonoBehaviour
         FireCallbacks(tag, value);
     }
 
-    // ── FIX: Deferred re-broadcast on new bridge connection ──────────────────
+    /// <summary>
+    /// Apply an inbound tag update from an external source such as MQTT or the TCP bridge.
+    /// Accepts either friend-bridge JSON: {"Tag":"...","Value":true,"Type":"Boolean"}
+    /// or a raw boolean payload when fallbackTag is provided.
+    /// </summary>
+    public bool ApplyIncomingMessage(string msg, string sourceLabel = "PLC", string fallbackTag = "", bool preferFallbackTag = false)
+    {
+        if (string.IsNullOrEmpty(msg) || msg == "_RECONNECT_") return false;
+
+        string tag = preferFallbackTag ? fallbackTag : "";
+        if (string.IsNullOrEmpty(tag)) tag = Extract(msg, "Tag");
+        if (string.IsNullOrEmpty(tag)) tag = Extract(msg, "tag");
+        if (string.IsNullOrEmpty(tag)) tag = fallbackTag;
+        if (string.IsNullOrEmpty(tag)) return false;
+
+        string valueStr = Extract(msg, "Value");
+        if (string.IsNullOrEmpty(valueStr)) valueStr = Extract(msg, "value");
+        if (string.IsNullOrEmpty(valueStr)) valueStr = msg;
+
+        if (!TryParseBool(valueStr, out bool value))
+        {
+            Debug.LogWarning($"[IO ROUTER] Ignored inbound {sourceLabel} tag '{tag}' with non-boolean value '{valueStr}'.");
+            return false;
+        }
+
+        ApplyIncomingValue(tag, value, sourceLabel);
+        return true;
+    }
+
+    /// <summary>
+    /// Apply an inbound PLC/input tag without sending it back to the bridge.
+    /// This is the same local effect as a PLC message arriving from the TCP bridge.
+    /// </summary>
+    public void ApplyIncomingValue(string tag, bool value, string sourceLabel = "PLC")
+    {
+        if (string.IsNullOrEmpty(tag)) return;
+        tag = tag.Trim();
+        cache[tag] = value;
+
+        string source = string.IsNullOrWhiteSpace(sourceLabel) ? "IN" : sourceLabel.Trim();
+        dbLastTagIn = $"[{source}] {tag}={value}";
+        FireCallbacks(tag, value);
+    }
+
+    // â”€â”€ FIX: Deferred re-broadcast on new bridge connection â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     public void NotifyBridgeConnected()
     {
         if (deferredBroadcastPending) return;
@@ -340,32 +387,24 @@ public class IO_Router : MonoBehaviour
                   $"fired {fired} tag(s) to newly-registered callbacks.");
     }
 
-    // ── Incoming message from PLC bridge ─────────────────────────────────────
+    // â”€â”€ Incoming message from PLC bridge â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     void HandleMessage(string msg)
     {
         if (string.IsNullOrEmpty(msg) || msg == "_RECONNECT_") return;
 
         // FIX B: NEVER gate inbound PLC messages on offlineMode.
-        // offlineMode only controls Unity→PLC sends (SetValue → bridge.Send).
-        // Inbound PLC→Unity messages must ALWAYS be dispatched.
-        if (offlineMode && !offlineModeWarnFired)
+        // offlineMode only controls Unityâ†’PLC sends (SetValue â†’ bridge.Send).
+        // Inbound PLCâ†’Unity messages must ALWAYS be dispatched.
+        if (sendOutputsToBridge && offlineMode && !offlineModeWarnFired)
         {
             offlineModeWarnFired = true;
             Debug.LogWarning(
-                "[IO ROUTER] ⚠ Received a PLC message while offlineMode=TRUE.\n" +
-                "  → Set IO_Router.offlineMode = FALSE in the Inspector to enable full PLC mode.\n" +
-                "  Processing the message anyway — callbacks WILL fire.");
+                "[IO ROUTER] âڑ  Received a PLC message while offlineMode=TRUE.\n" +
+                "  â†’ Set IO_Router.offlineMode = FALSE in the Inspector to enable full PLC mode.\n" +
+                "  Processing the message anyway â€” callbacks WILL fire.");
         }
 
-        string tag      = Extract(msg, "Tag");
-        string valueStr = Extract(msg, "Value");
-        if (string.IsNullOrEmpty(tag)) return;
-
-        tag = tag.Trim();   // FIX D
-        bool value  = valueStr.Equals("true", StringComparison.OrdinalIgnoreCase);
-        cache[tag]  = value;
-        dbLastTagIn = $"{tag}={value}";
-        FireCallbacks(tag, value);
+        ApplyIncomingMessage(msg, "PLC");
     }
 
     readonly List<Action<bool>> callbackScratch = new List<Action<bool>>();
@@ -382,11 +421,11 @@ public class IO_Router : MonoBehaviour
         }
     }
 
-    // ── Diagnostics ───────────────────────────────────────────────────────────
+    // â”€â”€ Diagnostics â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     public void LogAllTags()
     {
-        Debug.Log($"╔══════════════ IO_ROUTER TAG DUMP  [{dbMode}] ══════════════╗");
-        Debug.Log($"  Bridge     : {(bridge != null ? (bridge.IsConnected ? "CONNECTED" : "offline/disconnected") : "not found")}");
+        Debug.Log($"â•”â•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گ IO_ROUTER TAG DUMP  [{dbMode}] â•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•—");
+        Debug.Log($"  Bridge     : {(sendOutputsToBridge ? (bridge != null ? (bridge.IsConnected ? "CONNECTED" : "offline/disconnected") : "not found") : "disabled (MQTT)")}");
         Debug.Log($"  Registered : {map.Count} tags   Cached: {cache.Count} tags");
         Debug.Log($"  Qualified  : {dbQualifiedTagCount} (DB.VarName format)   Legacy: {dbLegacyTagCount}");
         Debug.Log($"  Latched    : {latchedFeedbackTags.Count} feedback tag(s) currently TRUE");
@@ -399,7 +438,7 @@ public class IO_Router : MonoBehaviour
 
         foreach (var g in groups)
         {
-            Debug.Log($"  ── {g.Key} ──");
+            Debug.Log($"  â”€â”€ {g.Key} â”€â”€");
             foreach (var kv in g.OrderBy(x => x.Key))
             {
                 string latched = latchedFeedbackTags.Contains(kv.Key) ? " [LATCHED]" : "";
@@ -407,18 +446,83 @@ public class IO_Router : MonoBehaviour
                 Debug.Log($"    {kv.Key,-50} = {kv.Value}{latched}{regStar}");
             }
         }
-        Debug.Log("╚═════════════════════════════════════════════════════════════╝");
+        Debug.Log("â•ڑâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•گâ•‌");
     }
 
     static string Extract(string json, string key)
     {
-        string search = $"\"{key}\":";
-        int start = json.IndexOf(search);
-        if (start == -1) return "";
-        start += search.Length;
-        int end = json.IndexOfAny(new char[] { ',', '}' }, start);
-        if (end == -1) end = json.Length;
-        return json[start..end].Replace("\"", "").Trim();
+        if (string.IsNullOrEmpty(json) || string.IsNullOrEmpty(key)) return "";
+
+        string search = $"\"{key}\"";
+        int keyStart = json.IndexOf(search, StringComparison.OrdinalIgnoreCase);
+        if (keyStart == -1) return "";
+
+        int colon = json.IndexOf(':', keyStart + search.Length);
+        if (colon == -1) return "";
+
+        int start = colon + 1;
+        while (start < json.Length && char.IsWhiteSpace(json[start])) start++;
+        if (start >= json.Length) return "";
+
+        if (json[start] == '"')
+        {
+            int end = start + 1;
+            bool escaped = false;
+            while (end < json.Length)
+            {
+                char c = json[end];
+                if (c == '"' && !escaped) break;
+                escaped = c == '\\' && !escaped;
+                if (c != '\\') escaped = false;
+                end++;
+            }
+
+            if (end >= json.Length) return "";
+            return json.Substring(start + 1, end - start - 1)
+                .Replace("\\\"", "\"")
+                .Replace("\\\\", "\\")
+                .Trim();
+        }
+
+        int valueEnd = start;
+        while (valueEnd < json.Length &&
+               json[valueEnd] != ',' &&
+               json[valueEnd] != '}' &&
+               json[valueEnd] != ']')
+        {
+            valueEnd++;
+        }
+
+        return json.Substring(start, valueEnd - start).Trim();
+    }
+
+    static bool TryParseBool(string raw, out bool value)
+    {
+        value = false;
+        if (string.IsNullOrWhiteSpace(raw)) return false;
+
+        string normalized = raw.Trim().Trim('"').Trim('\'').Trim();
+        if (bool.TryParse(normalized, out value)) return true;
+
+        switch (normalized.ToLowerInvariant())
+        {
+            case "1":
+            case "on":
+            case "yes":
+            case "y":
+            case "t":
+                value = true;
+                return true;
+            case "0":
+            case "off":
+            case "no":
+            case "n":
+            case "f":
+                value = false;
+                return true;
+            default:
+                return false;
+        }
     }
 
 #if UNITY_EDITOR
@@ -432,7 +536,7 @@ public class IO_Router : MonoBehaviour
     void EditorToggleOffline()
     {
         offlineMode = !offlineMode;
-        dbMode      = offlineMode ? "Offline" : "PLC";
+        dbMode      = sendOutputsToBridge ? (offlineMode ? "Offline" : "PLC") : "MQTT";
         Debug.Log($"[IO ROUTER] Mode switched to: {dbMode}");
     }
 
@@ -443,7 +547,7 @@ public class IO_Router : MonoBehaviour
         var legacy    = cache.Keys.Where(k => !k.Contains('.') && !k.StartsWith("__")).OrderBy(k => k).ToList();
         Debug.Log($"[IO ROUTER] Qualified tags ({qualified.Count}):\n  " + string.Join("\n  ", qualified));
         if (legacy.Count > 0)
-            Debug.Log($"[IO ROUTER] ⚠ Legacy unqualified tags ({legacy.Count}) — " +
+            Debug.Log($"[IO ROUTER] âڑ  Legacy unqualified tags ({legacy.Count}) â€” " +
                       "update Unity Inspector fields to 'DBName.VarName' format:\n  " + string.Join("\n  ", legacy));
     }
 #endif

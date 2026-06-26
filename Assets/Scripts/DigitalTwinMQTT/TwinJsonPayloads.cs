@@ -66,6 +66,100 @@ public class TwinWarehouseControlPayload
     public string objectId;
     public int remainingInA;
     public int deliveredToB;
+    public int remainingInB;
     public string batchStatus;
     public long timestamp;
+}
+
+[Serializable]
+public class TwinControlEnvelope
+{
+    public string objectId;
+    public string type;
+    public string source;
+    public long timestamp;
+}
+
+[Serializable]
+public class TwinConveyorControlMessage
+{
+    public string objectId;
+    public string type;
+    public string source;
+    public long timestamp;
+    public ConveyorControlData control;
+}
+
+[Serializable]
+public class TwinCarControlMessage
+{
+    public string objectId;
+    public string type;
+    public string source;
+    public long timestamp;
+    public CarControlData control;
+}
+
+[Serializable]
+public class TwinArmControlMessage
+{
+    public string objectId;
+    public string type;
+    public string source;
+    public long timestamp;
+    public ArmControlData control;
+}
+
+[Serializable]
+public class TwinWarehouseControlMessage
+{
+    public string objectId;
+    public string type;
+    public string source;
+    public long timestamp;
+    public WarehouseControlData control;
+}
+
+[Serializable]
+public class ConveyorControlData
+{
+    public float currentSpeed;
+    public bool running;
+    public bool objectDetected;
+}
+
+[Serializable]
+public class CarControlData
+{
+    public float currentX;
+    public float currentZ;
+    public string status;
+    public bool atPickTarget;
+    public bool atDropTarget;
+    public bool carrying;
+}
+
+[Serializable]
+public class ArmControlData
+{
+    public float currentJ1;
+    public float currentJ2;
+    public float currentJ3;
+    public float currentJ4;
+    public float currentJ5;
+    public float currentJ6;
+    public bool finger1State;
+    public bool finger2State;
+    public string status;
+    public bool atPickTarget;
+    public bool atDropTarget;
+}
+
+[Serializable]
+public class WarehouseControlData
+{
+    public int remainingInA;
+    public int remainingInB;
+    public int deliveredToB;
+    public string batchStatus;
 }

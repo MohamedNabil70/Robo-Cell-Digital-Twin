@@ -19,7 +19,7 @@ public class MqttTwinClient : MonoBehaviour
     public string username = "";
     public string password = "";
     public string clientId = "unity_twin";
-    public string subscribeTopic = "factory/cell1/twin/+/+";
+    public string subscribeTopic = "factory/cell1/twin/+/control";
     public string[] subscribeTopics =
     {
         "factory/cell1/twin/+/control",
@@ -365,7 +365,7 @@ public class MqttTwinClient : MonoBehaviour
 
         if (telemetryManager == null)
         {
-            telemetryManager = FindFirstObjectByType<TelemetryManager>();
+            telemetryManager = FindAnyObjectByType<TelemetryManager>();
         }
 
         if (telemetryManager == null)
@@ -387,7 +387,7 @@ public class MqttTwinClient : MonoBehaviour
 
         if (messageRouter == null)
         {
-            messageRouter = FindFirstObjectByType<MqttTwinMessageRouter>();
+            messageRouter = FindAnyObjectByType<MqttTwinMessageRouter>();
         }
 
         if (messageRouter == null)
@@ -407,40 +407,44 @@ public class MqttTwinClient : MonoBehaviour
     {
         var topics = new List<string>();
         var seen = new HashSet<string>();
+        bool addedTwinTopic = false;
 
         if (subscribeTopics != null)
         {
             foreach (string topic in subscribeTopics)
             {
-                AddSubscribeTopic(topic, topics, seen);
+                addedTwinTopic |= AddSubscribeTopic(topic, topics, seen);
             }
         }
 
-        if (topics.Count == 0)
+        if (!addedTwinTopic)
         {
-            AddSubscribeTopic(subscribeTopic, topics, seen);
+            addedTwinTopic = AddSubscribeTopic(subscribeTopic, topics, seen);
         }
 
         if (topics.Count == 0)
         {
-            topics.Add("factory/cell1/twin/+/+");
+            topics.Add("factory/cell1/twin/+/control");
         }
 
         return topics;
     }
 
-    static void AddSubscribeTopic(string topic, List<string> topics, HashSet<string> seen)
+    static bool AddSubscribeTopic(string topic, List<string> topics, HashSet<string> seen)
     {
         if (string.IsNullOrWhiteSpace(topic))
         {
-            return;
+            return false;
         }
 
         topic = topic.Trim();
         if (seen.Add(topic))
         {
             topics.Add(topic);
+            return true;
         }
+
+        return false;
     }
 
     void ScheduleReconnect()

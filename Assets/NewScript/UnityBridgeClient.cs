@@ -62,6 +62,10 @@ using UnityEngine;
 /// </summary>
 public class UnityBridgeClient : MonoBehaviour
 {
+    [Header("Legacy TCP Bridge")]
+    [Tooltip("Enable only when using the old Program.cs OPC UA TCP bridge. Keep false when Unity is driven by MQTT.")]
+    public bool enableTcpBridge = false;
+
     [Header("══ Offline / Simulation ═════════════════════════════════════════")]
     [Tooltip("TRUE = no TCP connection attempted. Use for fully offline testing. " +
              "Should match IO_Router.offlineMode.")]
@@ -106,7 +110,7 @@ public class UnityBridgeClient : MonoBehaviour
     public static event Action         OnDisconnected;
 
     // FIX E: IsConnected is true only when TCP stream is actually live
-    public bool IsConnected => !offlineMode && running && netStream != null;
+    public bool IsConnected => enableTcpBridge && !offlineMode && running && netStream != null;
 
     // ── Private ───────────────────────────────────────────────────────────────
     TcpClient     client;
@@ -129,6 +133,14 @@ public class UnityBridgeClient : MonoBehaviour
     // ─────────────────────────────────────────────────────────────────────────
     void Start()
     {
+        if (!enableTcpBridge)
+        {
+            offlineMode = true;
+            dbMode = "Disabled (MQTT)";
+            running = false;
+            return;
+        }
+
         dbMode = offlineMode ? "Offline" : "PLC";
 
         if (offlineMode)
@@ -160,6 +172,7 @@ public class UnityBridgeClient : MonoBehaviour
     // ─────────────────────────────────────────────────────────────────────────
     void Update()
     {
+        if (!enableTcpBridge) return;
         if (offlineMode) return;
 
         dbConnected  = running;
@@ -223,6 +236,8 @@ public class UnityBridgeClient : MonoBehaviour
     // ─────────────────────────────────────────────────────────────────────────
     IEnumerator ConnectLoop()
     {
+        if (!enableTcpBridge) yield break;
+
         while (!running)
         {
             if (TryConnect()) yield break;
@@ -336,6 +351,11 @@ public class UnityBridgeClient : MonoBehaviour
     // ── Send ──────────────────────────────────────────────────────────────────
     public void Send(string tag, bool value)
     {
+        if (!enableTcpBridge)
+        {
+            return;
+        }
+
         if (!running)
         {
             if (!offlineMode)

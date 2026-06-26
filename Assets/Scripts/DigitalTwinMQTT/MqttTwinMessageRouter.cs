@@ -94,12 +94,12 @@ public class MqttTwinMessageRouter : MonoBehaviour
 
         if (statusStore == null && autoCreateDependencies)
         {
-            statusStore = FindFirstObjectByType<TwinObjectStatusStore>();
+            statusStore = FindAnyObjectByType<TwinObjectStatusStore>();
         }
 
         if (controlRouter == null && autoCreateDependencies)
         {
-            controlRouter = FindFirstObjectByType<TwinControlRouter>();
+            controlRouter = FindAnyObjectByType<TwinControlRouter>();
         }
 
         if (statusStore == null && autoCreateDependencies)
@@ -113,5 +113,6 @@ public class MqttTwinMessageRouter : MonoBehaviour
             var routerObject = new GameObject("TwinControlRouter");
             controlRouter = routerObject.AddComponent<TwinControlRouter>();
         }
+
     }
 }
