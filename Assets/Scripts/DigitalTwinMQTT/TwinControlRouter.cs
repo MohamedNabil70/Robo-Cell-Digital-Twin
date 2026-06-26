@@ -213,7 +213,10 @@ public class TwinControlRouter : MonoBehaviour
 
         warehouseStateStore.UpdateWarehouseState(cellId, payload, rawJson);
 
-        if (applyWarehouseSnapshotsToScene)
+        bool isLegacyWholeWarehouse = entry == null ||
+            string.Equals(objectId, "warehouse", StringComparison.OrdinalIgnoreCase);
+
+        if (applyWarehouseSnapshotsToScene && isLegacyWholeWarehouse)
         {
             if (warehouseManager == null)
             {

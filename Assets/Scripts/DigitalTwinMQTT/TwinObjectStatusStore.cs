@@ -120,7 +120,9 @@ public struct TwinObjectStatus
             Speed = payload?.speed ?? 0f,
             Temperature = payload?.temperature ?? 0f,
             Vibration = payload?.vibration ?? 0f,
-            AiStatus = payload?.aiStatus ?? string.Empty,
+            AiStatus = !string.IsNullOrWhiteSpace(payload?.aiStatus)
+                ? payload.aiStatus
+                : payload?.ai_status ?? string.Empty,
             AiConfidence = payload?.aiConfidence ?? 0f,
             Message = payload?.message ?? string.Empty,
             RecommendedAction = payload?.recommendedAction ?? string.Empty,
