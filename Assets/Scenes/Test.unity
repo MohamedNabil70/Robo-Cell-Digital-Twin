@@ -4041,7 +4041,7 @@ Transform:
   m_GameObject: {fileID: 386122244}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.05, y: 22.44, z: -5.88}
+  m_LocalPosition: {x: 10.05, y: 22.02, z: -5.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5483,7 +5483,7 @@ Transform:
   m_GameObject: {fileID: 651432291}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 44.95, y: 12.27, z: -9.8}
+  m_LocalPosition: {x: 44.8, y: 17.74, z: -8.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5745,7 +5745,7 @@ Transform:
   m_GameObject: {fileID: 682855876}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.29, y: 22.67, z: -10.44}
+  m_LocalPosition: {x: -9.29, y: 22.27, z: -10.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8570,7 +8570,7 @@ Transform:
   m_GameObject: {fileID: 1008678560}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 26.42, y: 24.07, z: -9.23}
+  m_LocalPosition: {x: 26.42, y: 22.49, z: -9.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9586,7 +9586,7 @@ Transform:
   m_GameObject: {fileID: 1293108989}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.8051534, y: -0.4332624, z: 5.580938}
+  m_LocalPosition: {x: -5.429, y: -0.4332624, z: 5.580938}
   m_LocalScale: {x: 0.037674993, y: 0.037674993, z: 0.037674993}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14416,7 +14416,7 @@ Transform:
   m_GameObject: {fileID: 1673232770}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -27.51495, y: 22.67, z: -10.85}
+  m_LocalPosition: {x: -27.51495, y: 22.1, z: -10.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17462,14 +17462,14 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1745096342}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
