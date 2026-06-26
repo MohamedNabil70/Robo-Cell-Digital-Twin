@@ -12,6 +12,7 @@ public class TwinControlRouter : MonoBehaviour
 
     [Header("Behavior")]
     public bool autoCreateStores = true;
+    public bool autoAddReceiverComponents = true;
     public bool logAppliedControl = false;
     public bool applyWarehouseSnapshotsToScene = true;
 
@@ -47,6 +48,14 @@ public class TwinControlRouter : MonoBehaviour
         {
             Debug.LogWarning($"[TwinControlRouter] Ignored empty control JSON for '{objectId}'.");
             return false;
+        }
+
+        TwinControlEnvelope envelope = ParseJson<TwinControlEnvelope>(rawJson, objectId);
+        string payloadObjectId = envelope?.objectId;
+        if (!string.IsNullOrWhiteSpace(payloadObjectId) &&
+            !string.Equals(payloadObjectId.Trim(), objectId.Trim(), StringComparison.OrdinalIgnoreCase))
+        {
+            Debug.LogWarning($"[TwinControlRouter] Topic objectId '{objectId}' differs from payload objectId '{payloadObjectId}'. Routing by topic.");
         }
 
         if (registry == null)
@@ -103,139 +112,334 @@ public class TwinControlRouter : MonoBehaviour
 
     bool ApplyRobotArmControl(TwinObjectRegistryEntry entry, string rawJson)
     {
-        TwinRobotArmControlPayload payload = ParseJson<TwinRobotArmControlPayload>(rawJson, entry.objectId);
-        if (payload == null)
+        TwinArmControlMessage message = ParseJson<TwinArmControlMessage>(rawJson, entry.objectId);
+        ArmControlData control = message?.control;
+        long timestamp = message != null ? message.timestamp : 0;
+
+        if (control == null)
         {
+            TwinRobotArmControlPayload legacy = ParseJson<TwinRobotArmControlPayload>(rawJson, entry.objectId);
+            if (legacy?.joints == null || legacy.joints.Length < 6)
+            {
+                Debug.LogWarning($"[TwinControlRouter] Robot arm '{entry.objectId}' control must include semantic control.currentJ1..currentJ6 values.");
+                return false;
+            }
+
+            control = new ArmControlData
+            {
+                currentJ1 = legacy.joints[0],
+                currentJ2 = legacy.joints[1],
+                currentJ3 = legacy.joints[2],
+                currentJ4 = legacy.joints[3],
+                currentJ5 = legacy.joints[4],
+                currentJ6 = legacy.joints[5],
+                finger1State = legacy.finger1State,
+                finger2State = legacy.finger2State,
+                status = legacy.status,
+                atPickTarget = legacy.atPickTarget,
+                atDropTarget = legacy.atDropTarget
+            };
+            timestamp = legacy.timestamp;
+        }
+
+        ArmControlReceiver receiver = GetOrAddArmReceiver(entry);
+        if (receiver == null)
+        {
+            Debug.LogWarning($"[TwinControlRouter] Robot arm '{entry.objectId}' has no ArmControlReceiver and no target object to add one.");
             return false;
         }
 
-        if (entry.robotArm == null)
-        {
-            Debug.LogWarning($"[TwinControlRouter] Registry entry '{entry.objectId}' has no RobotArmController.");
-            return false;
-        }
+        receiver.ApplyControl(control);
 
-        float[] joints = payload.joints;
-        if (joints == null || joints.Length < 6)
-        {
-            Debug.LogWarning($"[TwinControlRouter] Robot arm '{entry.objectId}' control must include six joint values.");
-            return false;
-        }
-
-        ApplyJointAngle(entry.robotArm.joint1, entry.robotArm.j1Axis, joints[0]);
-        ApplyJointAngle(entry.robotArm.joint2, entry.robotArm.j2Axis, joints[1]);
-        ApplyJointAngle(entry.robotArm.joint3, entry.robotArm.j3Axis, joints[2]);
-        ApplyJointAngle(entry.robotArm.joint4, entry.robotArm.j4Axis, joints[3]);
-        ApplyJointAngle(entry.robotArm.joint5, entry.robotArm.j5Axis, joints[4]);
-        ApplyJointAngle(entry.robotArm.joint6, entry.robotArm.j6Axis, joints[5]);
-
-        entry.lastStatus = payload.status ?? string.Empty;
-        entry.lastFinger1State = payload.finger1State;
-        entry.lastFinger2State = payload.finger2State;
-        entry.lastAtPickTarget = payload.atPickTarget;
-        entry.lastAtDropTarget = payload.atDropTarget;
-        entry.lastSourceTimestamp = payload.timestamp;
+        entry.lastStatus = control.status ?? string.Empty;
+        entry.lastFinger1State = control.finger1State;
+        entry.lastFinger2State = control.finger2State;
+        entry.lastAtPickTarget = control.atPickTarget;
+        entry.lastAtDropTarget = control.atDropTarget;
+        entry.lastSourceTimestamp = timestamp;
         entry.lastAppliedUtc = DateTime.UtcNow.ToString("O");
         return true;
     }
 
     bool ApplyCarControl(TwinObjectRegistryEntry entry, string rawJson)
     {
-        TwinCarControlPayload payload = ParseJson<TwinCarControlPayload>(rawJson, entry.objectId);
-        if (payload == null)
+        TwinCarControlMessage message = ParseJson<TwinCarControlMessage>(rawJson, entry.objectId);
+        CarControlData control = message?.control;
+        long timestamp = message != null ? message.timestamp : 0;
+
+        if (control == null)
         {
+            TwinCarControlPayload legacy = ParseJson<TwinCarControlPayload>(rawJson, entry.objectId);
+            if (legacy == null)
+            {
+                return false;
+            }
+
+            control = new CarControlData
+            {
+                currentX = legacy.currentX,
+                currentZ = legacy.currentZ,
+                status = legacy.status,
+                atPickTarget = legacy.atPickTarget,
+                atDropTarget = legacy.atDropTarget,
+                carrying = legacy.carrying
+            };
+            timestamp = legacy.timestamp;
+        }
+
+        CarControlReceiver receiver = GetOrAddCarReceiver(entry);
+        if (receiver == null)
+        {
+            Debug.LogWarning($"[TwinControlRouter] Car '{entry.objectId}' has no CarControlReceiver and no target object to add one.");
             return false;
         }
 
-        if (entry.carTransform == null)
-        {
-            Debug.LogWarning($"[TwinControlRouter] Registry entry '{entry.objectId}' has no car Transform.");
-            return false;
-        }
+        receiver.ApplyControl(entry.objectId, control);
 
-        Vector3 position = entry.carTransform.position;
-        position.x = payload.currentX;
-        position.z = payload.currentZ;
-        entry.carTransform.position = position;
-
-        entry.lastStatus = payload.status ?? string.Empty;
-        entry.lastAtPickTarget = payload.atPickTarget;
-        entry.lastAtDropTarget = payload.atDropTarget;
-        entry.lastCarrying = payload.carrying;
-        entry.lastSourceTimestamp = payload.timestamp;
+        entry.lastStatus = control.status ?? string.Empty;
+        entry.lastAtPickTarget = control.atPickTarget;
+        entry.lastAtDropTarget = control.atDropTarget;
+        entry.lastCarrying = control.carrying;
+        entry.lastSourceTimestamp = timestamp;
         entry.lastAppliedUtc = DateTime.UtcNow.ToString("O");
         return true;
     }
 
     bool ApplyConveyorControl(TwinObjectRegistryEntry entry, string rawJson)
     {
-        TwinConveyorControlPayload payload = ParseJson<TwinConveyorControlPayload>(rawJson, entry.objectId);
-        if (payload == null)
+        TwinConveyorControlMessage message = ParseJson<TwinConveyorControlMessage>(rawJson, entry.objectId);
+        ConveyorControlData control = message?.control;
+        long timestamp = message != null ? message.timestamp : 0;
+
+        if (control == null)
         {
+            TwinConveyorControlPayload legacy = ParseJson<TwinConveyorControlPayload>(rawJson, entry.objectId);
+            if (legacy == null)
+            {
+                return false;
+            }
+
+            control = new ConveyorControlData
+            {
+                currentSpeed = legacy.currentSpeed,
+                running = legacy.running,
+                objectDetected = legacy.objectDetected
+            };
+            timestamp = legacy.timestamp;
+        }
+
+        ConveyorControlReceiver receiver = GetOrAddConveyorReceiver(entry);
+        if (receiver == null)
+        {
+            Debug.LogWarning($"[TwinControlRouter] Conveyor '{entry.objectId}' has no ConveyorControlReceiver and no target object to add one.");
             return false;
         }
 
-        if (entry.conveyor == null)
-        {
-            Debug.LogWarning($"[TwinControlRouter] Registry entry '{entry.objectId}' has no ConveyorMotor.");
-            return false;
-        }
+        receiver.ApplyControl(control);
 
-        entry.conveyor.speed = payload.currentSpeed;
-        SimulateTag(entry.runningTag, payload.running);
-        SimulateTag(entry.objectDetectedTag, payload.objectDetected);
-
-        entry.lastStatus = payload.running ? "running" : "stopped";
-        entry.lastObjectDetected = payload.objectDetected;
-        entry.lastSourceTimestamp = payload.timestamp;
+        entry.lastStatus = control.running ? "running" : "stopped";
+        entry.lastObjectDetected = control.objectDetected;
+        entry.lastSourceTimestamp = timestamp;
         entry.lastAppliedUtc = DateTime.UtcNow.ToString("O");
         return true;
     }
 
     bool ApplyWarehouseControl(string cellId, string objectId, string rawJson, TwinObjectRegistryEntry entry)
     {
-        TwinWarehouseControlPayload payload = ParseJson<TwinWarehouseControlPayload>(rawJson, objectId);
-        if (payload == null)
+        TwinWarehouseControlMessage message = ParseJson<TwinWarehouseControlMessage>(rawJson, objectId);
+        WarehouseControlData control = message?.control;
+        long timestamp = message != null ? message.timestamp : 0;
+
+        if (control == null)
         {
-            return false;
+            TwinWarehouseControlPayload legacy = ParseJson<TwinWarehouseControlPayload>(rawJson, objectId);
+            if (legacy == null)
+            {
+                return false;
+            }
+
+            control = new WarehouseControlData
+            {
+                remainingInA = legacy.remainingInA,
+                remainingInB = legacy.remainingInB > 0 ? legacy.remainingInB : legacy.deliveredToB,
+                deliveredToB = legacy.deliveredToB,
+                batchStatus = legacy.batchStatus
+            };
+            timestamp = legacy.timestamp;
         }
+
+        string resolvedObjectId = objectId;
+        if (message != null && !string.IsNullOrWhiteSpace(message.objectId))
+        {
+            resolvedObjectId = message.objectId;
+        }
+
+        var payload = new TwinWarehouseControlPayload
+        {
+            objectId = string.IsNullOrWhiteSpace(resolvedObjectId) ? "warehouse" : resolvedObjectId,
+            remainingInA = control.remainingInA,
+            remainingInB = control.remainingInB,
+            deliveredToB = control.remainingInB > 0 ? control.remainingInB : control.deliveredToB,
+            batchStatus = control.batchStatus,
+            timestamp = timestamp
+        };
 
         if (warehouseStateStore == null)
         {
-            Debug.LogWarning("[TwinControlRouter] No TwinWarehouseStateStore is assigned.");
-            return false;
+            Debug.LogWarning("[TwinControlRouter] No TwinWarehouseStateStore is assigned. Warehouse control will still update visuals if a receiver exists.");
         }
-
-        if (string.IsNullOrWhiteSpace(payload.objectId))
+        else
         {
-            payload.objectId = string.IsNullOrWhiteSpace(objectId) ? "warehouse" : objectId;
+            warehouseStateStore.UpdateWarehouseState(cellId, payload, rawJson);
         }
-
-        warehouseStateStore.UpdateWarehouseState(cellId, payload, rawJson);
 
         bool isLegacyWholeWarehouse = entry == null ||
             string.Equals(objectId, "warehouse", StringComparison.OrdinalIgnoreCase);
 
         if (applyWarehouseSnapshotsToScene && isLegacyWholeWarehouse)
         {
-            if (warehouseManager == null)
+            WarehouseControlReceiver receiver = GetOrAddWarehouseReceiver(entry);
+            if (receiver != null)
             {
-                Debug.LogWarning("[TwinControlRouter] No WarehouseManager is assigned. Warehouse counts were stored but not applied to the scene.");
+                receiver.ApplyControl(control);
+            }
+            else if (warehouseManager != null)
+            {
+                warehouseManager.ApplyExternalWarehouseSnapshot(
+                    control.remainingInA,
+                    control.remainingInB > 0 ? control.remainingInB : control.deliveredToB,
+                    control.batchStatus);
             }
             else
             {
-                warehouseManager.ApplyExternalWarehouseSnapshot(payload.remainingInA, payload.deliveredToB, payload.batchStatus);
+                Debug.LogWarning("[TwinControlRouter] No WarehouseControlReceiver or WarehouseManager is assigned. Warehouse control was stored but not applied to the scene.");
             }
         }
 
         if (entry != null)
         {
-            entry.lastStatus = payload.batchStatus ?? string.Empty;
-            entry.lastSourceTimestamp = payload.timestamp;
+            entry.lastStatus = control.batchStatus ?? string.Empty;
+            entry.lastSourceTimestamp = timestamp;
             entry.lastAppliedUtc = DateTime.UtcNow.ToString("O");
         }
 
         return true;
+    }
+
+    ArmControlReceiver GetOrAddArmReceiver(TwinObjectRegistryEntry entry)
+    {
+        if (entry == null)
+        {
+            return null;
+        }
+
+        entry.ResolveReferences();
+        if (entry.armReceiver == null && entry.targetObject != null)
+        {
+            entry.armReceiver = entry.targetObject.GetComponent<ArmControlReceiver>();
+        }
+
+        if (entry.armReceiver == null && autoAddReceiverComponents && entry.targetObject != null)
+        {
+            entry.armReceiver = entry.targetObject.AddComponent<ArmControlReceiver>();
+        }
+
+        if (entry.armReceiver != null)
+        {
+            entry.armReceiver.Configure(entry.robotArm);
+        }
+
+        return entry.armReceiver;
+    }
+
+    CarControlReceiver GetOrAddCarReceiver(TwinObjectRegistryEntry entry)
+    {
+        if (entry == null)
+        {
+            return null;
+        }
+
+        entry.ResolveReferences();
+        GameObject target = entry.targetObject;
+        if (target == null && entry.carTransform != null)
+        {
+            target = entry.carTransform.gameObject;
+            entry.targetObject = target;
+        }
+
+        if (entry.carReceiver == null && target != null)
+        {
+            entry.carReceiver = target.GetComponent<CarControlReceiver>();
+        }
+
+        if (entry.carReceiver == null && autoAddReceiverComponents && target != null)
+        {
+            entry.carReceiver = target.AddComponent<CarControlReceiver>();
+        }
+
+        if (entry.carReceiver != null)
+        {
+            entry.carReceiver.Configure(entry.carTransform);
+        }
+
+        return entry.carReceiver;
+    }
+
+    ConveyorControlReceiver GetOrAddConveyorReceiver(TwinObjectRegistryEntry entry)
+    {
+        if (entry == null)
+        {
+            return null;
+        }
+
+        entry.ResolveReferences();
+        if (entry.conveyorReceiver == null && entry.targetObject != null)
+        {
+            entry.conveyorReceiver = entry.targetObject.GetComponent<ConveyorControlReceiver>();
+        }
+
+        if (entry.conveyorReceiver == null && autoAddReceiverComponents && entry.targetObject != null)
+        {
+            entry.conveyorReceiver = entry.targetObject.AddComponent<ConveyorControlReceiver>();
+        }
+
+        if (entry.conveyorReceiver != null)
+        {
+            entry.conveyorReceiver.Configure(entry.conveyor, entry.runningTag, entry.objectDetectedTag);
+        }
+
+        return entry.conveyorReceiver;
+    }
+
+    WarehouseControlReceiver GetOrAddWarehouseReceiver(TwinObjectRegistryEntry entry)
+    {
+        GameObject target = entry?.targetObject;
+        if (target == null && warehouseManager != null)
+        {
+            target = warehouseManager.gameObject;
+        }
+
+        WarehouseControlReceiver receiver = entry?.warehouseReceiver;
+        if (receiver == null && target != null)
+        {
+            receiver = target.GetComponent<WarehouseControlReceiver>();
+        }
+
+        if (receiver == null && autoAddReceiverComponents && target != null)
+        {
+            receiver = target.AddComponent<WarehouseControlReceiver>();
+        }
+
+        if (receiver != null)
+        {
+            receiver.Configure(warehouseManager);
+            if (entry != null)
+            {
+                entry.warehouseReceiver = receiver;
+            }
+        }
+
+        return receiver;
     }
 
     static void ApplyJointAngle(Transform joint, RobotArmController.RotAxis axis, float angle)
@@ -300,7 +504,7 @@ public class TwinControlRouter : MonoBehaviour
 
         if (registry == null && autoCreateStores)
         {
-            registry = FindFirstObjectByType<TwinObjectRegistry>();
+            registry = FindAnyObjectByType<TwinObjectRegistry>();
         }
 
         if (registry == null && autoCreateStores)
@@ -317,7 +521,7 @@ public class TwinControlRouter : MonoBehaviour
 
         if (warehouseStateStore == null && autoCreateStores)
         {
-            warehouseStateStore = FindFirstObjectByType<TwinWarehouseStateStore>();
+            warehouseStateStore = FindAnyObjectByType<TwinWarehouseStateStore>();
         }
 
         if (warehouseStateStore == null && autoCreateStores)
@@ -333,7 +537,7 @@ public class TwinControlRouter : MonoBehaviour
 
         if (warehouseManager == null && autoCreateStores)
         {
-            warehouseManager = FindFirstObjectByType<WarehouseManager>();
+            warehouseManager = FindAnyObjectByType<WarehouseManager>();
         }
     }
 }

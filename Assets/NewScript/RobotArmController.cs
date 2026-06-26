@@ -281,7 +281,8 @@ public class RobotArmController : MonoBehaviour
         }
 
         BuildLists();
-        dbMode = offlineMode ? "Offline" : "PLC";
+        bool bridgeMode = IO_Router.Instance != null && IO_Router.Instance.sendOutputsToBridge;
+        dbMode = bridgeMode ? (offlineMode ? "Offline" : "PLC") : "MQTT";
 
         waitGripDelay = new WaitForSeconds(gripDelay);
         waitPause     = new WaitForSeconds(pauseBetweenMoves);
@@ -487,7 +488,8 @@ public class RobotArmController : MonoBehaviour
                 ? "Required motion poses are captured; Home uses the zero rest pose."
                 : "Core poses (Home, WaypointA, Grab) are non-zero.");
 
-        if (!offlineMode)
+        bool bridgeMode = IO_Router.Instance != null && IO_Router.Instance.sendOutputsToBridge;
+        if (!offlineMode && bridgeMode)
         {
             if (string.IsNullOrEmpty(plcTriggerTag))
                 Warn("offlineMode=false but plcTriggerTag is empty.");

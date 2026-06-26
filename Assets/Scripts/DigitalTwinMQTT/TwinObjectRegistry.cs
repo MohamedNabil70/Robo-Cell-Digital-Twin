@@ -75,6 +75,12 @@ public class TwinObjectRegistryEntry
     public ConveyorMotor conveyor;
     public Transform carTransform;
 
+    [Header("Optional Control Receivers")]
+    public ArmControlReceiver armReceiver;
+    public CarControlReceiver carReceiver;
+    public ConveyorControlReceiver conveyorReceiver;
+    public WarehouseControlReceiver warehouseReceiver;
+
     [Header("Optional IO Tags")]
     public string runningTag = "";
     public string eStopTag = "";
@@ -119,6 +125,26 @@ public class TwinObjectRegistryEntry
         if (carTransform == null)
         {
             carTransform = targetObject.transform;
+        }
+
+        if (armReceiver == null)
+        {
+            armReceiver = targetObject.GetComponent<ArmControlReceiver>();
+        }
+
+        if (carReceiver == null)
+        {
+            carReceiver = targetObject.GetComponent<CarControlReceiver>();
+        }
+
+        if (conveyorReceiver == null)
+        {
+            conveyorReceiver = targetObject.GetComponent<ConveyorControlReceiver>();
+        }
+
+        if (warehouseReceiver == null)
+        {
+            warehouseReceiver = targetObject.GetComponent<WarehouseControlReceiver>();
         }
     }
 }

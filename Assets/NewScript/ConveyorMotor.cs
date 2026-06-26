@@ -167,6 +167,7 @@ public class ConveyorMotor : MonoBehaviour
         if (string.IsNullOrEmpty(plcTag))
         {
             plcOn = true; dbPlcOn = true;
+            if (IO_Router.Instance != null && IO_Router.Instance.sendOutputsToBridge)
             Debug.LogWarning($"[CONVEYOR:{name}] plcTag empty — Simulation/Offline mode.");
         }
         else
@@ -176,7 +177,7 @@ public class ConveyorMotor : MonoBehaviour
                 // FIX 3: removed hard `return` in offline mode.
                 // Log a warning so the developer knows the PLC write arrived
                 // but still apply it — this makes runtime mode-switching safe.
-                if (offlineMode)
+                if (offlineMode && IO_Router.Instance != null && IO_Router.Instance.sendOutputsToBridge)
                     Debug.LogWarning($"[CONVEYOR:{name}] PLC tag '{plcTag}'={v} received while " +
                                      "offlineMode=TRUE. Applying anyway. Set offlineMode=FALSE " +
                                      "in Inspector to suppress this warning.");
