@@ -4599,6 +4599,7 @@ MonoBehaviour:
   disableConveyorWhenStoppedWithoutRunTag: 1
   forceConveyorToPlcMode: 1
   parentDetectedObjectToAnchor: 1
+  allowLocalPayloadVisuals: 1
   conveyorMovementDirection: {x: 1, y: 0, z: 0}
   cubeOnConveyorScale: {x: 4, y: 4, z: 4}
   goalSpeed: 0
@@ -7973,6 +7974,7 @@ MonoBehaviour:
   hidePayloadWhenNotCarrying: 1
   hideOneShelvingAItemOnCar1Pickup: 1
   placeManufacturedObjectOnCar2Drop: 1
+  allowLocalPayloadVisuals: 1
   payloadOnCarScale: {x: 4, y: 4, z: 4}
   hasTarget: 0
   targetPosition: {x: 0, y: 0, z: 0}
@@ -8618,6 +8620,7 @@ MonoBehaviour:
   hidePayloadWhenNotCarrying: 1
   hideOneShelvingAItemOnCar1Pickup: 1
   placeManufacturedObjectOnCar2Drop: 1
+  allowLocalPayloadVisuals: 1
   payloadOnCarScale: {x: 4, y: 4, z: 4}
   hasTarget: 0
   targetPosition: {x: 0, y: 0, z: 0}
@@ -14122,6 +14125,7 @@ MonoBehaviour:
   tel_GateDelivery: 1
   tel_GateCar1: 1
   tel_GateDispatch: 1
+  warehouseControlMode: 0
   externalWarehouseControlOnly: 1
   logExternalWarehouseSync: 1
   useSeparateMqttShelfVisuals: 1
@@ -16171,6 +16175,7 @@ MonoBehaviour:
   disableConveyorWhenStoppedWithoutRunTag: 1
   forceConveyorToPlcMode: 1
   parentDetectedObjectToAnchor: 1
+  allowLocalPayloadVisuals: 1
   conveyorMovementDirection: {x: 1, y: 0, z: 0}
   cubeOnConveyorScale: {x: 4, y: 4, z: 4}
   goalSpeed: 0
