@@ -22,6 +22,8 @@ public class CarControlReceiver : MonoBehaviour
     public bool hidePayloadWhenNotCarrying = true;
     public bool hideOneShelvingAItemOnCar1Pickup = true;
     public bool placeManufacturedObjectOnCar2Drop = true;
+    [Tooltip("When false, this receiver only records MQTT car state and does not spawn, hide, or move payload visuals.")]
+    public bool allowLocalPayloadVisuals = true;
     public Vector3 payloadOnCarScale = new Vector3(4f, 4f, 4f);
 
     [Header("Diagnostics")]
@@ -98,6 +100,11 @@ public class CarControlReceiver : MonoBehaviour
         UpdateRuntimePositionDiagnostics();
     }
 
+    public void SetLocalPayloadVisualsAllowed(bool allowed)
+    {
+        allowLocalPayloadVisuals = allowed;
+    }
+
     public void ApplyControl(string objectId, CarControlData control)
     {
         if (control == null)
@@ -130,32 +137,35 @@ public class CarControlReceiver : MonoBehaviour
         bool dropStarted = control.hasAtDropTarget && !lastAtDropTarget && control.atDropTarget;
         bool carryingNow = control.hasCarrying ? control.carrying : lastCarrying;
 
-        if (control.hasCarrying && control.carrying)
+        if (allowLocalPayloadVisuals)
         {
-            EnsurePayloadOnCar();
-        }
-        else if (control.hasCarrying && hidePayloadWhenNotCarrying)
-        {
-            SetPayloadVisible(false);
-        }
+            if (control.hasCarrying && control.carrying)
+            {
+                EnsurePayloadOnCar();
+            }
+            else if (control.hasCarrying && hidePayloadWhenNotCarrying)
+            {
+                SetPayloadVisible(false);
+            }
 
-        if (IsCar1(objectId) &&
-            control.hasAtPickTarget &&
-            control.atPickTarget &&
-            carryingNow &&
-            (carryingStarted || pickStarted))
-        {
-            EnsurePayloadOnCar();
-            HideNextShelvingAItem();
-        }
+            if (IsCar1(objectId) &&
+                control.hasAtPickTarget &&
+                control.atPickTarget &&
+                carryingNow &&
+                (carryingStarted || pickStarted))
+            {
+                EnsurePayloadOnCar();
+                HideNextShelvingAItem();
+            }
 
-        if (IsCar2(objectId) &&
-            control.hasAtDropTarget &&
-            control.atDropTarget &&
-            carryingNow &&
-            (dropStarted || carryingStarted))
-        {
-            PlaceManufacturedObjectInShelvingB();
+            if (IsCar2(objectId) &&
+                control.hasAtDropTarget &&
+                control.atDropTarget &&
+                carryingNow &&
+                (dropStarted || carryingStarted))
+            {
+                PlaceManufacturedObjectInShelvingB();
+            }
         }
 
         lastStatus = control.status ?? string.Empty;

@@ -9,6 +9,12 @@ using UnityEditor;
 /// WarehouseManager — master batch controller with integrated QC routing.
 /// (Original functionality preserved. Telemetry section added at bottom of Inspector.)
 /// </summary>
+public enum WarehouseControlMode
+{
+    DirectSnapshot,
+    EventDrivenPayloadFlow
+}
+
 public class WarehouseManager : MonoBehaviour
 {
     public static WarehouseManager Instance { get; private set; }
@@ -134,6 +140,8 @@ public class WarehouseManager : MonoBehaviour
     [SerializeField] bool  tel_GateDispatch   = true;
 
     [Header("MQTT / External Warehouse Sync")]
+    [Tooltip("DirectSnapshot preserves warehouse/control remainingInA/B behavior. EventDrivenPayloadFlow makes WarehouseManager the owner of payload visuals.")]
+    public WarehouseControlMode warehouseControlMode = WarehouseControlMode.DirectSnapshot;
     [Tooltip("When true, WarehouseManager does not spawn/reorder shelf visuals or run the local batch flow until warehouse/control snapshots arrive.")]
     public bool externalWarehouseControlOnly = true;
     [Tooltip("Log whenever an inbound warehouse/control snapshot corrects shelf occupancy.")]
@@ -166,6 +174,7 @@ public class WarehouseManager : MonoBehaviour
     int   totalAllBatchDefective = 0;
     readonly Queue<float> deliveryTimestamps = new Queue<float>(); // for throughput
     bool hasReceivedExternalWarehouseControl = false;
+    bool warnedEventDrivenSnapshotIgnored = false;
 
     // ─────────────────────────────────────────────────────────────────────────
     List<GameObject> spawnedObjects = new List<GameObject>();
@@ -189,12 +198,15 @@ public class WarehouseManager : MonoBehaviour
     Coroutine dispatchCoroutine = null;
 
     System.Action<bool> cbStartBatch, cbStop, cbPause, cbResume;
+    WarehouseControlMode appliedWarehouseControlMode;
+    bool hasAppliedWarehouseControlMode;
 
     // ─────────────────────────────────────────────────────────────────────────
     void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
+        ApplyPayloadVisualOwnershipMode();
     }
 
     void OnEnable()  => CubeProcessor.OnProcessingComplete += HandleQCReport;
@@ -203,6 +215,11 @@ public class WarehouseManager : MonoBehaviour
     void Update()
     {
         if (!Application.isPlaying) return;
+
+        if (!hasAppliedWarehouseControlMode || appliedWarehouseControlMode != warehouseControlMode)
+        {
+            ApplyPayloadVisualOwnershipMode();
+        }
 
         // Batch elapsed
         if (batchStarted && !batchComplete)
@@ -250,6 +267,8 @@ public class WarehouseManager : MonoBehaviour
 
     void Start()
     {
+        ApplyPayloadVisualOwnershipMode();
+
         if (robotCar1 == null)
         {
             robotCar1 = FindObjectOfType<RobotCar1>();
@@ -345,6 +364,34 @@ public class WarehouseManager : MonoBehaviour
 
     [ContextMenu("Diagnose Tag Subscriptions")]
     public void DiagnoseTagSubscriptions() => TagSubscriptionHelper.DiagnoseAll();
+
+    [ContextMenu("Apply Payload Visual Ownership Mode")]
+    public void ApplyPayloadVisualOwnershipMode()
+    {
+        bool allowLocalPayloadVisuals = warehouseControlMode != WarehouseControlMode.EventDrivenPayloadFlow;
+
+        CarControlReceiver[] carReceivers = FindObjectsByType<CarControlReceiver>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        for (int i = 0; i < carReceivers.Length; i++)
+        {
+            if (carReceivers[i] != null)
+                carReceivers[i].SetLocalPayloadVisualsAllowed(allowLocalPayloadVisuals);
+        }
+
+        ConveyorControlReceiver[] conveyorReceivers = FindObjectsByType<ConveyorControlReceiver>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        for (int i = 0; i < conveyorReceivers.Length; i++)
+        {
+            if (conveyorReceivers[i] != null)
+                conveyorReceivers[i].SetLocalPayloadVisualsAllowed(allowLocalPayloadVisuals);
+        }
+
+        appliedWarehouseControlMode = warehouseControlMode;
+        hasAppliedWarehouseControlMode = true;
+
+        if (Application.isPlaying)
+        {
+            Debug.Log($"[WH] Payload visual ownership mode applied: {warehouseControlMode}. Local car/conveyor payload visuals allowed={allowLocalPayloadVisuals}.");
+        }
+    }
 
     // ── Spawn ─────────────────────────────────────────────────────────────────
     void SpawnWarehouseAObjects()
@@ -626,6 +673,17 @@ public class WarehouseManager : MonoBehaviour
 
     public void ApplyExternalWarehouseSnapshot(int remainingInA, int deliveredToB, string batchStatus)
     {
+        if (warehouseControlMode == WarehouseControlMode.EventDrivenPayloadFlow)
+        {
+            if (!warnedEventDrivenSnapshotIgnored)
+            {
+                Debug.LogWarning("[WH] Ignored direct warehouse remainingInA/remainingInB snapshot because WarehouseControlMode is EventDrivenPayloadFlow.");
+                warnedEventDrivenSnapshotIgnored = true;
+            }
+
+            return;
+        }
+
         if (remainingInA > 25)
         {
             Debug.LogWarning($"[WH] Ignored MQTT warehouse snapshot because remainingInA={remainingInA} exceeds 25.");

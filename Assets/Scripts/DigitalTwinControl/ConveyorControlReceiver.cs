@@ -20,6 +20,8 @@ public class ConveyorControlReceiver : MonoBehaviour
     public bool disableConveyorWhenStoppedWithoutRunTag = true;
     public bool forceConveyorToPlcMode = true;
     public bool parentDetectedObjectToAnchor = true;
+    [Tooltip("When false, this receiver only records MQTT conveyor state and does not spawn, hide, or move payload visuals.")]
+    public bool allowLocalPayloadVisuals = true;
     public Vector3 conveyorMovementDirection = Vector3.right;
     public Vector3 cubeOnConveyorScale = new Vector3(1f, 1f, 1f);
 
@@ -50,6 +52,7 @@ public class ConveyorControlReceiver : MonoBehaviour
     {
         bool canMoveObject = running &&
             objectDetected &&
+            allowLocalPayloadVisuals &&
             objectOnConveyor != null &&
             objectOnConveyor.activeInHierarchy;
 
@@ -72,6 +75,11 @@ public class ConveyorControlReceiver : MonoBehaviour
     public void ApplyControl(ConveyorControlData control)
     {
         ApplyControl(string.Empty, control);
+    }
+
+    public void SetLocalPayloadVisualsAllowed(bool allowed)
+    {
+        allowLocalPayloadVisuals = allowed;
     }
 
     public void ApplyControl(string objectId, ConveyorControlData control)
@@ -105,11 +113,11 @@ public class ConveyorControlReceiver : MonoBehaviour
         if (control.hasObjectDetected)
         {
             objectDetected = control.objectDetected;
-            if (objectDetected)
+            if (allowLocalPayloadVisuals && objectDetected)
             {
                 EnsureObjectOnConveyor(lastObjectId);
             }
-            else
+            else if (allowLocalPayloadVisuals)
             {
                 HideObjectOnConveyor();
             }
