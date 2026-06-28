@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 public class TwinControlRouter : MonoBehaviour
@@ -177,14 +178,21 @@ public class TwinControlRouter : MonoBehaviour
 
             control = new CarControlData
             {
+                Car1_Target = legacy.Car1_Target,
+                Car2_Target = legacy.Car2_Target,
                 currentX = legacy.currentX,
-                currentZ = legacy.currentZ,
                 status = legacy.status,
                 atPickTarget = legacy.atPickTarget,
                 atDropTarget = legacy.atDropTarget,
                 carrying = legacy.carrying
             };
             timestamp = legacy.timestamp;
+        }
+
+        if (!PopulateCarPresence(rawJson, entry.objectId, control))
+        {
+            Debug.LogWarning($"[TwinControlRouter] Ignored incomplete car control for '{entry.objectId}'. Include control.Car1_Target/Car2_Target, control.currentX fallback, or a supported car control field.");
+            return false;
         }
 
         CarControlReceiver receiver = GetOrAddCarReceiver(entry);
@@ -197,9 +205,9 @@ public class TwinControlRouter : MonoBehaviour
         receiver.ApplyControl(entry.objectId, control);
 
         entry.lastStatus = control.status ?? string.Empty;
-        entry.lastAtPickTarget = control.atPickTarget;
-        entry.lastAtDropTarget = control.atDropTarget;
-        entry.lastCarrying = control.carrying;
+        if (control.hasAtPickTarget) entry.lastAtPickTarget = control.atPickTarget;
+        if (control.hasAtDropTarget) entry.lastAtDropTarget = control.atDropTarget;
+        if (control.hasCarrying) entry.lastCarrying = control.carrying;
         entry.lastSourceTimestamp = timestamp;
         entry.lastAppliedUtc = DateTime.UtcNow.ToString("O");
         return true;
@@ -228,6 +236,12 @@ public class TwinControlRouter : MonoBehaviour
             timestamp = legacy.timestamp;
         }
 
+        if (!PopulateConveyorPresence(rawJson, control))
+        {
+            Debug.LogWarning($"[TwinControlRouter] Ignored incomplete conveyor control for '{entry.objectId}'. Include control.objectDetected, control.running, or control.currentSpeed.");
+            return false;
+        }
+
         ConveyorControlReceiver receiver = GetOrAddConveyorReceiver(entry);
         if (receiver == null)
         {
@@ -235,10 +249,10 @@ public class TwinControlRouter : MonoBehaviour
             return false;
         }
 
-        receiver.ApplyControl(control);
+        receiver.ApplyControl(entry.objectId, control);
 
-        entry.lastStatus = control.running ? "running" : "stopped";
-        entry.lastObjectDetected = control.objectDetected;
+        if (control.hasRunning) entry.lastStatus = control.running ? "running" : "stopped";
+        if (control.hasObjectDetected) entry.lastObjectDetected = control.objectDetected;
         entry.lastSourceTimestamp = timestamp;
         entry.lastAppliedUtc = DateTime.UtcNow.ToString("O");
         return true;
@@ -268,6 +282,12 @@ public class TwinControlRouter : MonoBehaviour
             timestamp = legacy.timestamp;
         }
 
+        if (!PopulateWarehousePresence(rawJson, control))
+        {
+            Debug.LogWarning($"[TwinControlRouter] Ignored incomplete warehouse control for '{objectId}'. Include control.remainingInA and/or control.remainingInB.");
+            return false;
+        }
+
         string resolvedObjectId = objectId;
         if (message != null && !string.IsNullOrWhiteSpace(message.objectId))
         {
@@ -279,7 +299,7 @@ public class TwinControlRouter : MonoBehaviour
             objectId = string.IsNullOrWhiteSpace(resolvedObjectId) ? "warehouse" : resolvedObjectId,
             remainingInA = control.remainingInA,
             remainingInB = control.remainingInB,
-            deliveredToB = control.remainingInB > 0 ? control.remainingInB : control.deliveredToB,
+            deliveredToB = control.hasRemainingInB ? control.remainingInB : control.deliveredToB,
             batchStatus = control.batchStatus,
             timestamp = timestamp
         };
@@ -307,7 +327,7 @@ public class TwinControlRouter : MonoBehaviour
             {
                 warehouseManager.ApplyExternalWarehouseSnapshot(
                     control.remainingInA,
-                    control.remainingInB > 0 ? control.remainingInB : control.deliveredToB,
+                    control.hasRemainingInB ? control.remainingInB : control.deliveredToB,
                     control.batchStatus);
             }
             else
@@ -464,6 +484,270 @@ public class TwinControlRouter : MonoBehaviour
         }
 
         joint.localEulerAngles = euler;
+    }
+
+    static bool PopulateCarPresence(string rawJson, string topicObjectId, CarControlData control)
+    {
+        if (control == null || !TryGetControlObject(rawJson, out JObject controlJson))
+        {
+            return false;
+        }
+
+        bool hasCommand = false;
+        bool isCar1 = string.Equals(topicObjectId, "car1", StringComparison.OrdinalIgnoreCase);
+        bool isCar2 = string.Equals(topicObjectId, "car2", StringComparison.OrdinalIgnoreCase);
+        bool hasCar1Target = TryGetFloat(controlJson, "Car1_Target", out float car1Target);
+        bool hasCar2Target = TryGetFloat(controlJson, "Car2_Target", out float car2Target);
+
+        if (isCar1 && hasCar1Target)
+        {
+            control.Car1_Target = car1Target;
+            control.targetZ = car1Target;
+            control.hasTargetZ = true;
+            hasCommand = true;
+        }
+        else if (isCar2 && hasCar2Target)
+        {
+            control.Car2_Target = car2Target;
+            control.targetZ = car2Target;
+            control.hasTargetZ = true;
+            hasCommand = true;
+        }
+        else
+        {
+            if (isCar1 && hasCar2Target)
+            {
+                Debug.LogWarning("[TwinControlRouter] Ignored Car2_Target on car1 topic. Use control.Car1_Target for factory/cell1/twin/car1/control.");
+            }
+            else if (isCar2 && hasCar1Target)
+            {
+                Debug.LogWarning("[TwinControlRouter] Ignored Car1_Target on car2 topic. Use control.Car2_Target for factory/cell1/twin/car2/control.");
+            }
+
+            if (TryGetFloat(controlJson, "currentX", out float currentX))
+            {
+                control.currentX = currentX;
+                control.targetZ = currentX;
+                control.hasTargetZ = true;
+                control.hasCurrentX = true;
+                hasCommand = true;
+            }
+        }
+
+        if (TryGetString(controlJson, "status", out string status))
+        {
+            control.status = status;
+            hasCommand = true;
+        }
+
+        if (TryGetBool(controlJson, "carrying", out bool carrying))
+        {
+            control.carrying = carrying;
+            control.hasCarrying = true;
+            hasCommand = true;
+        }
+
+        if (TryGetBool(controlJson, "atPickTarget", out bool atPickTarget))
+        {
+            control.atPickTarget = atPickTarget;
+            control.hasAtPickTarget = true;
+            hasCommand = true;
+        }
+
+        if (TryGetBool(controlJson, "atDropTarget", out bool atDropTarget))
+        {
+            control.atDropTarget = atDropTarget;
+            control.hasAtDropTarget = true;
+            hasCommand = true;
+        }
+
+        return hasCommand;
+    }
+
+    static bool PopulateConveyorPresence(string rawJson, ConveyorControlData control)
+    {
+        if (control == null || !TryGetControlObject(rawJson, out JObject controlJson))
+        {
+            return false;
+        }
+
+        bool hasCommand = false;
+        if (TryGetFloat(controlJson, "currentSpeed", out float currentSpeed))
+        {
+            control.currentSpeed = currentSpeed;
+            control.hasCurrentSpeed = true;
+            hasCommand = true;
+        }
+
+        if (TryGetBool(controlJson, "running", out bool running))
+        {
+            control.running = running;
+            control.hasRunning = true;
+            hasCommand = true;
+        }
+
+        if (TryGetBool(controlJson, "objectDetected", out bool objectDetected))
+        {
+            control.objectDetected = objectDetected;
+            control.hasObjectDetected = true;
+            hasCommand = true;
+        }
+
+        return hasCommand;
+    }
+
+    static bool PopulateWarehousePresence(string rawJson, WarehouseControlData control)
+    {
+        if (control == null || !TryGetControlObject(rawJson, out JObject controlJson))
+        {
+            return false;
+        }
+
+        bool hasCommand = false;
+        if (TryGetInt(controlJson, "remainingInA", out int remainingInA))
+        {
+            control.remainingInA = remainingInA;
+            control.hasRemainingInA = true;
+            hasCommand = true;
+        }
+
+        if (TryGetInt(controlJson, "remainingInB", out int remainingInB))
+        {
+            control.remainingInB = remainingInB;
+            control.hasRemainingInB = true;
+            hasCommand = true;
+        }
+
+        if (TryGetInt(controlJson, "deliveredToB", out int deliveredToB))
+        {
+            control.deliveredToB = deliveredToB;
+            control.hasDeliveredToB = true;
+            hasCommand = true;
+        }
+
+        if (TryGetString(controlJson, "batchStatus", out string batchStatus))
+        {
+            control.batchStatus = batchStatus;
+            hasCommand = true;
+        }
+
+        return hasCommand;
+    }
+
+    static bool TryGetControlObject(string rawJson, out JObject controlObject)
+    {
+        controlObject = null;
+        try
+        {
+            JObject root = JObject.Parse(rawJson ?? "{}");
+            controlObject = GetObjectProperty(root, "control") ?? root;
+            return controlObject != null;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning($"[TwinControlRouter] Cannot inspect control JSON fields: {ex.Message}");
+            return false;
+        }
+    }
+
+    static JObject GetObjectProperty(JObject obj, string name)
+    {
+        JToken value = GetPropertyValue(obj, name);
+        return value as JObject;
+    }
+
+    static bool TryGetFloat(JObject obj, string name, out float value)
+    {
+        value = 0f;
+        JToken token = GetPropertyValue(obj, name);
+        if (token == null || token.Type == JTokenType.Null)
+        {
+            return false;
+        }
+
+        try
+        {
+            value = token.Value<float>();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning($"[TwinControlRouter] Ignored invalid float field '{name}': {ex.Message}");
+            return false;
+        }
+    }
+
+    static bool TryGetInt(JObject obj, string name, out int value)
+    {
+        value = 0;
+        JToken token = GetPropertyValue(obj, name);
+        if (token == null || token.Type == JTokenType.Null)
+        {
+            return false;
+        }
+
+        try
+        {
+            value = token.Value<int>();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning($"[TwinControlRouter] Ignored invalid int field '{name}': {ex.Message}");
+            return false;
+        }
+    }
+
+    static bool TryGetBool(JObject obj, string name, out bool value)
+    {
+        value = false;
+        JToken token = GetPropertyValue(obj, name);
+        if (token == null || token.Type == JTokenType.Null)
+        {
+            return false;
+        }
+
+        try
+        {
+            value = token.Value<bool>();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning($"[TwinControlRouter] Ignored invalid bool field '{name}': {ex.Message}");
+            return false;
+        }
+    }
+
+    static bool TryGetString(JObject obj, string name, out string value)
+    {
+        value = null;
+        JToken token = GetPropertyValue(obj, name);
+        if (token == null || token.Type == JTokenType.Null)
+        {
+            return false;
+        }
+
+        value = token.Value<string>();
+        return true;
+    }
+
+    static JToken GetPropertyValue(JObject obj, string name)
+    {
+        if (obj == null || string.IsNullOrEmpty(name))
+        {
+            return null;
+        }
+
+        foreach (JProperty property in obj.Properties())
+        {
+            if (string.Equals(property.Name, name, StringComparison.OrdinalIgnoreCase))
+            {
+                return property.Value;
+            }
+        }
+
+        return null;
     }
 
     static T ParseJson<T>(string rawJson, string objectId) where T : class
