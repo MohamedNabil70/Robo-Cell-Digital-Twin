@@ -3885,6 +3885,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d27b5381bf7c464998db26b1cbc2bab, type: 3}
       insertIndex: -1
       addedObject: {fileID: 611000002}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d27b5381bf7c464998db26b1cbc2bab, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1279909959}
   m_SourcePrefab: {fileID: 100100000, guid: 9d27b5381bf7c464998db26b1cbc2bab, type: 3}
 --- !u!4 &416822129 stripped
 Transform:
@@ -4459,7 +4462,6 @@ GameObject:
   m_Component:
   - component: {fileID: 577066038}
   - component: {fileID: 577066039}
-  - component: {fileID: 577066040}
   m_Layer: 0
   m_Name: RobotCar_Root 1
   m_TagString: Untagged
@@ -4544,63 +4546,6 @@ MonoBehaviour:
   tel_OdometerMeters: 0
   tel_AvgTripTime: 0
   tel_EStopCount: 0
---- !u!114 &577066040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 577066037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60de046e76a4fe34aa8e48b6f359d3c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CarControlReceiver
-  carTransform: {fileID: 577066038}
-  carPayloadAnchor: {fileID: 1452098561}
-  payloadOnCarObject: {fileID: 0}
-  payloadOnCarPrefab: {fileID: 0}
-  shelvingAItems:
-  - {fileID: 83756853}
-  - {fileID: 1289564894}
-  - {fileID: 2143035723}
-  - {fileID: 676312303}
-  - {fileID: 1551686012}
-  - {fileID: 2031242223}
-  - {fileID: 1740282879}
-  - {fileID: 839361323}
-  - {fileID: 143276846}
-  - {fileID: 1672238307}
-  - {fileID: 1358581258}
-  - {fileID: 1600893381}
-  - {fileID: 115450445}
-  - {fileID: 124515646}
-  - {fileID: 98787783}
-  - {fileID: 117710119}
-  - {fileID: 209462336}
-  - {fileID: 1424421620}
-  - {fileID: 1242914038}
-  - {fileID: 1843367350}
-  - {fileID: 15526505}
-  - {fileID: 1669257682}
-  - {fileID: 65850279}
-  - {fileID: 307184721}
-  - {fileID: 1964465107}
-  shelvingBSlots: []
-  manufacturedObjectPrefab: {fileID: 0}
-  moveSpeed: 100
-  smoothMovement: 1
-  hidePayloadWhenNotCarrying: 1
-  hideOneShelvingAItemOnCar1Pickup: 1
-  placeManufacturedObjectOnCar2Drop: 1
-  hasTarget: 0
-  targetPosition: {x: 0, y: 0, z: 0}
-  lastStatus: 
-  lastAtPickTarget: 0
-  lastAtDropTarget: 0
-  lastCarrying: 0
-  hiddenShelvingACount: 0
-  placedShelvingBCount: 0
 --- !u!1 &578192028
 GameObject:
   m_ObjectHideFlags: 0
@@ -5177,7 +5122,6 @@ GameObject:
   m_Component:
   - component: {fileID: 628575014}
   - component: {fileID: 628575015}
-  - component: {fileID: 628575016}
   m_Layer: 0
   m_Name: RobotCar_Root 2
   m_TagString: Untagged
@@ -5259,63 +5203,6 @@ MonoBehaviour:
   tel_AvgDeliveryTime: 0
   tel_EStopCount: 0
   tel_PayloadOnBoard: 0
---- !u!114 &628575016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 628575013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60de046e76a4fe34aa8e48b6f359d3c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CarControlReceiver
-  carTransform: {fileID: 628575014}
-  carPayloadAnchor: {fileID: 799140310}
-  payloadOnCarObject: {fileID: 0}
-  payloadOnCarPrefab: {fileID: 7873702435416022012, guid: 9de8727c6f216f947bd73e75ba8c0b65, type: 3}
-  shelvingAItems: []
-  shelvingBSlots:
-  - {fileID: 873523287}
-  - {fileID: 1017024171}
-  - {fileID: 1329650823}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  manufacturedObjectPrefab: {fileID: 0}
-  moveSpeed: 100
-  smoothMovement: 1
-  hidePayloadWhenNotCarrying: 1
-  hideOneShelvingAItemOnCar1Pickup: 1
-  placeManufacturedObjectOnCar2Drop: 1
-  hasTarget: 0
-  targetPosition: {x: 0, y: 0, z: 0}
-  lastStatus: 
-  lastAtPickTarget: 0
-  lastAtDropTarget: 0
-  lastCarrying: 0
-  hiddenShelvingACount: 0
-  placedShelvingBCount: 0
 --- !u!1 &638218242
 GameObject:
   m_ObjectHideFlags: 0
@@ -8457,6 +8344,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d27b5381bf7c464998db26b1cbc2bab, type: 3}
       insertIndex: -1
       addedObject: {fileID: 611000006}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9d27b5381bf7c464998db26b1cbc2bab, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1006951460}
   m_SourcePrefab: {fileID: 100100000, guid: 9d27b5381bf7c464998db26b1cbc2bab, type: 3}
 --- !u!4 &1006951456 stripped
 Transform:
@@ -8516,6 +8406,63 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.93, y: 2.0403886, z: 0.54043806}
   m_Center: {x: -0.9650009, y: 1.0202221, z: 0.27024657}
+--- !u!114 &1006951460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006951457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60de046e76a4fe34aa8e48b6f359d3c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarControlReceiver
+  carTransform: {fileID: 1006951456}
+  carPayloadAnchor: {fileID: 1452098561}
+  payloadOnCarObject: {fileID: 0}
+  payloadOnCarPrefab: {fileID: 0}
+  shelvingAItems:
+  - {fileID: 83756853}
+  - {fileID: 1289564894}
+  - {fileID: 2143035723}
+  - {fileID: 676312303}
+  - {fileID: 1551686012}
+  - {fileID: 2031242223}
+  - {fileID: 1740282879}
+  - {fileID: 839361323}
+  - {fileID: 143276846}
+  - {fileID: 1672238307}
+  - {fileID: 1358581258}
+  - {fileID: 1600893381}
+  - {fileID: 115450445}
+  - {fileID: 124515646}
+  - {fileID: 98787783}
+  - {fileID: 117710119}
+  - {fileID: 209462336}
+  - {fileID: 1424421620}
+  - {fileID: 1242914038}
+  - {fileID: 1843367350}
+  - {fileID: 15526505}
+  - {fileID: 1669257682}
+  - {fileID: 65850279}
+  - {fileID: 307184721}
+  - {fileID: 1964465107}
+  shelvingBSlots: []
+  manufacturedObjectPrefab: {fileID: 0}
+  moveSpeed: 100
+  smoothMovement: 1
+  hidePayloadWhenNotCarrying: 1
+  hideOneShelvingAItemOnCar1Pickup: 1
+  placeManufacturedObjectOnCar2Drop: 1
+  hasTarget: 0
+  targetPosition: {x: 0, y: 0, z: 0}
+  lastStatus: 
+  lastAtPickTarget: 0
+  lastAtDropTarget: 0
+  lastCarrying: 0
+  hiddenShelvingACount: 0
+  placedShelvingBCount: 0
 --- !u!1 &1008678560
 GameObject:
   m_ObjectHideFlags: 0
@@ -9370,6 +9317,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1457433727}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1279909959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416822130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60de046e76a4fe34aa8e48b6f359d3c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarControlReceiver
+  carTransform: {fileID: 416822129}
+  carPayloadAnchor: {fileID: 799140310}
+  payloadOnCarObject: {fileID: 0}
+  payloadOnCarPrefab: {fileID: 7873702435416022012, guid: 9de8727c6f216f947bd73e75ba8c0b65, type: 3}
+  shelvingAItems: []
+  shelvingBSlots:
+  - {fileID: 873523287}
+  - {fileID: 1017024171}
+  - {fileID: 1329650823}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  manufacturedObjectPrefab: {fileID: 0}
+  moveSpeed: 100
+  smoothMovement: 1
+  hidePayloadWhenNotCarrying: 1
+  hideOneShelvingAItemOnCar1Pickup: 1
+  placeManufacturedObjectOnCar2Drop: 1
+  hasTarget: 0
+  targetPosition: {x: 0, y: 0, z: 0}
+  lastStatus: 
+  lastAtPickTarget: 0
+  lastAtDropTarget: 0
+  lastCarrying: 0
+  hiddenShelvingACount: 0
+  placedShelvingBCount: 0
 --- !u!4 &1283703334 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3427800614753458072, guid: 57d6d9ac7da42454ea88f91737c63a1b, type: 3}
