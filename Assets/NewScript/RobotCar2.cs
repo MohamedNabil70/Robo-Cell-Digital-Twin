@@ -75,6 +75,8 @@ public class RobotCar2 : MonoBehaviour
 {
     [Header("══ Offline / Simulation ═════════════════════════════════════════")]
     public bool offlineMode = true;
+    [Tooltip("When true, snap this car to wpConv2Exit at Play start. Keep false when MQTT/control should preserve the scene-authored transform until a control message moves the car.")]
+    public bool snapToConv2ExitOnStart = false;
 
     [Header("══ Waypoints ══════════════════════════════════════════════════")]
     public Transform wpConv2Exit;
@@ -185,7 +187,11 @@ public class RobotCar2 : MonoBehaviour
 
         dbMode = offlineMode ? "Offline" : "PLC";
 
-        if (wpConv2Exit != null) { transform.position = wpConv2Exit.position; transform.rotation = wpConv2Exit.rotation; }
+        if (snapToConv2ExitOnStart && wpConv2Exit != null)
+        {
+            transform.position = wpConv2Exit.position;
+            transform.rotation = wpConv2Exit.rotation;
+        }
 
         prevPosition = transform.position;
 

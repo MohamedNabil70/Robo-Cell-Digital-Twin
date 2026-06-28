@@ -22,16 +22,26 @@ public class CarControlReceiver : MonoBehaviour
     public bool hidePayloadWhenNotCarrying = true;
     public bool hideOneShelvingAItemOnCar1Pickup = true;
     public bool placeManufacturedObjectOnCar2Drop = true;
+    public Vector3 payloadOnCarScale = new Vector3(4f, 4f, 4f);
 
     [Header("Diagnostics")]
     [SerializeField] bool hasTarget;
     [SerializeField] Vector3 targetPosition;
+    [SerializeField] float currentX;
+    [SerializeField] float currentY;
+    [SerializeField] float currentZ;
+    [SerializeField] float goalZ;
+    [SerializeField] float fixedGoalX;
+    [SerializeField] float fixedGoalY;
     [SerializeField] string lastStatus = "";
     [SerializeField] bool lastAtPickTarget;
     [SerializeField] bool lastAtDropTarget;
     [SerializeField] bool lastCarrying;
     [SerializeField] int hiddenShelvingACount;
     [SerializeField] int placedShelvingBCount;
+    [SerializeField] bool warnedMissingPayloadPrefab;
+
+    readonly List<GameObject> managedPayloadObjects = new List<GameObject>();
 
     void Awake()
     {
@@ -41,14 +51,23 @@ public class CarControlReceiver : MonoBehaviour
         }
 
         targetPosition = carTransform.position;
+        fixedGoalX = targetPosition.x;
+        fixedGoalY = targetPosition.y;
+        goalZ = targetPosition.z;
+        UpdateRuntimePositionDiagnostics();
     }
 
     void Update()
     {
+        UpdateRuntimePositionDiagnostics();
+
         if (!hasTarget || carTransform == null)
         {
             return;
         }
+
+        targetPosition.x = fixedGoalX;
+        targetPosition.y = fixedGoalY;
 
         if (smoothMovement)
         {
@@ -61,12 +80,22 @@ public class CarControlReceiver : MonoBehaviour
         {
             carTransform.position = targetPosition;
         }
+
+        UpdateRuntimePositionDiagnostics();
     }
 
     public void Configure(Transform target)
     {
         carTransform = target != null ? target : transform;
-        targetPosition = carTransform.position;
+        if (!hasTarget)
+        {
+            targetPosition = carTransform.position;
+            fixedGoalX = targetPosition.x;
+            fixedGoalY = targetPosition.y;
+            goalZ = targetPosition.z;
+        }
+
+        UpdateRuntimePositionDiagnostics();
     }
 
     public void ApplyControl(string objectId, CarControlData control)
@@ -83,25 +112,37 @@ public class CarControlReceiver : MonoBehaviour
         }
 
         Vector3 current = carTransform.position;
-        targetPosition = new Vector3(control.currentX, current.y, control.currentZ);
-        hasTarget = true;
+        if (control.hasTargetZ)
+        {
+            Vector3 target = current;
+            fixedGoalX = current.x;
+            fixedGoalY = current.y;
+            target.x = fixedGoalX;
+            target.y = fixedGoalY;
+            target.z = control.targetZ;
+            targetPosition = target;
+            hasTarget = true;
+            goalZ = targetPosition.z;
+        }
 
-        bool carryingStarted = !lastCarrying && control.carrying;
-        bool pickStarted = !lastAtPickTarget && control.atPickTarget;
-        bool dropStarted = !lastAtDropTarget && control.atDropTarget;
+        bool carryingStarted = control.hasCarrying && !lastCarrying && control.carrying;
+        bool pickStarted = control.hasAtPickTarget && !lastAtPickTarget && control.atPickTarget;
+        bool dropStarted = control.hasAtDropTarget && !lastAtDropTarget && control.atDropTarget;
+        bool carryingNow = control.hasCarrying ? control.carrying : lastCarrying;
 
-        if (control.carrying)
+        if (control.hasCarrying && control.carrying)
         {
             EnsurePayloadOnCar();
         }
-        else if (hidePayloadWhenNotCarrying)
+        else if (control.hasCarrying && hidePayloadWhenNotCarrying)
         {
             SetPayloadVisible(false);
         }
 
         if (IsCar1(objectId) &&
+            control.hasAtPickTarget &&
             control.atPickTarget &&
-            control.carrying &&
+            carryingNow &&
             (carryingStarted || pickStarted))
         {
             EnsurePayloadOnCar();
@@ -109,29 +150,55 @@ public class CarControlReceiver : MonoBehaviour
         }
 
         if (IsCar2(objectId) &&
+            control.hasAtDropTarget &&
             control.atDropTarget &&
-            control.carrying &&
+            carryingNow &&
             (dropStarted || carryingStarted))
         {
             PlaceManufacturedObjectInShelvingB();
         }
 
         lastStatus = control.status ?? string.Empty;
-        lastAtPickTarget = control.atPickTarget;
-        lastAtDropTarget = control.atDropTarget;
-        lastCarrying = control.carrying;
+        if (control.hasAtPickTarget)
+        {
+            lastAtPickTarget = control.atPickTarget;
+        }
+
+        if (control.hasAtDropTarget)
+        {
+            lastAtDropTarget = control.atDropTarget;
+        }
+
+        if (control.hasCarrying)
+        {
+            lastCarrying = control.carrying;
+        }
+
+        UpdateRuntimePositionDiagnostics();
     }
 
     void EnsurePayloadOnCar()
     {
+        if (payloadOnCarObject == null)
+        {
+            payloadOnCarObject = FindManagedPayloadOnCar();
+        }
+
         if (payloadOnCarObject == null && payloadOnCarPrefab != null)
         {
             payloadOnCarObject = Instantiate(payloadOnCarPrefab);
+            payloadOnCarObject.name = $"{name}_PayloadOnCar";
+            managedPayloadObjects.Add(payloadOnCarObject);
         }
 
         if (payloadOnCarObject == null)
         {
-            // TODO: Assign payloadOnCarObject or payloadOnCarPrefab if this car should show carried payloads.
+            if (!warnedMissingPayloadPrefab)
+            {
+                Debug.LogWarning($"[CarControlReceiver:{name}] carrying=true but payloadOnCarPrefab is not assigned.");
+                warnedMissingPayloadPrefab = true;
+            }
+
             return;
         }
 
@@ -140,12 +207,17 @@ public class CarControlReceiver : MonoBehaviour
             payloadOnCarObject.transform.SetParent(carPayloadAnchor, false);
             payloadOnCarObject.transform.localPosition = Vector3.zero;
             payloadOnCarObject.transform.localRotation = Quaternion.identity;
+            payloadOnCarObject.transform.localScale = payloadOnCarScale;
         }
         else if (carTransform != null)
         {
             payloadOnCarObject.transform.SetParent(carTransform, false);
+            payloadOnCarObject.transform.localPosition = Vector3.zero;
+            payloadOnCarObject.transform.localRotation = Quaternion.identity;
+            payloadOnCarObject.transform.localScale = payloadOnCarScale;
         }
 
+        MakePayloadVisualFollowCar(payloadOnCarObject);
         SetPayloadVisible(true);
     }
 
@@ -154,6 +226,71 @@ public class CarControlReceiver : MonoBehaviour
         if (payloadOnCarObject != null)
         {
             payloadOnCarObject.SetActive(visible);
+        }
+
+        if (!visible)
+        {
+            HideManagedPayloadChildren();
+        }
+    }
+
+    GameObject FindManagedPayloadOnCar()
+    {
+        for (int i = 0; i < managedPayloadObjects.Count; i++)
+        {
+            GameObject payload = managedPayloadObjects[i];
+            if (payload != null && IsPayloadAttachedToCar(payload.transform))
+            {
+                return payload;
+            }
+        }
+
+        return null;
+    }
+
+    void HideManagedPayloadChildren()
+    {
+        for (int i = 0; i < managedPayloadObjects.Count; i++)
+        {
+            GameObject payload = managedPayloadObjects[i];
+            if (payload != null && IsPayloadAttachedToCar(payload.transform))
+            {
+                payload.SetActive(false);
+            }
+        }
+    }
+
+    bool IsPayloadAttachedToCar(Transform payload)
+    {
+        if (payload == null)
+        {
+            return false;
+        }
+
+        return (carPayloadAnchor != null && payload.IsChildOf(carPayloadAnchor)) ||
+               (carTransform != null && payload.IsChildOf(carTransform));
+    }
+
+    static void MakePayloadVisualFollowCar(GameObject payload)
+    {
+        if (payload == null)
+        {
+            return;
+        }
+
+        Rigidbody[] bodies = payload.GetComponentsInChildren<Rigidbody>(true);
+        for (int i = 0; i < bodies.Length; i++)
+        {
+            Rigidbody body = bodies[i];
+            if (body == null)
+            {
+                continue;
+            }
+
+            body.linearVelocity = Vector3.zero;
+            body.angularVelocity = Vector3.zero;
+            body.useGravity = false;
+            body.isKinematic = true;
         }
     }
 
@@ -222,6 +359,20 @@ public class CarControlReceiver : MonoBehaviour
         objectToPlace.transform.localRotation = Quaternion.identity;
         objectToPlace.SetActive(true);
         placedShelvingBCount++;
+    }
+
+    void UpdateRuntimePositionDiagnostics()
+    {
+        if (carTransform == null)
+        {
+            return;
+        }
+
+        Vector3 position = carTransform.position;
+        currentX = position.x;
+        currentY = position.y;
+        currentZ = position.z;
+        goalZ = targetPosition.z;
     }
 
     static bool IsCar1(string objectId) =>

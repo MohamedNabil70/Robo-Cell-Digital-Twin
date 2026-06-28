@@ -41,6 +41,8 @@ public class TwinRobotArmControlPayload
 public class TwinCarControlPayload
 {
     public string objectId;
+    public float Car1_Target;
+    public float Car2_Target;
     public float currentX;
     public float currentZ;
     public string status;
@@ -126,17 +128,29 @@ public class ConveyorControlData
     public float currentSpeed;
     public bool running;
     public bool objectDetected;
+    [NonSerialized] public bool hasCurrentSpeed;
+    [NonSerialized] public bool hasRunning;
+    [NonSerialized] public bool hasObjectDetected;
 }
 
 [Serializable]
 public class CarControlData
 {
+    public float Car1_Target;
+    public float Car2_Target;
+    public float targetZ;
     public float currentX;
     public float currentZ;
     public string status;
     public bool atPickTarget;
     public bool atDropTarget;
     public bool carrying;
+    [NonSerialized] public bool hasTargetZ;
+    [NonSerialized] public bool hasCurrentX;
+    [NonSerialized] public bool hasCurrentZ;
+    [NonSerialized] public bool hasAtPickTarget;
+    [NonSerialized] public bool hasAtDropTarget;
+    [NonSerialized] public bool hasCarrying;
 }
 
 [Serializable]
@@ -162,4 +176,7 @@ public class WarehouseControlData
     public int remainingInB;
     public int deliveredToB;
     public string batchStatus;
+    [NonSerialized] public bool hasRemainingInA;
+    [NonSerialized] public bool hasRemainingInB;
+    [NonSerialized] public bool hasDeliveredToB;
 }

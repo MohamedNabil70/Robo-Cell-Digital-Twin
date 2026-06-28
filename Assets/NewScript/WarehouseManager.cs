@@ -134,6 +134,8 @@ public class WarehouseManager : MonoBehaviour
     [SerializeField] bool  tel_GateDispatch   = true;
 
     [Header("MQTT / External Warehouse Sync")]
+    [Tooltip("When true, WarehouseManager does not spawn/reorder shelf visuals or run the local batch flow until warehouse/control snapshots arrive.")]
+    public bool externalWarehouseControlOnly = true;
     [Tooltip("Log whenever an inbound warehouse/control snapshot corrects shelf occupancy.")]
     [SerializeField] bool logExternalWarehouseSync = true;
     [Tooltip("Use separate shelf display objects for MQTT warehouse snapshots so live/offline simulation is not interrupted.")]
@@ -163,6 +165,7 @@ public class WarehouseManager : MonoBehaviour
     int   totalAllBatchDelivered = 0;
     int   totalAllBatchDefective = 0;
     readonly Queue<float> deliveryTimestamps = new Queue<float>(); // for throughput
+    bool hasReceivedExternalWarehouseControl = false;
 
     // ─────────────────────────────────────────────────────────────────────────
     List<GameObject> spawnedObjects = new List<GameObject>();
@@ -222,6 +225,12 @@ public class WarehouseManager : MonoBehaviour
         tel_WHAOccupied    = pendingQueue.Count;
         tel_WHBOccupied    = nextBSlot;
         tel_RejectOccupied = nextRejectSlot;
+        if (externalWarehouseControlOnly && hasReceivedExternalWarehouseControl)
+        {
+            tel_WHAOccupied = dbRemainingInA;
+            tel_WHBOccupied = dbDeliveredToB;
+            tel_RejectOccupied = 0;
+        }
 
         // Pipeline gate mirrors
         tel_GateDelivery = previousDelivered;
@@ -248,8 +257,18 @@ public class WarehouseManager : MonoBehaviour
         }
 
         dbMode = (offlineMode || offlineAutoStart) ? "Offline" : "PLC";
-        RunSystemDiagnostics();
-        SpawnWarehouseAObjects();
+        if (externalWarehouseControlOnly)
+        {
+            dbMode = "MQTT";
+            dbStatus = "Waiting for warehouse/control";
+            dbPipelineStage = "Waiting for external warehouse snapshot";
+            dbFeedbackPhase = "ExternalControlOnly";
+        }
+        else
+        {
+            RunSystemDiagnostics();
+            SpawnWarehouseAObjects();
+        }
 
         cbStartBatch = v =>
         {
@@ -284,7 +303,7 @@ public class WarehouseManager : MonoBehaviour
 
         RegisterAllInputTags();
 
-        if (offlineMode || offlineAutoStart) StartCoroutine(AutoStart());
+        if (!externalWarehouseControlOnly && (offlineMode || offlineAutoStart)) StartCoroutine(AutoStart());
     }
 
     void RegisterAllInputTags()
@@ -353,6 +372,12 @@ public class WarehouseManager : MonoBehaviour
     // ── Batch control ─────────────────────────────────────────────────────────
     public void StartBatch()
     {
+        if (externalWarehouseControlOnly)
+        {
+            Debug.LogWarning("[WH] Ignored StartBatch because externalWarehouseControlOnly=true. Publish factory/cell1/twin/warehouse/control to drive shelf visuals.");
+            return;
+        }
+
         if (batchStarted) return;
         batchStarted=true; batchComplete=false; previousDelivered=true;
         dbWaitingForDelivery=false; dbWaitingForCar1=false;
@@ -387,6 +412,12 @@ public class WarehouseManager : MonoBehaviour
 
     public void RestartBatch()
     {
+        if (externalWarehouseControlOnly)
+        {
+            Debug.LogWarning("[WH] Ignored RestartBatch because externalWarehouseControlOnly=true. Warehouse visuals are controlled by warehouse/control snapshots.");
+            return;
+        }
+
         if (batchStarted&&!batchComplete){Debug.LogWarning("[WH] RestartBatch while running — ignored.");return;}
         Debug.Log("[WH] ▶▶ Restarting batch — recycling objects to WH-A...");
         if (dispatchCoroutine!=null){StopCoroutine(dispatchCoroutine);dispatchCoroutine=null;}
@@ -595,6 +626,19 @@ public class WarehouseManager : MonoBehaviour
 
     public void ApplyExternalWarehouseSnapshot(int remainingInA, int deliveredToB, string batchStatus)
     {
+        if (remainingInA > 25)
+        {
+            Debug.LogWarning($"[WH] Ignored MQTT warehouse snapshot because remainingInA={remainingInA} exceeds 25.");
+            return;
+        }
+
+        if (deliveredToB > 25)
+        {
+            Debug.LogWarning($"[WH] Ignored MQTT warehouse snapshot because remainingInB/deliveredToB={deliveredToB} exceeds 25.");
+            return;
+        }
+
+        hasReceivedExternalWarehouseControl = true;
         int requestedA = Mathf.Max(0, remainingInA);
         int requestedB = Mathf.Max(0, deliveredToB);
         int availableASlots = CountValidSlots(warehouseASlots);
