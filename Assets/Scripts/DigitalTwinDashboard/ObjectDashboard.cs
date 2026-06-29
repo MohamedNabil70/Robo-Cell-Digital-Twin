@@ -1,4 +1,4 @@
-using System.Globalization;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -17,10 +17,13 @@ public sealed class ObjectDashboard : MonoBehaviour
     public TMP_Text temperatureText;
     public TMP_Text vibrationText;
     public TMP_Text aiStatusText;
+    [Tooltip("Optional fifth row. If empty, it is created at runtime from the AI Status row.")]
+    public TMP_Text statusFaultText;
 
     string targetObjectId;
     float nextRefreshTime;
     TwinObjectStatusStore boundStatusStore;
+    readonly List<TMP_Text> runtimeRows = new List<TMP_Text>();
 
     void OnEnable()
     {
@@ -105,44 +108,141 @@ public sealed class ObjectDashboard : MonoBehaviour
     {
         BindStatusStore();
 
-        if (string.IsNullOrWhiteSpace(targetObjectId) ||
-            boundStatusStore == null ||
-            !boundStatusStore.TryGetStatus(targetObjectId, out TwinObjectStatus status))
+        if (string.IsNullOrWhiteSpace(targetObjectId))
         {
-            SetValue(objectNameText, string.IsNullOrWhiteSpace(targetObjectId) ? MissingValue : targetObjectId);
-            SetTelemetryText(MissingValue, MissingValue, MissingValue, MissingValue);
+            SetValue(objectNameText, MissingValue);
+            SetSnapshotFields(null);
             return;
         }
 
-        RefreshDisplay(status);
+        RefreshDisplay(TwinDashboardDataResolver.Resolve(targetObjectId));
     }
 
     void RefreshDisplay(TwinObjectStatus status)
     {
-        string displayName = !string.IsNullOrWhiteSpace(status.ObjectId)
-            ? status.ObjectId
-            : targetObjectId;
-
-        SetValue(objectNameText, string.IsNullOrWhiteSpace(displayName) ? MissingValue : displayName);
-        SetTelemetryText(
-            FormatMetric(status.Speed, "m/s"),
-            FormatMetric(status.Temperature, "C"),
-            FormatMetric(status.Vibration, "mm/s"),
-            !string.IsNullOrWhiteSpace(status.AiStatus) ? status.AiStatus : MissingValue);
+        RefreshDisplay(TwinDashboardDataResolver.Resolve(status.ObjectId));
     }
 
-    void SetTelemetryText(string speed, string temperature, string vibration, string aiStatus)
+    void RefreshDisplay(TwinDashboardDataSnapshot snapshot)
     {
-        SetText(speedText, "Speed", speed);
-        SetText(temperatureText, "Temperature", temperature);
-        SetText(vibrationText, "Vibration", vibration);
-        SetText(aiStatusText, "AI Status", aiStatus);
+        SetValue(objectNameText, snapshot == null ? MissingValue : snapshot.DisplayName);
+        SetSnapshotFields(snapshot);
     }
 
-    static string FormatMetric(float value, string unit)
+    void SetSnapshotFields(TwinDashboardDataSnapshot snapshot)
     {
-        string formatted = value.ToString("0.##", CultureInfo.InvariantCulture);
-        return string.IsNullOrWhiteSpace(unit) ? formatted : $"{formatted} {unit.Trim()}";
+        int fieldCount = snapshot != null ? snapshot.Fields.Count : 4;
+        TMP_Text[] rows = EnsureRowCapacity(fieldCount);
+
+        for (int i = 0; i < rows.Length; i++)
+        {
+            TMP_Text row = rows[i];
+            if (row == null)
+            {
+                continue;
+            }
+
+            bool hasValue = snapshot != null && i < snapshot.Fields.Count;
+            row.gameObject.SetActive(hasValue || i < 4);
+            if (hasValue)
+            {
+                TwinDashboardField field = snapshot.Fields[i];
+                SetText(row, field.Label, string.IsNullOrWhiteSpace(field.Value) ? MissingValue : field.Value);
+            }
+            else if (i < 4)
+            {
+                SetText(row, "Value", MissingValue);
+            }
+        }
+    }
+
+    TMP_Text[] EnsureRowCapacity(int requiredCount)
+    {
+        runtimeRows.Clear();
+        AddRow(speedText);
+        AddRow(temperatureText);
+        AddRow(vibrationText);
+        AddRow(aiStatusText);
+        AddRow(statusFaultText);
+
+        while (runtimeRows.Count < requiredCount)
+        {
+            TMP_Text row = CreateRuntimeRow(runtimeRows.Count);
+            if (row == null)
+            {
+                break;
+            }
+
+            if (runtimeRows.Count == 4)
+            {
+                statusFaultText = row;
+            }
+
+            runtimeRows.Add(row);
+        }
+
+        LayoutRows(runtimeRows);
+        return runtimeRows.ToArray();
+    }
+
+    void AddRow(TMP_Text row)
+    {
+        if (row != null && !runtimeRows.Contains(row))
+        {
+            runtimeRows.Add(row);
+        }
+    }
+
+    TMP_Text CreateRuntimeRow(int rowIndex)
+    {
+        TMP_Text template = aiStatusText != null ? aiStatusText : vibrationText;
+        if (template == null)
+        {
+            return null;
+        }
+
+        GameObject rowObject = Instantiate(template.gameObject, template.transform.parent);
+        rowObject.name = $"Dashboard Field {rowIndex + 1}";
+        TMP_Text rowText = rowObject.GetComponent<TMP_Text>();
+        if (rowText != null)
+        {
+            rowText.text = string.Empty;
+        }
+
+        return rowText;
+    }
+
+    static void LayoutRows(IReadOnlyList<TMP_Text> rows)
+    {
+        for (int i = 0; i < rows.Count; i++)
+        {
+            TMP_Text row = rows[i];
+            if (row == null)
+            {
+                continue;
+            }
+
+            RectTransform rectTransform = row.rectTransform;
+            rectTransform.localRotation = Quaternion.identity;
+            rectTransform.localScale = Vector3.one;
+            rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+            rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
+            rectTransform.anchoredPosition = new Vector2(0f, 85f - (70f * i));
+            rectTransform.sizeDelta = new Vector2(500f, 54f);
+        }
+    }
+
+    public TMP_Text[] GetMetricTexts()
+    {
+        return EnsureRowCapacity(statusFaultText != null ? 5 : 4);
+    }
+
+    public TMP_Text GetStatusText()
+    {
+        return statusFaultText != null && statusFaultText.gameObject.activeInHierarchy
+            ? statusFaultText
+            : aiStatusText;
     }
 
     static void SetText(TMP_Text field, string label, string value)

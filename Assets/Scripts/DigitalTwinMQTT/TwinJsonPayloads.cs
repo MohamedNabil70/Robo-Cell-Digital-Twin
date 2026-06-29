@@ -5,6 +5,8 @@ public class TwinStatusPayload
 {
     public string objectId;
     public string displayName;
+    public string objectType;
+    public string object_type;
     public string state;
     public string status;
     public string health;
@@ -18,6 +20,16 @@ public class TwinStatusPayload
     public string aiStatus;
     public string ai_status;
     public float aiConfidence;
+    public float rul_cycles;
+    public float rulCycles;
+    public float health_score;
+    public float healthScore;
+    public string health_state;
+    public string healthState;
+    public bool maintenance_required;
+    public bool maintenanceRequired;
+    public string fault_type;
+    public string faultType;
     public string message;
     public string recommendedAction;
     public long timestamp;

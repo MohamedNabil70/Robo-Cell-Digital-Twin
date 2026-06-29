@@ -65,10 +65,11 @@ public sealed class DashboardVisualEnhancer : MonoBehaviour
             return;
         }
 
-        UpdateMetricText(dashboard.speedText, "SPEED", "m/s");
-        UpdateMetricText(dashboard.temperatureText, "TEMPERATURE", "C");
-        UpdateMetricText(dashboard.vibrationText, "VIBRATION", "mm/s");
-        UpdateMetricText(dashboard.aiStatusText, "AI STATUS", string.Empty);
+        foreach (TMP_Text metricText in dashboard.GetMetricTexts())
+        {
+            UpdateMetricText(metricText);
+        }
+
         UpdateStatusStyle();
         UpdatePulseColors();
 
@@ -163,10 +164,11 @@ public sealed class DashboardVisualEnhancer : MonoBehaviour
         ConfigureText(dashboard.objectNameText, 38f, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, ValueColor);
         SetRect(dashboard.objectNameText, new Vector2(-85f, 205f), new Vector2(370f, 62f));
 
-        ConfigureMetric(dashboard.speedText, new Vector2(0f, 85f));
-        ConfigureMetric(dashboard.temperatureText, new Vector2(0f, 15f));
-        ConfigureMetric(dashboard.vibrationText, new Vector2(0f, -55f));
-        ConfigureMetric(dashboard.aiStatusText, new Vector2(0f, -125f));
+        TMP_Text[] metricTexts = dashboard.GetMetricTexts();
+        for (int i = 0; i < metricTexts.Length; i++)
+        {
+            ConfigureMetric(metricTexts[i], new Vector2(0f, 85f - (70f * i)));
+        }
 
         Transform closeTransform = FindChildRecursive(transform, "Close button");
         if (closeTransform != null)
@@ -217,14 +219,16 @@ public sealed class DashboardVisualEnhancer : MonoBehaviour
 
         CreateImage(contentRoot, "HUD Accent", AccentColor, new Vector2(0f, 163f), new Vector2(540f, 4f));
 
-        CreateMetricBackground(contentRoot, "Speed Row", dashboard.speedText, RowColor);
-        CreateMetricBackground(contentRoot, "Temperature Row", dashboard.temperatureText, AlternateRowColor);
-        CreateMetricBackground(contentRoot, "Vibration Row", dashboard.vibrationText, RowColor);
-        statusBackground = CreateMetricBackground(
-            contentRoot,
-            "AI Status Row",
-            dashboard.aiStatusText,
-            new Color(NormalColor.r, NormalColor.g, NormalColor.b, 0.18f));
+        TMP_Text[] metricTexts = dashboard.GetMetricTexts();
+        for (int i = 0; i < metricTexts.Length; i++)
+        {
+            Color rowColor = i % 2 == 0 ? RowColor : AlternateRowColor;
+            Image rowBackground = CreateMetricBackground(contentRoot, $"Metric Row {i + 1}", metricTexts[i], rowColor);
+            if (metricTexts[i] == dashboard.GetStatusText())
+            {
+                statusBackground = rowBackground;
+            }
+        }
 
         Image liveBadge = CreateImage(
             contentRoot,
@@ -324,10 +328,10 @@ public sealed class DashboardVisualEnhancer : MonoBehaviour
 
     private void CacheCurrentValues()
     {
-        CacheValue(dashboard.speedText);
-        CacheValue(dashboard.temperatureText);
-        CacheValue(dashboard.vibrationText);
-        CacheValue(dashboard.aiStatusText);
+        foreach (TMP_Text metricText in dashboard.GetMetricTexts())
+        {
+            CacheValue(metricText);
+        }
     }
 
     private void CacheValue(TMP_Text text)
@@ -338,7 +342,7 @@ public sealed class DashboardVisualEnhancer : MonoBehaviour
         }
     }
 
-    private void UpdateMetricText(TMP_Text text, string label, string unit)
+    private void UpdateMetricText(TMP_Text text)
     {
         if (text == null)
         {
@@ -346,6 +350,7 @@ public sealed class DashboardVisualEnhancer : MonoBehaviour
         }
 
         string plainText = StripRichText(text.text);
+        string label = ExtractLabel(plainText).ToUpperInvariant();
         string value = ExtractValue(plainText);
         string previousValue = lastPlainValues.TryGetValue(text, out string cached) ? ExtractValue(cached) : null;
 
@@ -356,8 +361,7 @@ public sealed class DashboardVisualEnhancer : MonoBehaviour
             lastTelemetryChangeTime = Time.unscaledTime;
         }
 
-        string displayValue = AddUnitIfNumeric(value, unit);
-        string desired = $"<color=#{ColorUtility.ToHtmlStringRGB(LabelColor)}>{label}</color>  <b>{displayValue}</b>";
+        string desired = $"<color=#{ColorUtility.ToHtmlStringRGB(LabelColor)}>{label}</color>  <b>{value}</b>";
         if (!string.Equals(text.text, desired, System.StringComparison.Ordinal))
         {
             text.text = desired;
@@ -366,12 +370,13 @@ public sealed class DashboardVisualEnhancer : MonoBehaviour
 
     private void UpdateStatusStyle()
     {
-        if (dashboard.aiStatusText == null)
+        TMP_Text statusText = dashboard.GetStatusText();
+        if (statusText == null)
         {
             return;
         }
 
-        string status = ExtractValue(StripRichText(dashboard.aiStatusText.text)).ToLowerInvariant();
+        string status = ExtractValue(StripRichText(statusText.text)).ToLowerInvariant();
         Color statusColor = status.Contains("maintenance") || status.Contains("fault") || status.Contains("error")
             ? DangerColor
             : status.Contains("warn")
@@ -388,13 +393,7 @@ public sealed class DashboardVisualEnhancer : MonoBehaviour
 
     private void UpdatePulseColors()
     {
-        foreach (TMP_Text text in new[]
-                 {
-                     dashboard.speedText,
-                     dashboard.temperatureText,
-                     dashboard.vibrationText,
-                     dashboard.aiStatusText
-                 })
+        foreach (TMP_Text text in dashboard.GetMetricTexts())
         {
             if (text == null)
             {
@@ -586,19 +585,20 @@ public sealed class DashboardVisualEnhancer : MonoBehaviour
             : text.Trim();
     }
 
-    private static string AddUnitIfNumeric(string value, string unit)
+    private static string ExtractLabel(string text)
     {
-        if (string.IsNullOrEmpty(unit) || string.Equals(value, "N/A", System.StringComparison.OrdinalIgnoreCase))
+        if (string.IsNullOrWhiteSpace(text))
         {
-            return value;
+            return "VALUE";
         }
 
-        return float.TryParse(
-            value,
-            System.Globalization.NumberStyles.Float,
-            System.Globalization.CultureInfo.InvariantCulture,
-            out _)
-            ? $"{value} {unit}"
-            : value;
+        int separator = text.IndexOf(':');
+        if (separator > 0)
+        {
+            return text.Substring(0, separator).Trim();
+        }
+
+        int doubleSpace = text.IndexOf("  ", System.StringComparison.Ordinal);
+        return doubleSpace > 0 ? text.Substring(0, doubleSpace).Trim() : "VALUE";
     }
 }
