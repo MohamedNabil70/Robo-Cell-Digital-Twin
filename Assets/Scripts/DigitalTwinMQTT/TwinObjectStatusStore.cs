@@ -74,6 +74,8 @@ public struct TwinObjectStatus
 {
     public string CellId;
     public string ObjectId;
+    public string DisplayName;
+    public string ObjectType;
     public string RawJson;
     public string State;
     public string Health;
@@ -83,6 +85,11 @@ public struct TwinObjectStatus
     public float Vibration;
     public string AiStatus;
     public float AiConfidence;
+    public float RulCycles;
+    public float HealthScore;
+    public string HealthState;
+    public bool MaintenanceRequired;
+    public string FaultType;
     public string Message;
     public string RecommendedAction;
     public long SourceTimestamp;
@@ -111,6 +118,10 @@ public struct TwinObjectStatus
         {
             CellId = cellId ?? string.Empty,
             ObjectId = payloadObjectId ?? string.Empty,
+            DisplayName = payload?.displayName ?? string.Empty,
+            ObjectType = !string.IsNullOrWhiteSpace(payload?.objectType)
+                ? payload.objectType
+                : payload?.object_type ?? string.Empty,
             RawJson = rawJson ?? string.Empty,
             State = !string.IsNullOrWhiteSpace(payload?.state)
                 ? payload.state
@@ -124,6 +135,15 @@ public struct TwinObjectStatus
                 ? payload.aiStatus
                 : payload?.ai_status ?? string.Empty,
             AiConfidence = payload?.aiConfidence ?? 0f,
+            RulCycles = payload != null && payload.rul_cycles > 0f ? payload.rul_cycles : payload?.rulCycles ?? 0f,
+            HealthScore = payload != null && payload.health_score > 0f ? payload.health_score : payload?.healthScore ?? 0f,
+            HealthState = !string.IsNullOrWhiteSpace(payload?.health_state)
+                ? payload.health_state
+                : payload?.healthState ?? string.Empty,
+            MaintenanceRequired = payload != null && (payload.maintenance_required || payload.maintenanceRequired),
+            FaultType = !string.IsNullOrWhiteSpace(payload?.fault_type)
+                ? payload.fault_type
+                : payload?.faultType ?? string.Empty,
             Message = payload?.message ?? string.Empty,
             RecommendedAction = payload?.recommendedAction ?? string.Empty,
             SourceTimestamp = payload?.timestamp ?? 0,
